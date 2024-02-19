@@ -1,0 +1,256 @@
+Tomcat during the initialization of the mail Session
+    Resource. <strong>Note:</strong> placing this jar in both $CATALINA_HOME/lib
+    and a  web application's lib folder will cause an error, so ensure you have
+    it in the $CATALINA_HOME/lib location only.
+    </p>
+
+    <h5>5.  Restart Tomcat</h5>
+
+    <p>For the additional JAR to be visible to Tomcat, it is necessary for the
+    Tomcat instance to be restarted.</p>
+
+
+    <h5>Example Application</h5>
+
+    <p>The <code>/examples</code> application included with Tomcat contains
+    an example of utilizing this resource factory.  It is accessed via the
+    "JSP Examples" link.  The source code for the servlet that actually
+    sends the mail message is in
+    <code>/WEB-INF/classes/SendMailServlet.java</code>.</p>
+
+    <p><strong>WARNING</strong> - The default configuration assumes that there
+    is an SMTP server listing on port 25 on <code>localhost</code>. If this is
+    not the case, edit the
+    <a href="config/context.html"><code>&lt;Context&gt;</code></a> element for
+    this web application and modify the parameter value for the
+    <code>mail.smtp.host</code> parameter to be the host name of an SMTP server
+    on your network.</p>
+
+  </div></div>
+
+  <div class="subsection"><h4 id="JDBC_Data_Sources">JDBC Data Sources</h4><div class="text">
+
+    <h5>0.  Introduction</h5>
+
+    <p>Many web applications need to access a database via a JDBC driver,
+    to support the functionality required by that application.  The Java EE
+    Platform Specification requires Java EE Application Servers to make
+    available a <em>DataSource</em> implementation (that is, a connection
+    pool for JDBC connections) for this purpose.  Tomcat offers exactly
+    the same support, so that database-based applications you develop on
+    Tomcat using this service will run unchanged on any Java EE server.</p>
+
+    <p>For information about JDBC, you should consult the following:</p>
+    <ul>
+    <li><a href="http://www.oracle.com/technetwork/java/javase/jdbc/index.html">
+        http://www.oracle.com/technetwork/java/javase/jdbc/index.html</a> -
+        Home page for information about Java Database Connectivity.</li>
+    <li><a href="http://java.sun.com/j2se/1.3/docs/guide/jdbc/spec2/jdbc2.1.frame.html">http://java.sun.com/j2se/1.3/docs/guide/jdbc/spec2/jdbc2.1.frame.html</a> -
+        The JDBC 2.1 API Specification.</li>
+    <li><a href="http://java.sun.com/products/jdbc/jdbc20.stdext.pdf">http://java.sun.com/products/jdbc/jdbc20.stdext.pdf</a> -
+        The JDBC 2.0 Standard Extension API (including the
+        <code>javax.sql.DataSource</code> API).  This package is now known
+        as the "JDBC Optional Package".</li>
+    <li><a href="http://www.oracle.com/technetwork/java/javaee/overview/index.htm">
+        http://www.oracle.com/technetwork/java/javaee/overview/index.htm</a> -
+        The Java EE Platform Specification (covers the JDBC facilities that
+        all Java EE platforms must provide to applications).</li>
+    </ul>
+
+    <p><strong>NOTE</strong> - The default data source support in Tomcat
+    is based on the <strong>DBCP 2</strong> connection pool from the
+    <a href="https://commons.apache.org/">Commons</a>
+    project.  However, it is possible to use any other connection pool
+    that implements <code>javax.sql.DataSource</code>, by writing your
+    own custom resource factory, as described
+    <a href="#Adding_Custom_Resource_Factories">below</a>.</p>
+
+    <h5>1.  Install Your JDBC Driver</h5>
+
+    <p>Use of the <em>JDBC Data Sources</em> JNDI Resource Factory requires
+    that you make an appropriate JDBC driver available to both Tomcat internal
+    classes and to your web application.  This is most easily accomplished by
+    installing the driver's JAR file(s) into the
+    <code>$CATALINA_HOME/lib</code> directory, which makes the driver
+    available both to the resource factory and to your application.</p>
+
+    <h5>2.  Declare Your Resource Requirements</h5>
+
+    <p>Next, modify the web application deployment descriptor
+    (<code>/WEB-INF/web.xml</code>) to declare the JNDI name under
+    which you will look up preconfigured data source.  By convention, all such
+    names should resolve to the <code>jdbc</code> subcontext (relative to the
+    standard <code>java:comp/env</code> naming context that is the root of
+    all provided resource factories.  A typical <code>web.xml</code> entry
+    might look like this:</p>
+<div class="codeBox"><pre><code>&lt;resource-ref&gt;
+  &lt;description&gt;
+    Resource reference to a factory for java.sql.Connection
+    instances that may be used for talking to a particular
+    database that is configured in the &lt;Context&gt;
+    configuration for the web application.
+  &lt;/description&gt;
+  &lt;res-ref-name&gt;
+    jdbc/EmployeeDB
+  &lt;/res-ref-name&gt;
+  &lt;res-type&gt;
+    javax.sql.DataSource
+  &lt;/res-type&gt;
+  &lt;res-auth&gt;
+    Container
+  &lt;/res-auth&gt;
+&lt;/resource-ref&gt;</code></pre></div>
+
+    <p><strong>WARNING</strong> - Be sure you respect the element ordering
+    that is required by the DTD for web application deployment descriptors!
+    See the
+    <a href="https://cwiki.apache.org/confluence/display/TOMCAT/Specifications">Servlet
+    Specification</a> for details.</p>
+
+    <h5>3.  Code Your Application's Use Of This Resource</h5>
+
+    <p>A typical use of this resource reference might look like this:</p>
+<div class="codeBox"><pre><code>Context initCtx = new InitialContext();
+Context envCtx = (Context) initCtx.lookup("java:comp/env");
+DataSource ds = (DataSource)
+  envCtx.lookup("jdbc/EmployeeDB");
+
+Connection conn = ds.getConnection();
+... use this connection to access the database ...
+conn.close();</code></pre></div>
+
+    <p>Note that the application uses the same resource reference name that was
+    declared in the web application deployment descriptor. This is matched up
+    against the resource factory that is configured in the
+    <a href="config/context.html"><code>&lt;Context&gt;</code></a> element for
+    the web application as described below.</p>
+
+    <h5>4.  Configure Tomcat's Resource Factory</h5>
+
+    <p>To configure Tomcat's resource factory, add an element like this to the
+    <a href="config/context.html"><code>&lt;Context&gt;</code></a> element for
+    the web application.</p>
+
+<div class="codeBox"><pre><code>&lt;Context ...&gt;
+  ...
+  &lt;Resource name="jdbc/EmployeeDB"
+            auth="Container"
+            type="javax.sql.DataSource"
+            username="dbusername"
+            password="dbpassword"
+            driverClassName="org.hsql.jdbcDriver"
+            url="jdbc:HypersonicSQL:database"
+            maxTotal="8"
+            maxIdle="4"/&gt;
+  ...
+&lt;/Context&gt;</code></pre></div>
+
+    <p>Note that the resource name (here, <code>jdbc/EmployeeDB</code>) must
+    match the value specified in the web application deployment descriptor.</p>
+
+    <p>This example assumes that you are using the HypersonicSQL database
+    JDBC driver.  Customize the <code>driverClassName</code> and
+    <code>driverName</code> parameters to match your actual database's
+    JDBC driver and connection URL.</p>
+
+    <p>The configuration properties for Tomcat's standard data source
+    resource factory
+    (<code>org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory</code>) are
+    as follows:</p>
+    <ul>
+    <li><strong>driverClassName</strong> - Fully qualified Java class name
+        of the JDBC driver to be used.</li>
+    <li><strong>username</strong> - Database username to be passed to our
+        JDBC driver.</li>
+    <li><strong>password</strong> - Database password to be passed to our
+        JDBC driver.</li>
+    <li><strong>url</strong> - Connection URL to be passed to our JDBC driver.
+        (For backwards compatibility, the property <code>driverName</code>
+        is also recognized.)</li>
+    <li><strong>initialSize</strong> - The initial number of connections
+        that will be created in the pool during pool initialization. Default: 0</li>
+    <li><strong>maxTotal</strong> - The maximum number of connections
+        that can be allocated from this pool at the same time. Default: 8</li>
+    <li><strong>minIdle</strong> - The minimum number of connections that
+        will sit idle in this pool at the same time. Default: 0</li>
+    <li><strong>maxIdle</strong> - The maximum number of connections that
+        can sit idle in this pool at the same time. Default: 8</li>
+    <li><strong>maxWaitMillis</strong> - The maximum number of milliseconds that the
+        pool will wait (when there are no available connections) for a
+        connection to be returned before throwing an exception. Default: -1 (infinite)</li>
+    </ul>
+    <p>Some additional properties handle connection validation:</p>
+    <ul>
+    <li><strong>validationQuery</strong> - SQL query that can be used by the
+        pool to validate connections before they are returned to the
+        application.  If specified, this query MUST be an SQL SELECT
+        statement that returns at least one row.</li>
+    <li><strong>validationQueryTimeout</strong> - Timeout in seconds
+        for the validation query to return. Default: -1 (infinite)</li>
+    <li><strong>testOnBorrow</strong> - true or false: whether a connection
+        should be validated using the validation query each time it is
+        borrowed from the pool. Default: true</li>
+    <li><strong>testOnReturn</strong> - true or false: whether a connection
+        should be validated using the validation query each time it is
+        returned to the pool. Default: false</li>
+    </ul>
+    <p>The optional evictor thread is responsible for shrinking the pool
+    by removing any connections which are idle for a long time. The evictor
+    does not respect <code>minIdle</code>. Note that you do not need to
+    activate the evictor thread if you only want the pool to shrink according
+    to the configured <code>maxIdle</code> property.</p>
+    <p>The evictor is disabled by default and can be configured using
+    the following properties:</p>
+    <ul>
+    <li><strong>timeBetweenEvictionRunsMillis</strong> - The number of
+        milliseconds between consecutive runs of the evictor.
+        Default: -1 (disabled)</li>
+    <li><strong>numTestsPerEvictionRun</strong> - The number of connections
+        that will be checked for idleness by the evictor during each
+        run of the evictor. Default: 3</li>
+    <li><strong>minEvictableIdleTimeMillis</strong> - The idle time in
+        milliseconds after which a connection can be removed from the pool
+        by the evictor. Default: 30*60*1000 (30 minutes)</li>
+    <li><strong>testWhileIdle</strong> - true or false: whether a connection
+        should be validated by the evictor thread using the validation query
+        while sitting idle in the pool. Default: false</li>
+    </ul>
+    <p>Another optional feature is the removal of abandoned connections.
+    A connection is called abandoned if the application does not return it
+    to the pool for a long time. The pool can close such connections
+    automatically and remove them from the pool. This is a workaround
+    for applications leaking connections.</p>
+    <p>The abandoning feature is disabled by default and can be configured
+    using the following properties:</p>
+    <ul>
+    <li><strong>removeAbandonedOnBorrow</strong> - true or false: whether to
+        remove abandoned connections from the pool when a connection is
+        borrowed. Default: false</li>
+    <li><strong>removeAbandonedOnMaintenance</strong> - true or false: whether
+        to remove abandoned connections from the pool during pool maintenance.
+        Default: false</li>
+    <li><strong>removeAbandonedTimeout</strong> - The number of
+        seconds after which a borrowed connection is assumed to be abandoned.
+        Default: 300</li>
+    <li><strong>logAbandoned</strong> - true or false: whether to log
+        stack traces for application code which abandoned a statement
+        or connection. This adds serious overhead. Default: false</li>
+    </ul>
+    <p>Finally there are various properties that allow further fine tuning
+    of the pool behaviour:</p>
+    <ul>
+    <li><strong>defaultAutoCommit</strong> - true or false: default
+        auto-commit state of the connections created by this pool.
+        Default: true</li>
+    <li><strong>defaultReadOnly</strong> - true or false: default
+        read-only state of the connections created by this pool.
+        Default: false</li>
+    <li><strong>defaultTransactionIsolation</strong> - This sets the
+        default transaction isolation level. Can be one of
+        <code>NONE</code>, <code>READ_COMMITTED</code>,
+        <code>READ_UNCOMMITTED</code>, <code>REPEATABLE_READ</code>,
+        <code>SERIALIZABLE</code>. Default: no default set</li>
+    <li><strong>poolPreparedStatements</strong> - true or false: whether to
+        pool PreparedStatements and CallableStatements. Default: false</li>
+    <li><strong>maxOpenPreparedStatements</strong> - The maximum number of open
+        statements that can be allo

@@ -1,0 +1,1311 @@
+             <antipattern><!-- Move a project to done -->
+                    <token inflected="yes" regexp="yes" skip="4">change|set|switch|move</token>
+                    <token>to</token>
+                    <token>done</token>
+                </antipattern>
+                <pattern>
+                    <token>to</token>
+                    <marker>
+                        <token postag_regexp="yes" postag="VB[DN]"><exception postag="VB[PS]?|JJ|NN:UN" postag_regexp="yes"/></token>
+                    </marker>
+                    <token postag="SENT_END" regexp="yes">\p{P}</token>
+                </pattern>
+                <message>The verb after "to" should be in the base form.</message>
+                <suggestion><match no="2" postag="VB"/></suggestion>
+                <example correction="buy">I've decided to <marker>bought</marker>.</example>
+                <example>Arabic is written from right to left.</example>
+                <example>They sit down next to Drew.</example>
+                <example>The person he was introduced to was Lennie</example>
+                <example>We really want to switch to hosted connections</example>
+                <example correction="notice">Tom was the only one who seemed to <marker>noticed</marker>.</example>
+                <example>Desire is understood to be prior to thought.</example>
+                <example>Please change it from doing to done here</example><!-- #2536. Possibly italics in the original or possibly missing quote marks. -->
+                <example>Reservation status has changed to REFUSED.</example>
+            </rule>
+            <rule>
+                <antipattern>
+                    <token regexp="yes">that|which|what</token>
+                    <token chunk_re="B-NP.*" min="0" />
+                    <token chunk_re="E-NP.*" />
+                    <token postag="RB" min="0" />
+                    <token inflected="yes" regexp="yes" chunk_re=".-VP">need|want|have|try|love|like|hate</token>
+                </antipattern>
+                <pattern>
+                    <token inflected="yes" regexp="yes" chunk_re=".-VP">need|want|have|try|love|like|hate</token>
+                    <token>to</token>
+                    <token postag="RB" min="0">
+                        <exception postag="IN|EX|W.*" postag_regexp="yes" />
+                    </token>
+                    <marker>
+                        <token regexp="yes">sp?ent</token>
+                    </marker>
+                </pattern>
+                <message>The verb after "to" should be in the base form.</message>
+                <suggestion><match no="4" postag="VB" /></suggestion>
+                <example correction="spend">I have to <marker>spent</marker> more time on this.</example>
+            </rule>
+        </rulegroup>
+
+        <rulegroup id="MANY_FEW_UNCOUNTABLE" name="'many/few' + uncountable noun, e.g. 'many (much) food'">
+            <rule>
+                <pattern>
+                    <token>as</token>
+                    <marker>
+                        <token regexp="yes">many|few</token>
+                    </marker>
+                    <token postag="NN:U"/>
+                    <token>as</token>
+                </pattern>
+                <message>Use <suggestion>much</suggestion> or <suggestion>little</suggestion> with uncountable nouns.</message>
+                <short>Grammatical problem with uncountable noun</short>
+                <example correction="much|little">John eats as <marker>many</marker> food as Peter.</example>
+                <example correction="much|little">John eats as <marker>few</marker> food as Peter.</example>
+            </rule>
+            <rule>
+                <!-- TODO: more uncountable nouns   -->
+                <pattern>
+                    <marker>
+                        <token regexp="yes">many|few</token>
+                    </marker>
+                    <token regexp="yes">air|food|freedom|furniture|information|intelligence|knowledge|life|maturity|meat|money|news|sand|software|success|water</token>
+                    <token><exception postag="NNS"/></token>
+                </pattern>
+                <message>Use <suggestion>much</suggestion> or <suggestion>little</suggestion> with uncountable nouns.</message>
+                <short>Grammatical problem with uncountable noun</short>
+                <example>There are <marker>many</marker> food plants.</example>
+                <example correction="much|little">She has <marker>many</marker> money.</example>
+            </rule>
+        </rulegroup>
+        <!--
+    "an information" is used in the legal US jargon, deleting
+
+    longer list but not checked thoroughly:
+    http://www.geocities.com/Athens/Olympus/7583/ncntlist.html
+    -->
+        <rulegroup id="A_UNCOUNTABLE" name="Articles: a + uncountable noun">
+            <rule>
+                <antipattern><!-- #2442 -->
+                    <token regexp="yes">an?</token>
+                    <token chunk="I-NP-singular"/>
+                    <token chunk="E-NP-singular" postag_regexp="yes" postag="NN(:UN)?"/>
+                </antipattern>
+                <pattern>
+                    <marker>
+                        <token regexp="yes">an?</token>
+                        <token regexp="yes">accommodation|advice|access|baggage|bread|damage|equipment|garbage|graffiti|luggage|money|cattle|sand|furniture|meat|food|news|pasta|progress|research|water|freedom|maturity|intelligence|travel|pollution|traffic|transport|patience|wisdom</token><!-- MFU 2019-12-20: Why do the rules have only a subset of non-count nouns? -->
+                    </marker>
+                    <token postag="RP|VB[ZD]|IN|SENT_END" postag_regexp="yes"/>
+                </pattern>
+                <message>Uncountable nouns are usually not used with an indefinite article. Use simply <suggestion>\2</suggestion>.</message>
+                <short>Uncountable noun with an article</short>
+                <example><marker>The information</marker> in your files is correct.</example>
+                <example><marker>An intelligence</marker> service is known to be corrupt here.</example>
+                <example>It was thrown off of <marker>a garbage truck</marker></example><!--  #2442 -->
+                <example>Please focus on <marker>a research question</marker></example>
+                <example>Move it into <marker>a food processor</marker></example>
+                <example>Please keep <marker>a food diary</marker></example>
+                <example correction="Accommodation"><marker>An accommodation</marker> is too expensive.</example>
+                <example correction="wisdom">You need <marker>a wisdom</marker> in your life.</example>
+                <example correction="wisdom">The lack of <marker>a wisdom</marker> caused him to upset many people.</example>
+            </rule>
+            <rule> <!-- only for 'knowledge', but not 'knowledge of', which occasionally takes an article -->
+                <pattern>
+                    <marker>
+                        <token>a</token>
+                        <token>knowledge</token>
+                    </marker>
+                    <token postag="RP|VBZ|IN|SENT_END" postag_regexp="yes"><exception regexp="yes">of|about</exception></token>
+                </pattern>
+                <message>Uncountable nouns are usually not used with an indefinite article. Use simply <suggestion>\2</suggestion>.</message>
+                <short>Uncountable noun with an article</short>
+                <example>A knowledge of accounting was necessary for the job.</example>
+                <example correction="Knowledge"><marker>A knowledge</marker> is power.</example>
+            </rule>
+            <rule>
+                <antipattern><!-- Fix for a sentence that does not end with a punctuation mark:  ... an artificial intelligence program -->
+                    <token postag="JJ"/>
+                    <token/>
+                    <token chunk="E-NP-singular" postag="SENT_END"/>
+                </antipattern>
+                <pattern>
+                    <marker>
+                        <token regexp="yes">an?</token>
+                        <token postag="JJ"><exception>little</exception></token>
+                        <!-- note: 'food' is not included here, as 'a particular food' is considered standard English, see http://www.ldoceonline.com/dictionary/taste_1 -->
+                        <token regexp="yes">accommodation|advice|access|baggage|bread|damage|equipment|garbage|graffiti|luggage|money|cattle|sand|furniture|meat|news|pasta|progress|water|freedom|maturity|intelligence|travel|pollution|traffic|transport|patience|wisdom</token>
+                    </marker>
+                    <token postag="RP|VB[ZD]|IN|SENT_END" postag_regexp="yes"/>
+                </pattern>
+                <message>Uncountable nouns are usually not used with an indefinite article. Use simply <suggestion>\2 \3</suggestion>.</message>
+                <short>Uncountable noun with an article</short>
+                <example><marker>The information</marker> in your files is correct.</example>
+                <example>I have a little money.</example>
+                <example><marker>An intelligence</marker> service is known to be corrupt here.</example>
+                <example correction="Nice accommodation"><marker>A nice accommodation</marker> is too expensive.</example>
+                <example correction="bad graffiti">He made <marker>a bad graffiti</marker> with his hands.</example><!-- #2268 -->
+                <example correction="bad graffiti">Unfortunately, <marker>a bad graffiti</marker> were on the walls.</example><!-- #2268 -->
+                <example correction="incorrect advice">Unfortunately, <marker>an incorrect advice</marker> resulted in his financial ruin.</example>
+                <example>This was mentioned in a German research.</example>
+                <example>Automated Mathematician, an artificial intelligence program</example>
+            </rule>
+            <rule>
+                <!-- only for 'knowledge', but not 'knowledge of', which occasionally takes an article -->
+                <pattern>
+                    <marker>
+                        <token>a</token>
+                        <token postag="JJ"><exception>little</exception></token>
+                        <token>knowledge</token>
+                    </marker>
+                    <token postag="RP|VB[ZD]|IN|SENT_END" postag_regexp="yes"><exception regexp="yes">of|about</exception></token>
+                </pattern>
+                <message>Uncountable nouns are usually not used with an indefinite article. Use simply <suggestion>\2 \3</suggestion>.</message>
+                <short>Uncountable noun with an article</short>
+                <example>Knowledge is power.</example>
+                <example>A little knowledge of accounting was necessary for the job.</example>
+                <example correction="Good knowledge"><marker>A good knowledge</marker> is power.</example>
+                <example correction="poor knowledge">Because <marker>a poor knowledge</marker> caused him to fail the exam, he...</example>
+            </rule>
+            <rule>
+                <antipattern><!-- #2061. a few different food options. -->
+                    <token postag="JJ"/>
+                    <token chunk="I-NP-plural"/>
+                    <token chunk="E-NP-plural" postag="NNS"/>
+                </antipattern>
+                <pattern>
+                    <marker>
+                        <token regexp="yes">an?</token>
+                        <token postag="JJ|RB" postag_regexp="yes"><exception>little</exception></token>
+                        <token postag="JJ"/>
+                        <token regexp="yes">accommodation|advice|access|baggage|bread|damage|equipment|garbage|graffiti|luggage|money|cattle|sand|furniture|meat|food|news|pasta|progress|research|water|freedom|maturity|intelligence|travel|pollution|traffic|transport|patience|wisdom</token>
+                    </marker>
+                    <token postag="RP|VB[ZD]|IN|SENT_END" postag_regexp="yes"/>
+                </pattern>
+                <message>Uncountable nouns are usually not used with an indefinite article. Use simply <suggestion>\2 \3 \4</suggestion>.</message>
+                <short>Uncountable noun with an article</short>
+                <example><marker>The information</marker> in your files is correct.</example>
+                <example>My wife's part-time job brings in a little extra money.</example>
+                <example><marker>An intelligence</marker> service is known to be corrupt here.</example>
+                <example>I can find a few different food options.</example><!-- #2061 -->
+                <example correction="Very nice accommodation"><marker>A very nice accommodation</marker> is too expensive.</example>
+                <example correction="very nice accommodation">Although <marker>a very nice accommodation</marker> was offered, we decided that it was too expensive.</example>
+            </rule>
+            <rule>
+                <!-- only for 'knowledge', but not 'knowledge of', which occasionally takes an article -->
+                <pattern>
+                    <marker>
+                        <token>a</token>
+                        <token postag="JJ|RB" postag_regexp="yes"/>
+                        <token postag="JJ"/>
+                        <token>knowledge</token>
+                    </marker>
+                    <token postag="RP|VB[ZD]|IN|SENT_END" postag_regexp="yes"><exception regexp="yes">of|about</exception></token>
+                </pattern>
+                <message>Uncountable nouns are usually not used with an indefinite article. Use simply <suggestion>\2 \3 \4</suggestion>.</message>
+                <short>Uncountable noun with an article</short>
+                <example>A very little knowledge of accounting was necessary for the job.</example>
+                <example correction="Very good knowledge"><marker>A very good knowledge</marker> is too time-consuming.</example>
+                <example correction="Very good knowledge"><marker>A very good knowledge</marker> was the result of much study.</example>
+            </rule>
+        </rulegroup>
+        <rule id="MOST_SOME_OF_NNS" name="Articles: 'most/some of' + plural noun">
+            <pattern>
+
+                <token regexp="yes">most|some</token>
+                <token>of</token>
+                <token postag="NNS" regexp="yes">\p{Lower}+<exception postag="PRP$"/></token>
+            </pattern>
+            <message>After '\1 of', you should use 'the' (<suggestion>\1 \2 the \3</suggestion>) or simply say <suggestion>\1 \3</suggestion>.</message>
+            <short>Missing 'the'</short>
+            <example correction="Most of the students|Most students"><marker>Most of students</marker> do their homework.</example>
+            <example><marker>Most of the students</marker> do their homework.</example>
+            <example>Some of his students do their homework.</example>
+            <example>Buy a collection of most of Rand's works in a CD-ROM format.</example>
+            <example><marker>Some of the students</marker> do their homework.</example>
+        </rule>
+        <rulegroup id="HAVE_A_BREAKFAST" name="Articles before nouns used normally without them">
+            <rule>
+                <pattern>
+                    <marker>
+                        <token inflected="yes">have</token>
+                        <token regexp="yes">a|the</token>
+                        <token regexp="yes">breakfast|lunch|dinner</token>
+                    </marker>
+                    <token><exception postag="NN.*|VBG" postag_regexp="yes"/><exception>of</exception></token>
+                </pattern>
+                <message>When we speak of types of meals, the article is not required.</message>
+                <suggestion>\1 \3</suggestion>
+                <short>Grammatical problem: unnecessary article</short>
+                <example correction="had breakfast">We <marker>had a breakfast</marker> in the hotel restaurant.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token inflected="yes" skip="-1">invite<exception scope="next" postag="[;:]" postag_regexp="yes"/></token>
+                    <marker>
+                        <token>to</token>
+                        <token regexp="yes">a|the</token>
+                        <token regexp="yes">breakfast|lunch|dinner</token>
+                    </marker>
+                    <token><exception postag="NN.*|VBG" postag_regexp="yes"/><exception>of</exception></token>
+                </pattern>
+                <message>When we speak of types of meals, the article is not required.</message>
+                <suggestion>\2 \4</suggestion>
+                <short>Grammatical problem: unnecessary article</short>
+                <example correction="to dinner">Ray and Helen have invited us out <marker>to a dinner</marker> in the hotel restaurant.</example>
+                <example>Ray and Helen have invited us out <marker>to dinner</marker> in the hotel restaurant.</example>
+                <example>We were invited today to lunch in the hotel restaurant.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token inflected="yes" skip="-1">go<exception scope="next" postag="[;:,]" postag_regexp="yes"/></token>
+                    <marker>
+                        <token>for</token>
+                        <token regexp="yes">a|the</token>
+                        <token regexp="yes">breakfast|lunch|dinner</token>
+                    </marker>
+                    <token><exception postag="NN.*|VBG" postag_regexp="yes"/><exception>of</exception></token>
+                </pattern>
+                <message>When we speak of types of meals, the article is not required.</message>
+                <suggestion>\2 \4</suggestion>
+                <short>Grammatical problem: unnecessary article</short>
+                <example correction="for dinner">Ray and Helen went with us <marker>for a dinner</marker> in the hotel restaurant.</example>
+                <example>Ray and Helen went with us <marker>for dinner</marker> in the hotel restaurant.</example>
+                <example>We were invited today to lunch in the hotel restaurant.</example>
+            </rule>
+        </rulegroup>
+        <rulegroup id="IN_1990s" name="Missing definite article in the date">
+            <url>http://pl.talkenglish.com/Grammar/articles.aspx</url>
+            <rule>
+                <pattern>
+                    <token regexp='yes'>in|during</token>
+                    <token regexp='yes'>(1\d|20)\d0s</token>
+                </pattern>
+                <message>The article is probably missing here.</message>
+                <suggestion><match no="1"/> the <match no="2"/></suggestion>
+                <short>Missing article</short>
+                <example correction="in the 1990s">It happened <marker>in 1990s</marker>.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token regexp='yes'>in|during</token>
+                    <token regexp='yes'>(1[89]|20)\d0</token>
+                    <token spacebefore="no">'s</token>
+                </pattern>
+                <message>The article is probably missing here.</message>
+                <suggestion><match no="1"/> the <match no="2"/><match no="3"/></suggestion>
+                <short>Missing article</short>
+                <example correction="in the 1990's">It happened <marker>in 1990's</marker>.</example>
+            </rule>
+        </rulegroup>
+        <rule id="IN_PAST" name="Missing definite article referring to a time period">
+            <pattern>
+                <marker>
+                    <token>in</token>
+                    <token>past</token>
+                </marker>
+                <token regexp='yes'>[,\.:;]</token>
+            </pattern>
+            <message>Did you mean: <suggestion><match no="1"/> the <match no="2"/></suggestion>?</message>
+            <url>http://pl.talkenglish.com/Grammar/articles.aspx</url>
+            <short>Missing definite article</short>
+            <example correction="in the past">Something happened <marker>in past</marker>.</example>
+        </rule>
+        <!--  needs more and more tweaking;
+              currently the last exception in all rules is a simplification,
+              it should be more recursive, i.e., there one more rule for all current rules, structured like this:
+              ... NN !NN.*|JJ.*, ... NN JJ !NN.*|JJ.* -->
+        <rulegroup default="off" id="ARTICLE_MISSING" name="Articles: article missing before a countable noun">
+            <antipattern><!-- https://dictionary.cambridge.org/grammar/british-grammar/by -->
+                <token>by</token>
+                <token>car</token>
+            </antipattern>
+            <antipattern><!-- https://www.lexico.com/definition/brand_new -->
+                <token>brand</token>
+                <token>new</token>
+            </antipattern>
+            <antipattern><!-- https://www.lexico.com/definition/neck_and_neck -->
+                <token>neck</token>
+                <token>and</token>
+                <token>neck</token>
+            </antipattern>
+            <antipattern><!-- https://www.lexico.com/ -->
+                <token>in</token>
+                <token regexp="yes">bud|season|session</token>
+            </antipattern>
+            <rule>
+                <pattern>
+                    <token><exception postag="DT|WDT|JJ|NN.*" postag_regexp="yes"/></token>
+                    <token postag="VBP|VBZ" postag_regexp="yes"><exception regexp="yes">do|does|take[s]*|give[s]*|says|go|goes|becomes</exception><exception postag="NN.*|JJ.*|POS.*" postag_regexp="yes"/></token>
+                    <marker>
+                        <token postag="NN"><exception postag="DT|RB.*|RP|JJ.*|IN|C[CD]|VB[DN]|MD|NNP|NNP?S|PRP.*|WRB|NN:UN?" postag_regexp="yes"/><exception regexp="yes">(?u)\p{Lu}\p{Ll}+</exception></token>
+                    </marker>
+                    <token><exception postag="NN.*|CD" postag_regexp="yes"/></token>
+                </pattern>
+                <message>The article might be missing before the noun.</message>
+                <suggestion><match no="3" postag="+DT"/></suggestion>
+                <short>Article missing</short>
+                <example correction="a friend|the friend">He is <marker>friend</marker>.</example>
+                <example>He is <marker>a friend</marker>.</example>
+                <example>He is my friend.</example>
+                <example>This is Chapter 2.</example>
+                <example>Depict one's immersion with the world.</example>
+                <example>You can go <marker>by car</marker> or by train.</example>
+                <example>The horses are coming down the track and it's <marker>neck and neck</marker>.</example>
+                <example>It's <marker>brand new</marker>.</example>
+                <example>... region when the county courts were <marker>in session</marker>.</example>
+                <example>The roses are <marker>in bud</marker>.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token><exception postag="DT|WDT|JJ|NN.*" postag_regexp="yes"/></token>
+                    <token regexp="yes">do|does</token>
+                    <marker>
+                        <token postag="NN"><exception postag="DT|WRB|RB|RP|JJ|IN|CC|CD|JJR|RBS|VB[DN]|MD|NNP|NNS|VB|VBP" postag_regexp="yes"/></token>
+                    </marker>
+                    <token><exception postag="NN.*" postag_regexp="yes"/></token>
+                </pattern>
+                <message>The article might be missing before the noun.</message>
+                <suggestion><match no="3" postag="+DT"/></suggestion>
+                <short>Article missing</short>
+                <example correction="a lot|the lot">He does <marker>lot</marker> of things.</example>
+                <example>He does need us.</example>
+                <example>We do have this kind of attitude.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token><exception postag="DT|WDT|JJ|NN.*" postag_regexp="yes"/></token>
+                    <token regexp="yes">takes?</token>
+                    <marker>
+                        <token postag="NN"><exception regexp="yes">place|charge</exception><exception postag="DT|WRB|RB|RP|JJ|IN|CC|CD|JJR|RBS|VB[DN]|MD|NNP|NNS" postag_regexp="yes"/></token>
+                    </marker>
+                    <token><exception postag="NN.*" postag_regexp="yes"/></token>
+                </pattern>
+                <message>The article might be missing before the noun.</message>
+                <suggestion><match no="3" postag="+DT"/></suggestion>
+                <short>Article missing</short>
+                <example>He takes his brother to school.</example>
+                <example>The event takes place here.</example>
+                <example correction="a brother|the brother">He takes <marker>brother</marker> with him.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token><exception postag="DT|WDT|JJ|NN.*" postag_regexp="yes"/></token>
+                    <token regexp="yes">gives?</token>
+                    <marker>
+                        <token postag="NN"><exception regexp="yes">rise|way|room|vent|rein</exception><exception postag="DT|WRB|RB|RP|JJ|IN|CC|CD|JJR|RBS|VB[DN]|MD|NNP|NNS" postag_regexp="yes"/></token>
+                    </marker>
+                    <token><exception postag="NN.*" postag_regexp="yes"/></token>
+                </pattern>
+                <message>The article might be missing before the noun.</message>
+                <suggestion><match no="3" postag="+DT"/></suggestion>
+                <short>Article missing</short>
+                <example>He gives his brother a bar of chocolate.</example>
+                <example>This event gives rise to a new era.</example>
+                <example correction="a brother|the brother">He gives <marker>brother</marker> a bar of chocolate.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token><exception postag="DT|WDT|JJ|NN.*" postag_regexp="yes"/></token>
+                    <token regexp="yes">go|goes</token>
+                    <marker>
+                        <token postag="NN"><exception>hand</exception><exception postag="DT|WRB|RB|RP|JJ|IN|CC|CD|JJR|RBS|VB[DN]|MD|NNP|NNS" postag_regexp="yes"/></token>
+                    </marker>
+                    <token><exception postag="NN.*" postag_regexp="yes"/></token>
+                </pattern>
+                <message>The article might be missing before the noun.</message>
+                <suggestion><match no="3" postag="+DT"/></suggestion>
+                <short>Article missing</short>
+                <example correction="a step|the step">He goes <marker>step</marker> too far.</example>
+                <example>He goes a step too far.</example>
+                <example>This goes <marker>hand</marker> in hand...</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token><exception postag="DT|WDT|JJ|NN.*" postag_regexp="yes"/></token>
+                    <token regexp="yes">falls?</token>
+                    <marker>
+                        <token postag="NN"><exception>victim</exception><exception postag="DT|WRB|RB|RP|JJ|IN|CC|CD|JJR|RBS|VB[DN]|MD|NNP|NNS" postag_regexp="yes"/></token>
+                    </marker>
+                    <token><exception postag="NN.*" postag_regexp="yes"/></token>
+                </pattern>
+                <message>The article might be missing before the noun.</message>
+                <suggestion><match no="3" postag="+DT"/></suggestion>
+                <short>Article missing</short>
+                <example correction="a tad|the tad">It falls <marker>tad</marker>.</example>
+                <example>Inflation falls a tad.</example>
+                <example>The website falls <marker>victim</marker> to...</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token><exception postag="DT|WDT" postag_regexp="yes"/></token>
+                    <token postag="VBP|VBZ" postag_regexp="yes"><exception postag="JJ"/></token>
+                    <marker>
+                        <token postag="JJ"><exception>else</exception><exception postag="VB|RP|RB|CD|IN|CC|MD|VB[DN]|VBG|DT|WRB" postag_regexp="yes"/><exception regexp="yes">(?u)\p{Lu}\p{Ll}+</exception></token>
+                        <token postag="NN"><exception postag="CC|DT|RB|RP|JJ|IN|CD|JJR|RBS|VB[DN]|MD|NN[SP]|WRB" postag_regexp="yes"/><exception>are</exception></token>
+                    </marker>
+                    <token><exception postag="NN.*" postag_regexp="yes"/></token>
+                </pattern>
+                <message>The article might be missing before the noun.</message>
+                <suggestion><match no="3" postag="+DT"/> <match no="4"/></suggestion>
+                <short>Article missing</short>
+                <example correction="a good friend|the good friend">He is <marker>good friend</marker>.</example>
+                <example>He is a good friend.</example>
+                <example>It may require strong AI to be done as well as humans can do it.</example>
+            </rule>
+            <!-- this accounts for: I have experienced series... -->
+            <rule>
+                <pattern>
+                    <token postag="PRP|NNP" postag_regexp="yes"/>
+                    <token regexp="yes">ha(?:ve|s|d)</token>
+                    <marker>
+                        <token postag="VBN"><exception postag="VB|RP|WRB|RB|CD|IN|CC|MD" postag_regexp="yes"/></token>
+                        <token postag="NN"><exception postag="CC|DT|WDT|RB|RP|JJ|IN|CD|JJR|RBS|VB[DN]|MD|NN[SP]|PRP" postag_regexp="yes"/><exception>are</exception></token>
+                    </marker>
+                    <token><exception postag="NN.*" postag_regexp="yes"/></token>
+                </pattern>
+                <message>The article might be missing before the noun.</message>
+                <suggestion><match no="3"/> <match no="4" postag="+DT"/></suggestion>
+                <short>Article missing</short>
+                <example correction="experienced a problem|experienced the problem">Recently I have <marker>experienced problem</marker>.</example>
+                <example>Recently I have <marker>experienced a problem</marker>.</example>
+                <example>Different as our minds are, yours has nourished mine.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token postag="PRP|NNP" postag_regexp="yes"/>
+                    <token regexp="yes">have|ha[ds]</token>
+                    <marker>
+                        <token postag="VBN"><exception postag="VB|RP|WRB|RB|CD|IN|CC|MD" postag_regexp="yes"/></token>
+                        <token postag="JJ"><exception postag="VB|RP|WRB|RB|CD|IN|CC|MD|DT|WDT" postag_regexp="yes"/></token>
+                        <token postag="NN"><exception postag="CC|DT|RB|RP|JJ|IN|CD|JJR|RBS|VB[DN]|MD|NNS" postag_regexp="yes"/><exception>are</exception></token>
+                    </marker>
+                    <token><exception postag="NN.*" postag_regexp="yes"/></token>
+                </pattern>
+                <message>The article might be missing before the noun.</message>
+                <suggestion><match no="3"/> <match no="4" postag="+DT"/> <match no="5"/></suggestion>
+                <short>Article missing</short>
+                <example correction="experienced a serious problem|experienced the serious problem">Recently I have <marker>experienced serious problem</marker>.</example>
+                <example>Recently I have <marker>experienced a serious problem</marker>.</example>
+            </rule>
+            <!-- and now "an experienced soldier" -->
+            <rule>
+                <pattern>
+                    <token><exception postag="PRP.*|NN.*|DT|JJ.*|RB.*|CC|IN|VBG|WRB|WDT|WP\$?|UNKNOWN" postag_regexp="yes"/><exception regexp="yes">one|have|ha[sd]|appointed|called|s|\&quot;|[0-9].*|[,\'.\(\[]</exception></token>
+                    <marker>
+                        <token postag="VBN|JJ" postag_regexp="yes"><exception>else</exception><exception postag="VB|RP|WRB|RB|CD|IN|CC|MD|NNP|DT" postag_regexp="yes"/><exception>called</exception></token>
+                        <token postag="NN"><exception postag="CC|DT|RB|RP|JJ|IN|CD|JJR|RBS|VB[DN]|MD|NNP?S|NNP|WRB" postag_regexp="yes"/><exception>are</exception><exception regexp="yes">(?u)\p{Lu}\p{Ll}+</exception></token>
+                    </marker>
+                    <token><exception postag="NN.*|CD" postag_regexp="yes"/></token>
+                </pattern>
+                <message>The article might be missing before the noun.</message>
+                <suggestion><match no="2" postag="+DT"/> <match no="3"/></suggestion>
+                <short>Article missing</short>
+                <example correction="an experienced soldier|the experienced soldier">He is <marker>experienced soldier</marker>.</example>
+                <example>He is <marker>an experienced soldier</marker>.</example>
+                <example>Last year Beyeler arranged to sell $1,500,000.</example>
+                <example>At least one white student at Georgia got through this ritual.</example>
+                <example>In October 1944, he was appointed state warden and chief of the Forest Fire Section.</example>
+                <example>The typical U.S. daily menu, says Dr. Keys, contains 3,000 calories</example>
+                <example>I find the cleaner, less razor-edged monophonic version more interesting.</example>
+                <example>Majestic Pick comes next.</example>
+            </rule>
+            <!-- an extremely experienced soldier -->
+            <rule>
+                <pattern>
+                    <token><exception postag="PRP|NNP|DT|JJ|PRP\$|RB.*|CC|WDT|WP" postag_regexp="yes"/><exception regexp="yes">then|have|ha[sd]|s|\&quot;|[0-9].*|[\',\(\[]</exception></token>
+                    <marker>
+                        <token postag="RB.*" postag_regexp="yes"><exception postag="VB|RP|CD|IN|CC|MD" postag_regexp="yes"/><exception regexp="yes">not|only|also</exception></token>
+                        <token postag="VBN|JJ" postag_regexp="yes"><exception postag="VB|RP.*|RB|CD|IN|CC|MD|DT|WDT" postag_regexp="yes"/><exception regexp="yes">(?u)\p{Lu}\p{Ll}+</exception></token>
+                        <token postag="NN"><exception postag="WDT|CC|DT|RB|RP|JJ|IN|CD|JJR|RBS|VB[DN]|MD|NNS" postag_regexp="yes"/><exception>are</exception><exception regexp="yes">(?u)\p{Lu}\p{Ll}+</exception></token>
+                    </marker>
+                    <token><exception postag="NN.*" postag_regexp="yes"/></token>
+                </pattern>
+                <message>The article might be missing before the noun.</message>
+                <suggestion><match no="2" postag="+DT"/> <match no="3"/> <match no="4"/></suggestion>
+                <short>Article missing</short>
+                <example correction="an extremely experienced soldier|the extremely experienced soldier">He is <marker>extremely experienced soldier</marker>.</example>
+                <example>There is only one catch to this idyllic arrangement.</example>
+                <example>He is <marker>an extremely experienced soldier</marker>.</example>
+                <example>Nearby Foggy Bottom is ousting Negroes.</example>
+                <example>Cousin Emma is alone in that big old house and won't hear to parting from it.</example>
+            </rule>
+            <!--  this rule needs to be expanded to all prepositions
+                  so that exceptions could be accounted for properly, i.e.,
+                  'at home' vs. 'a tourist home'; 'for example' vs. 'an example for you' -->
+            <rule>
+                <pattern>
+                    <token>at</token>
+                    <marker>
+                        <token postag="NN"><exception postag="CC|UH|DT|WDT|RP|JJ|IN|CD|JJS|JJR|RBS|VB[DN]|MD|NNP|NNS" postag_regexp="yes"/><exception regexp="yes">least|(?u)\p{Lu}\p{Ll}+</exception></token>
+                    </marker>
+                    <token><exception postag="NN.*|CD" postag_regexp="yes"/></token>
+                </pattern>
+                <message>The article might be missing before the noun.</message>
+                <suggestion><match no="2" postag="+DT"/></suggestion>
+                <short>Article missing</short>
+                <example correction="an airport|the airport">He was waiting at <marker>airport</marker>.</example>
+                <example>He was waiting at <marker>the airport</marker>.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token>at</token>
+                    <marker>
+                        <token postag="JJ"><exception postag="VB|WRB|RB.*|CD|IN|DT|WDT" postag_regexp="yes"/></token>
+                        <token postag="NN"><exception postag="DT|WDT|RP|JJ|IN|CD|JJR|RBS|VB[DN]|MD|NNP|NNS|CC" postag_regexp="yes"/><exception>glance</exception></token>
+                    </marker>
+                    <token><exception postag="NN.*|CD" postag_regexp="yes"/><exception>free</exception></token>
+                </pattern>
+                <message>The article might be missing before the noun.</message>
+                <suggestion><match no="2" postag="+DT"/> <match no="3"/></suggestion>
+                <short>Article missing</short>
+                <example correction="a new airport|the new airport">He was waiting at <marker>new airport</marker>.</example>
+                <example>He was waiting at <marker>the new airport</marker>.</example>
+                <example>It appeared as something she could not at first cope with.</example>
+            </rule>
+            <rule>
+                <pattern case_sensitive="yes">
+                    <token/>
+                    <token regexp="yes">[Bb]y</token>
+                    <marker>
+                        <and>
+                            <token postag="NN"><exception postag="CC|UH|DT|WDT|RB|RP|JJ|IN|CD|JJS|JJR|RBS|VB[DN]|MD|NNP|NNS|VBG" postag_regexp="yes"/><exception regexp="yes">bit|step|example|\p{Lu}\p{Ll}+</exception></token>
+                            <token negate="yes"><match no="0"/></token>
+                        </and>
+                    </marker>
+                    <token><exception postag="NN.*|CD" postag_regexp="yes"/><exception>free</exception></token>
+                </pattern>
+                <message>The article might be missing before the noun.</message>
+                <suggestion><match no="3" postag="+DT"/></suggestion>
+                <short>Article missing</short>
+                <example correction="a river|the river">He was waiting by <marker>river</marker>.</example>
+                <example>He was waiting by <marker>the river</marker>.</example>
+                <example>The attack minute by minute</example>
+                <example>He works by <marker>day</marker>.</example>
+                <example>$30,000 state grant authorized by Gov. Vandiver</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token>by</token>
+                    <marker>
+                        <token postag="JJ"><exception postag="VB|WRB|RB.*|CD|IN|DT|WDT" postag_regexp="yes"/></token>
+                        <token postag="NN"><exception postag="DT|WDT|RP|JJ|IN|CD|JJR|RBS|VB[DN]|MD|NNP|NNS" postag_regexp="yes"/><exception>fiat</exception><exception regexp="yes">bit|step|way|example|dint|crook|hook|hand|machine|word|cheque|accident|day|means|mistake|name|train|rail|railway|coach|bus|boat|automobile|helicopter|taxi|ambulance|plane|airplane|foot|section|article|page|road|letter|phone|telephone|mail|storm|arrangement|satellite|decree|year-end|lot|profession|district|week|eye|covenant|fiat|ship|car|jowl|tramway|(?u)\p{Lu}\p{Ll}+</exception></token>
+                    </marker>
+                    <token><exception postag="NN.*|CD" postag_regexp="yes"/><exception>free</exception></token>
+                </pattern>
+                <message>The article might be missing before the noun.</message>
+                <suggestion><match no="2" postag="+DT"/> <match no="3"/></suggestion>
+                <short>Article missing</short>
+                <example correction="a small river|the small river">He was waiting by <marker>small river</marker>.</example>
+                <example>He was waiting by <marker>the small river</marker>.</example>
+                <example>Guests came by chartered plane from all over the country.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token>for</token>
+                    <marker>
+                        <token postag="NN"><exception postag="UH|CC|VBD|VBG|VBN|DT|WDT|RP|JJ|IN|CD|JJS|JJR|RBS|MD|NNP|NNS|WRB|PRP\$" postag_regexp="yes"/><exception regexp="yes">are|(?u)\p{Lu}\p{Ll}+</exception></token>
+                    </marker>
+                    <token><exception postag="NN.*|CD" postag_regexp="yes"/><exception>free</exception><exception regexp="yes">&apostrophe;</exception></token>
+                </pattern>
+                <message>The article might be missing before the noun.</message>
+                <suggestion><match no="2" postag="+DT"/></suggestion>
+                <short>Article missing</short>
+                <example correction="an answer|the answer">He was waiting for <marker>answer</marker>.</example>
+                <example>He was waiting for <marker>your answer</marker>.</example>
+                <example><marker>For example</marker>, he wrote a letter to me.</example>
+                <example>The data for boy 34 appear in Figure 3.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token>for</token>
+                    <marker>
+                        <token postag="JJ"><exception postag="VBG|VB|WRB|RB.*|CD|IN|DT|WDT" postag_regexp="yes"/></token>
+                        <token postag="NN"><exception postag="DT|WDT|RP|JJ|IN|CD|JJR|RBS|VB[DN]|MD|NNP|NNS" postag_regexp="yes"/><exception regexp="yes">(?u)\p{Lu}\p{Ll}+</exception></token>
+                    </marker>
+                    <token><exception postag="NN.*|CD" postag_regexp="yes"/><exception>free</exception></token>
+                </pattern>
+                <message>The article might be missing before the noun.</message>
+                <suggestion><match no="2" postag="+DT"/> <match no="3"/></suggestion>
+                <short>Article missing</short>
+                <example correction="a swift answer|the swift answer">He was waiting for <marker>swift answer</marker>.</example>
+                <example>He was waiting for <marker>your swift answer</marker>.</example>
+                <example><marker>For example</marker>, he wrote a letter to me.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token regexp="yes">day|week</token>
+                    <token spacebefore="yes">in</token>
+                    <marker>
+                        <and>
+                            <token postag="NN"><exception postag="VBG|DT|WDT|RP|JJ|IN|CD|JJS|JJR|RBS|VB[DN]|MD|NN[PS]|PRP\$" postag_regexp="yes"/><exception regexp="yes">word|(?u)\p{Lu}\p{Ll}+</exception></token>
+                            <token negate="yes"><match no="0"/></token>
+                        </and>
+                    </marker>
+                    <token><exception postag="NN.*|JJ|C[DC]" postag_regexp="yes"/><exception regexp="yes">\d+|&apostrophe;</exception></token>
+                </pattern>
+                <message>The article might be missing before the noun.</message>
+                <suggestion><match no="3" postag="+DT"/></suggestion>
+                <short>Article missing</short>
+                <example correction="a kitchen|the kitchen">The dog spent all day in <marker>kitchen</marker>.</example>
+                <example>He was waiting in the <marker>lobby</marker>.</example>
+                <example>I have exhausted myself day in day out</example>
+                <example><marker>In fact</marker>, he wrote a letter to me.</example>
+                <example>Chinese Empire under the Ch'in dynasty (221-207 B.C.)</example>
+                <example>American technology in engine and hull design is excellent.</example>
+                <example>22% of his total list as against 3.5% in mine.</example>
+                <example>In the system shown in Fig. 7-1, the accelerometer output is amplified.</example>
+            </rule>
+            <rule>
+                <!-- day in day out ignored above, checking for 'day' and 'week' -->
+                <pattern>
+                    <token><exception regexp="yes">day|week</exception></token>
+                    <token>in</token>
+                    <marker>
+                        <token postag="NN"><exception postag="DT|WDT|RP|IN|CD|JJ[RS]?|RBS|VB[DGN]|MD|NN[PS]" postag_regexp="yes"/><exception regexp="yes">word|(?u)\p{Lu}\p{Ll}+</exception></token>
+                    </marker>
+                    <token><exception postag="NN.*|JJ|C[DC]" postag_regexp="yes"/><exception regexp="yes">\d+</exception></token>
+                </pattern>
+                <message>The article might be missing before the noun.</message>
+                <suggestion><match no="3" postag="+DT"/></suggestion>
+                <short>Article missing</short>
+                <example correction="a lobby|the lobby">He was waiting in <marker>lobby</marker>.</example>
+                <example>He was waiting in the <marker>lobby</marker>.</example>
+                <example correction="a week|the week">Later in <marker>week</marker>.</example>
+                <example><marker>In fact</marker>, he wrote a letter to me.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token>in</token>
+                    <marker>
+                        <token postag="JJ"><exception postag="NNP|VBG|VB|WRB|RB.*|CD|IN|DT|WDT" postag_regexp="yes"/><exception regexp="yes">(?u)\p{Lu}\p{Ll}+</exception></token>
+                        <token postag="NN"><exception postag="DT|WDT|RP|JJ.*|IN|CD|RB.*|VB[DN]|MD|NNP|NNP?S|PRP.*|WRB" postag_regexp="yes"/></token>
+                    </marker>
+                    <token><exception postag="NN.*|JJ|CD" postag_regexp="yes"/><exception regexp="yes">\d+</exception></token>
+                </pattern>
+                <message>The article might be missing before the noun.</message>
+                <suggestion><match no="2" postag="+DT"/> <match no="3"/></suggestion>
+                <short>Article missing</short>
+                <example correction="a large lobby|the large lobby">He was waiting in <marker>large lobby</marker>.</example>
+                <example>He was waiting in the <marker>large lobby</marker>.</example>
+                <example><marker>In fact</marker>, he wrote a letter to me.</example>
+            </rule>
+            <!-- on -->
+            <rule>
+                <antipattern>
+                    <token>on</token>
+                    <token>autopilot</token>
+                </antipattern>
+                <pattern>
+                    <token>on</token>
+                    <marker>
+                        <token postag="NN"><exception postag="CC|UH|DT|WDT|RP|JJ|IN|CD|JJS|JJR|RB.*|VB[DN]|MD|NNP|NNS|WRB" postag_regexp="yes"/><exception regexp="yes">(?u)\p{Lu}\p{Ll}+</exception></token>
+                    </marker>
+                    <token><exception postag="NN.*|CD" postag_regexp="yes"/></token>
+                </pattern>
+                <message>The article might be missing before the noun.</message>
+                <suggestion><match no="2" postag="+DT"/></suggestion><suggestion><match no="2" postag="+DT"/></suggestion>
+                <short>Article missing</short>
+                <example correction="a covenant|the covenant">ACET would not be able to reclaim tax on <marker>covenant</marker>.</example>
+                <example>Rob Brydon is Keith and Steve Coogan plays Geoff, seen for the first time on screen</example>
+                <example>There is no science on how we are going to adapt.</example>
+                <example>I worked the last hour of my shift on autopilot.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token>on</token>
+                    <marker>
+                        <token postag="JJ"><exception postag="VBG|VB|WRB|RB.*|CD|IN|DT|WDT|NNP" postag_regexp="yes"/><exception regexp="yes">(?u)\p{Lu}\p{Ll}+</exception></token>
+                        <token postag="NN"><exception postag="CC|DT|WDT|RP|JJ.*|IN|CD|RBS|VB[DN]|MD|NNP|NNS|NNPS" postag_regexp="yes"/></token>
+                    </marker>
+                    <token><exception postag="NN.*|CD" postag_regexp="yes"/><exception>free</exception><exception regexp="yes">&apostrophe;</exception></token>
+                </pattern>
+                <message>The article might be missing before the noun.</message>
+                <suggestion><match no="2" postag="+DT"/> <match no="3"/></suggestion>
+                <short>Article missing</short>
+                <example correction="a previous page|the previous page">This remark is on <marker>previous page</marker>.</example>
+                <example>This remark is on <marker>the previous page</marker>.</example>
+            </rule>
+            <rule>
+                <!--after, with exception for phrases like 'anecdote after anecdote' (x after x); FIXME: first two tokens should be replaced with a chunk &lt;DT+VBN&gt; marked in a disambig-->
+                <pattern>
+                    <token><exception postag="DT|WDT" postag_regexp="yes"/></token>
+                    <token><exception postag="VBN|VBD" postag_regexp="yes"/></token>
+                    <token>after</token>
+                    <marker>
+                        <and>
+                            <token postag="NN"><exception postag="CC|UH|DT|WDT|RP|JJ.*|IN|CD|RB.*|VBD|VBZ|VBN|MD|NNP|NNP?S|PRP.*|WRB" postag_regexp="yes"/><exception regexp="yes">(?u)\p{Lu}\p{Ll}+</exception></token>
+                            <token negate="yes"><match no="1"/></token>
+                        </and>
+                    </marker>
+                    <token><exception postag="NN.*" postag_regexp="yes"/><exception>free</exception></token>
+                </pattern>
+                <message>The article is probably missing before the noun.</message>
+                <suggestion><match no="4" postag="+DT"/></suggestion>
+                <short>Article missing</short>
+                <example correction="a week|the week">Change your filter after <marker>week</marker>.</example>
+                <example>Change your filter after one week.</example>
+                <example>He told me anecdote after anecdote of that extraordinary man.</example>
+                <example>Soon after Loper leaked the news that Frankie had ordered two...</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <!--  to exclude phrases like: 'the turned up card' -->
+                    <token><exception postag="DT|WDT" postag_regexp="yes"/></token>
+                    <token><exception postag="VBN|VBD" postag_regexp="yes"/></token>
+                    <token postag="IN"><exception regexp="yes">a[st]|by|for|[io]n|to|of|following|than|after</exception><exception postag="JJ.*" postag_regexp="yes"/></token>
+                    <marker>
+                        <token postag="NN"><exception postag="CC|UH|DT|WDT|RP|JJ.*|IN|CD|RB.*|VBD|VBZ|VBN|MD|NNP|NNP?S|PRP.*|WRB" postag_regexp="yes"/><exception regexp="yes">(?u)\p{Lu}\p{Ll}+</exception></token>
+                    </marker>
+                    <token><exception postag="NN.*|CD" postag_regexp="yes"/><exception>free</exception></token>
+                </pattern>
+                <message>The article is probably missing before the noun.</message>
+                <suggestion><match no="4" postag="+DT"/></suggestion>
+                <short>Article missing</short>
+                <example correction="a friend|the friend">He is talking about <marker>friend</marker>.</example>
+                <example>He is talking about a friend.</example>
+                <example>Then Jesus arrived at Jordan from Galilee.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token><exception postag="DT|WDT" postag_regexp="yes"/></token>
+                    <token><exception postag="VBN|VBD" postag_regexp="yes"/></token>
+                    <token postag="IN"><exception regexp="yes">a[st]|by|for|[io]n|to|of|following|re</exception><exception postag="JJ.*" postag_regexp="yes"/></token>
+                    <marker>
+                        <token postag="JJ"><exception postag="VBG|VB|WRB|RB.*|CD|IN|DT|WDT|NNP" postag_regexp="yes"/><exception regexp="yes">(?u)\p{Lu}\p{Ll}+</exception></token>
+                        <token postag="NN"><exception postag="CC|DT|WDT|RP|JJ|IN|CD|JJR|RBS|VB[DN]|MD|NNP|NNS" postag_regexp="yes"/></token>
+                    </marker>
+                    <token><exception postag="NN.*|CD" postag_regexp="yes"/><exception>free</exception><exception regexp="yes">&apostrophe;</exception></token>
+                </pattern>
+                <message>The article might be missing before the noun.</message>
+                <suggestion><match no="4" postag="+DT"/> <match no="5"/></suggestion>
+                <short>Article missing</short>
+                <example correction="a good friend|the good friend">He is talking about <marker>good friend</marker>.</example>
+                <example>He is talking about a good friend.</example>
+                <example>Goodis voiced his objection before City Council's Finance Committee.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <!--  to include phrases like: 'About a month ago, ...'
+                          this kind of rules should be added for all above
+                          prepositions with exceptions -->
+                    <token postag="SENT_START"/>
+                    <token postag="IN"><exception regexp="yes">a[st]|by|for|[io]n|to|of|following</exception><exception postag="JJ.*" postag_regexp="yes"/></token>
+                    <marker>
+                        <token postag="NN"><exception postag="CC|UH|DT|WDT|RP|JJ.*|IN|CD|RB.*|VB[DN]|MD|NN[PS]|NNPS|PRP.*|WRB" postag_regexp="yes"/><exception regexp="yes">(?u)\p{Lu}\p{Ll}+</exception></token>
+                    </marker>
+                    <token><exception postag="NN.*|JJ|CD" postag_regexp="yes"/></token>
+                </pattern>
+                <message>The article might be missing before the noun.</message>
+                <suggestion><match no="3" postag="+DT"/></suggestion>
+                <short>Article missing</short>
+                <example correction="a month|the month">About <marker>month</marker> before I left it was discussed...</example>
+                <example>About <marker>a month</marker> before I left it was discussed...</example>
+                <example>During Oersted's attendance at the university, it was dull.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <!-- to include phrases like: 'About a long month ago,...' -->
+                    <token postag="SENT_START"/>
+                    <token postag="IN"><exception regexp="yes">a[st]|by|for|[io]n|to|of|following</exception><exception postag="JJ.*" postag_regexp="yes"/></token>
+                    <marker>
+                        <token postag="JJ"><exception postag="VBG|VB|WRB|RB.*|CD|IN|DT|WDT|NNP" postag_regexp="yes"/></token>
+                        <token postag="NN"><exception postag="DT|WDT|RP|JJ|IN|CD|JJR|RBS|VB[DN]|MD|NNP|NNS" postag_regexp="yes"/></token>
+                    </marker>
+                    <token><exception postag="NN.*|JJ|CD" postag_regexp="yes"/></token>
+                </pattern>
+                <message>The article might be missing before the noun.</message>
+                <suggestion><match no="3" postag="+DT"/> <match no="4"/></suggestion>
+                <short>Article missing</short>
+                <example correction="a large boat|the large boat">About <marker>large boat</marker>.</example>
+                <example>About <marker>a large boat</marker>.</example>
+                <example>During fiscal year 1959, six courses were conducted.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token><exception regexp="yes">no|any|every</exception><exception postag="JJ.*" postag_regexp="yes"/></token>
+                    <token>such</token>
+                    <marker>
+                        <token postag="NN"><exception postag="DT|WDT|RP|JJ|IN|CD|JJR|RBS|VB[DN]|MD|NN[PS]" postag_regexp="yes"/><exception inflected="yes" regexp="yes">be|have</exception></token>
+                    </marker>
+                    <token><exception postag="NN.*" postag_regexp="yes"/><exception>free</exception></token>
+                </pattern>
+                <message>The article might be missing before the noun.</message>
+                <suggestion><match no="3" postag="+INDT"/></suggestion>
+                <short>Article missing</short>
+                <example correction="a friend">He is talking of such <marker>friend</marker>.</example>
+                <example>He is talking of such a friend.</example>
+                <example>The most famous such organism is Amoeba proteus.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token><exception regexp="yes">no|any|every</exception></token>
+                    <token>such</token>
+                    <marker>
+                        <token postag="JJ"><exception postag="VBG|VB|WRB|RB.*|CD|IN|DT|WDT|NNP" postag_regexp="yes"/></token>
+                        <token postag="NN"><exception postag="DT|WDT|RP|JJ|IN|CD|JJR|RBS|VB[DN]|MD|NNP|NNS" postag_regexp="yes"/></token>
+                    </marker>
+                    <token><exception postag="NN.*" postag_regexp="yes"/><exception>free</exception></token>
+                </pattern>
+                <message>The article might be missing before the noun.</message>
+                <suggestion><match no="3" postag="+INDT"/> <match no="4"/></suggestion>
+                <short>Article missing</short>
+                <example correction="a good friend">He is talking of such <marker>good friend</marker>.</example>
+                <example>He is talking of such a good friend.</example>
+            </rule>
+        </rulegroup>
+
+        <rulegroup id="ALLOW_TO" name="'allow' + 'to' + infinitive">
+            <url>http://www.ef.com/english-resources/english-grammar/gerund-equals-infinitive/</url>
+            <short>Grammatical problem: use a gerund</short>
+            <rule>
+                <antipattern>
+                    <token inflected="yes">give</token>
+                    <token>cause</token>
+                    <token>to</token>
+                    <token postag="VBP"><exception postag="NNS"/></token>
+                </antipattern>
+                <antipattern><!-- 'allow to do' [assume that quoted text is not an error] -->
+                    <token regexp="yes">['‘"“]</token>
+                    <token spacebefore="no"/>
+                    <token>to</token>
+                    <token/>
+                   <token spacebefore="no" regexp="yes">['’"”]</token>
+                </antipattern>
+                <antipattern><!--  join forces to defeat Nazi Germany. -->
+                    <token chunk="E-NP-plural" postag="NNS"/>
+                    <token>to</token>
+                    <token postag="VBP"/>
+                    <token chunk="B-NP-singular"/>
+                </antipattern>
+                <pattern>
+                    <token inflected="yes" regexp="yes" postag_regexp="yes" postag="VB.?">allow|advise|authorize|cause|challenge|convince|encourage|force|hire|inform|instruct|invite|order|permit|persuade|remind|require|teach|tell|train|urge
+                        <exception postag="VB[GN]" postag_regexp="yes"/>
+                        <exception scope="previous" postag="PRP\$|JJ|VBN|W?DT" postag_regexp="yes"/></token>
+                    <marker>
+                        <token>to</token>
+                        <token postag="VBP"><exception postag="NNS"/></token>
+                    </marker>
+                </pattern>
+                <message>Did you mean <suggestion><match no="3" postag="VBG"/></suggestion>? Or maybe you should add a pronoun? In active voice, '<match no="1" postag="VB"/>' + 'to' takes an object, usually a pronoun.</message>
+                <example correction="seeing">It allows <marker>to see</marker> better.</example>
+                <example correction="staying">He advised <marker>to stay</marker> calm.</example><!--  #2497 -->
+                <example>It allows them <marker>to see</marker> better.</example>
+                <example>They are forbidden to fly without specific orders to proceed to their targets.</example>
+                <example>He was allowed to build an ambitious garden.</example>
+                <example>General Don Carlos Buell likewise refused orders to move the Army of the Ohio against rebel forces.</example>
+                <example>That is what it tries to teach to <marker>people</marker> like me.</example>
+                <example>... a non-interventionist policy (literally ‘<marker>allow to do</marker>’).</example>
+                <example>I didn't know for certain which train to take.</example>
+                <example>... Japan, Britain and the United States join forces to defeat Nazi Germany.</example>
+                <example>For example, if a counterparty enters a limit order to sell to Enron at price x, ...</example><!-- Premium #1564 -->
+                <example>... because many new workers have joined the labor force to take advantage of the booming economy.</example><!-- Premium #1564 -->
+                <example>Please prepare a change order to add dual fuel to the February '02 delivery turbine.</example><!-- Premium #1564 -->
+                <example>Privately owned Playmedia Systems seeks a court order to stop AOL's use of the allegedly infringing software.</example><!-- Premium #1564 -->
+                <example>Steve formed a task force to study how curtailment/diversion/force majeure risks play out at each chain across...</example><!-- Premium #1564 -->
+                <example>SCE is awaiting a commission order to auction off its SO2 credits.</example><!-- Premium #1564 -->
+                <example>Each of you have been asked to participate (or provide a participant) in the task force to identify problems with data movement from our...</example><!-- Premium #1564 -->
+                <example>If denied, Westchester can then seek a court order to block construction.</example><!-- Premium #1564 -->
+                <example>Mirant was asked by the latest order to justify close to $93,000 in March sales.</example><!-- Premium #1564 -->
+                <example>Governor Bush has set up a task force to study wholesale competition during this Legislative session.</example><!-- Premium #1564 -->
+                <example>Tthe administration created a task force to come up with a counter proposal to reduce harmful emissions.</example><!-- Premium #1564 -->
+                <example>President Bush has announced the creation a task force to review corporate disclosure rules after Enron's bankruptcy.</example><!-- Premium #1564 -->
+                <example>Bush yesterday appointed a task force to investigate Enron's collapse and at least six congressional committees are investigating.</example><!-- Premium #1564 -->
+                <example>He is putting together a task force to help with the SEC stuff.</example><!-- Premium #1564 -->
+                <example>The attorney general will agree to a confidentiality order to govern EES's production that was approved by the Los Angeles Superior Court.</example><!-- Premium #1564 -->
+                <example>Westchester can then seek a court order to block construction.</example><!-- Premium #1564 -->
+                <example>Dave Nutt has been sent the Compliance Order to review.</example><!-- Premium #1564 -->
+                <example>After three decades of amassing material, Boasians felt a growing urge to generalize.</example><!-- Premium #1564 -->
+                <example>... said the presence of FBI agents may make a court order to protect documents superfluous.</example><!-- Premium #1564 -->
+                <example>... to the traders, for a market order to buy, the market maker has to sell at the as...</example><!-- Premium #1564 -->
+                <example>Most yeomen farmers, craftsmen, and small merchants joined the Patriot cause to demand more political equality.</example><!-- Premium #1564 -->
+                <example>... after he was given a court order to lend money to an incompetent applicant.</example><!-- Premium #1564 -->
+                <example>Consciousness and thought remain very challenging to understand.</example>
+                <example>It is therefore very encouraging to see ORR take the matter forward.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token postag="SENT_START" skip="-1"><exception inflected="yes" postag="V.*" postag_regexp="yes" scope="next">be</exception></token>
+                    <token>allowed</token>
+                    <marker>
+                        <token>to</token>
+                        <token postag="VBP"/>
+                    </marker>
+                </pattern>
+                <message>Did you mean <suggestion><match no="4" postag="VBG"/></suggestion>? Or maybe you should add a pronoun? In active voice, 'allow' + 'to' takes an object, usually a pronoun.</message>
+                <example correction="seeing">It allowed <marker>to see</marker> better.</example>
+                <example>It allows <marker>seeing</marker> better.</example>
+                <example>He was allowed to build an ambitious garden.</example>
+                <example>He was eventually allowed to go to Tehran near the end of 1838-39.</example>
+                <example>... II of Prussia limited the number of Jews allowed to live in Breslau to only ten so-called "protected" ...</example>
+            </rule>
+        </rulegroup>
+
+        <rulegroup id="AFFORD_VBG" name="'afford', 'choose', 'deserve', 'pretend', 'learn', 'strive', 'want' and 'struggle' used with gerund instead of infinitive">
+            <antipattern>
+                <token>depending</token>
+                <token>on</token>
+            </antipattern>
+            <antipattern><!-- a type of exercise -->
+                <token>walking</token>
+                <token>lunges</token>
+            </antipattern>
+            <antipattern><!-- the "making of" -->
+                <token>making</token>
+                <token>of</token>
+            </antipattern>
+            <antipattern>
+                <token>nursing</token>
+                <token regexp="yes">homes?|process|partnerships?|acts?|councils?|times?|diagnosis|mothers?|m[uo]ms?</token>
+            </antipattern>
+            <antipattern>
+                <token>programming</token>
+                <token regexp="yes">languages?</token>
+            </antipattern>
+            <antipattern><!-- choose meeting locations, trading skills -->
+                <token regexp="yes">meeting|programming|trading</token>
+                <token postag="NN.*" postag_regexp="yes" />
+            </antipattern>
+            <antipattern>
+                <token>cooking</token>
+                <token regexp="yes">lessons?|courses?|channels?|compan(y|ies)|m[uo]ms?|studios?|videos?|fever|games?|shows?|recipes?|e?\-?books?</token>
+            </antipattern>
+            <antipattern>
+                <token postag="VBG"/>
+                <token postag="RB" min="1" max="2" /><!-- once again -->
+                <token regexp="yes">\p{P}</token>
+            </antipattern>
+            <antipattern>
+                <token postag="VBG"/>
+                <token regexp="yes">\p{P}</token>
+            </antipattern>
+            <antipattern><!-- batting technique, polling system, monitoring systems, billing services, towing company -->
+                <token postag="NN.*" postag_regexp="yes" />
+                <token regexp="yes">techniques?|systems?|things?|services?|compan(y|ies)|status|date|skills?|producs?|technolog(y|ies)|tool(s)?</token>
+            </antipattern>
+            <antipattern><!-- interesting things, batting technique, polling system, billing services -->
+                <token postag="VBG" skip="1" />
+                <token regexp="yes" skip="1">and|or|&amp;</token>
+                <token regexp="yes">techniques|system|things|services|companies|status|date|skills|products?|technologies|tools</token>
+            </antipattern>
+            <antipattern><!-- "choose logging and profiling", "choose subtitling over dubbing" -->
+                <token postag="VBG" skip="1" />
+                <token regexp="yes">and|or|&amp;|over</token>
+                <token postag="VBG" />
+            </antipattern>
+            <antipattern><!-- "I can accomplish what I want using ..." -->
+                <token postag="VB.*" postag_regexp="yes" skip="2" />
+                <token postag="WP" skip="3" />
+                <token inflected="yes" regexp="yes">afford|choose|deserve|pretend|strive|struggle|learn|want</token>
+            </antipattern>
+            <antipattern><!-- "Please create the products our users want using ..." -->
+                <token />
+                <token />
+                <token postag="VB.*" postag_regexp="yes" skip="7" />
+                <token postag="NN.*" postag_regexp="yes" />
+                <token postag="RB" min="0" />
+                <token inflected="yes" regexp="yes">afford|choose|deserve|pretend|strive|struggle|learn|want</token>
+            </antipattern>
+            <antipattern><!-- "Please create the products you want using ..." -->
+                <token />
+                <token />
+                <token postag="VB.*" postag_regexp="yes" skip="7" />
+                <token regexp="yes">you|we|they|s?he|I|it</token>
+                <token postag="RB" min="0" />
+                <token inflected="yes" regexp="yes">afford|choose|deserve|pretend|strive|struggle|learn|want</token>
+            </antipattern>
+            <antipattern>
+                <token inflected="yes" regexp="yes">afford|choose|deserve|pretend|strive|struggle|learn|want</token>
+                <token postag="SENT_END" />
+            </antipattern>
+            <rule>
+                <antipattern>
+                    <token regexp="yes">the|an?</token>
+                    <token postag="JJ" min="0" />
+                    <token>struggle</token>
+                    <token postag="VBG"/>
+                </antipattern>
+                <antipattern>
+                    <token>machine</token>
+                    <token>learning</token>
+                </antipattern>
+                <antipattern>
+                    <token inflected="yes" regexp="yes">choose|learn</token>
+                    <token regexp="yes">meeting|engineering|reporting</token>
+                </antipattern>
+                <antipattern><!-- nouns of things that you can "learn" -->
+                    <token inflected="yes">learn</token>
+                    <token regexp="yes">programming|cooking|trading</token>
+                </antipattern>
+                <pattern>
+                    <token inflected="yes" regexp="yes">afford|choose|deserve|pretend|strive|struggle|learn</token>
+                    <marker>
+                        <token postag="VBG">
+                            <exception case_sensitive="yes" postag="NN.*" postag_regexp="yes" regexp="yes">[A-Z].+</exception><!-- uppercase nouns -->
+                            <exception postag="IN" /><!-- "including", "regarding" -->
+                            <exception postag="JJ" /><!-- "amazing", "interesting", "existing", "corresponding" -->
+                        </token>
+                    </marker>
+                </pattern>
+                <message>If '\1' is used as a verb, it usually requires the infinitive.</message>
+                <suggestion>to <match no="2" postag="VB"/></suggestion>
+                <short>Grammatical problem: use the infinitive</short>
+                <example correction="to spend">We cannot afford <marker>spending</marker> the whole month in the Alps.</example>
+                <example correction="to buy">Also my name is not Tom Cruise, I can’t afford <marker>buying</marker> gems.</example>
+                <example>We cannot afford <marker>to spend</marker> the whole month in the Alps.</example>
+                <example>He didn't deserve to lose his job.</example>
+                <example>This book deserves preserving.</example>
+                <example>Please help them choose nursing homes.</example>
+                <example>I learn interesting things.</example>
+                <example>There is a struggle going on in the cabinet.</example>
+                <example>He chose engineering because he did not want to be an academic like his father.</example>
+                <example>Recognizing that market participants are located in various geographical locations, we tried to be sensitive to that and choose meeting locations accordingly.</example>
+                <example>Customers can choose billing and metering services from their ESP.</example>
+                <example>Does every boy have to learn cooking in your school?</example>
+                <example>Choose binding: 34</example>
+                <example>Please do the things you learned using your own skills.</example>
+                <example>Machine learning using finite-state algorithms</example>
+                <example>My goal is ultimately to get this working, but also learn programming at the same time.</example>
+                <example>I really struggle being alone.</example><!-- FN or FP? -->
+                <example>My goals for this challenge are to stick to the program I choose including rest days and deloads and see where that puts me.</example>
+                <example>If he/she called her/his chosen towing company, he/she could get the car without having to pay Sears one red cent.</example>
+                <example>To enable debug logging, go to the Bitbucket Server administration area and choose Logging and Profiling.</example>
+                <example correction="to add">Creating a macro for the duplication is easy, but I am struggling <marker>adding</marker> the sequential numbering.</example>
+                <example>When airing films on television, channels in the UK often choose <marker>subtitling</marker> over dubbing, even if a dubbing in English exists.</example>
+            </rule>
+            <rule><!-- want + VBG -->
+                <antipattern>
+                    <token postag="VBG"/>
+                    <token>of</token>
+                    <token>course</token>
+                    <token regexp="yes">\p{P}</token>
+                </antipattern>
+                <pattern>
+                    <token inflected="yes">want</token>
+                    <marker>
+                        <token postag="VBG">
+                            <exception postag="JJ.*|NN.*|IN" postag_regexp="yes" />
+                            <exception case_sensitive="yes" regexp="yes">[A-Z].*</exception>
+                            <exception>pricing</exception><!-- used like a noun (but isn't one) -->
+                        </token>
+                    </marker>
+                    <token />
+                </pattern>
+                <message>If '\1' is used as a verb, it usually requires the infinitive.</message>
+                <suggestion>to <match no="2" postag="VB"/></suggestion>
+                <url>https://www.grammaring.com/to-infinitive-or-gerund-need-require-want</url>
+                <short>Grammatical problem: use the infinitive</short>
+                <example correction="to hope">We don't want <marker>hoping</marker> for the deal.</example>
+                <example correction="to create">Maybe you want <marker>creating</marker> an Issue here.</example>
+                <example correction="to seek">To me that is feature rich and could not be the only want <marker>seeking</marker> out such capabilities.</example>
+                <example correction="to duplicate">I want all the settings to be exactly the same for both and don’t want <marker>duplicating</marker> things.</example>
+                <example correction="to authorize">McCain wrote that while he supports the legislation, he does not want <marker>authorizing</marker> provisions in the final appropriations bill.</example>
+                <example>I’m thinking that I might be misguided in trying to get it to work with the new app and that I can accomplish what I want using only the classic app.</example>
+                <example>We would want Clearing broker to pay executing broker.</example>
+                <example>Tom isn't the kind of person I want dating my daughter.</example>
+                <example>Just temporarily change the DTH for the device to the tweaker, make the changes you want including setting association groups, then change back to your everyday DTH.</example>
+                <example>A thimble can be very useful for sewing, if you don't want bleeding fingers.</example>
+                <example>The belt wants replacing also.</example>
+            </rule>
+            <rule><!-- want + VBG + the/an -->
+                <pattern>
+                    <token inflected="yes">want</token>
+                    <marker>
+                        <token postag="VBG">
+                            <exception postag="IN" />
+                        </token>
+                    </marker>
+                    <token regexp="yes">the|an?|my|y?our|his|her|its|their|this|many|any|some|these|those</token>
+                </pattern>
+                <message>If '\1' is used as a verb, it usually requires the infinitive.</message>
+                <suggestion>to <match no="2" postag="VB"/></suggestion>
+                <url>https://www.grammaring.com/to-infinitive-or-gerund-need-require-want</url>
+                <short>Grammatical problem: use the infinitive</short>
+                <example correction="to create">Maybe you want <marker>creating</marker> an Issue here.</example>
+                <example>I'm not the guy you want making this decision.</example>
+                <example>I think I’ll be able to accomplish what I want using the PageView event.</example>
+                <example correction="to turn">They want <marker>turning</marker> the switch off at the wall to cut current at the light fixture on the ceiling.</example>
+                <example>Please create the products you want using the location "West Wing 500" in Product Manager.</example>
+                <example>Glad to know that you are able to collect the metrics that you wanted using our latest java agent.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token inflected="yes" regexp="yes">afford|choose|deserve|pretend|strive|struggle|learn</token>
+                    <token>not</token>
+                    <marker>
+                        <token postag="VBG"/>
+                    </marker>
+                </pattern>
+                <message>If '\1' is used as a verb, it usually requires the infinitive.</message>
+                <suggestion>to <match no="3" postag="VB"/></suggestion>
+                <short>Grammatical problem: use the infinitive</short>
+                <example correction="to spend">We cannot afford not <marker>spending</marker> the whole month in the Alps.</example>
+            </rule>
+        </rulegroup>
+        <rulegroup id="ADMIT_ENJOY_VB" name="'admit', 'appreciate', 'avoid', 'enjoy' etc. with a base form of a verb">
+            <url>https://www.ef.com/english-resources/english-grammar/gerund-equals-infinitive/</url>
+            <rule>
+                <antipattern><!-- https://community.languagetool.org/rule/show/ADMIT_ENJOY_VB?lang=en-GB&ref=standalone-gui -->
+                    <token chunk="B-NP-singular" postag="WP"/>
+                    <token min="0" max="3" chunk="I-NP-singular"/>
+                    <token chunk="E-NP-singular" postag_regexp="yes" postag="NN:UN?"/>
+                    <token postag="MD"/>
+                    <token postag="PRP"/>
+                    <token postag="VBP"/>
+                    <token>to</token>
+                    <token postag="VB"/>
+                </antipattern>
+                <antipattern><!-- it is strongly suggested to revise your code -->
+                    <token inflected="yes" postag="VB[DZN]?" postag_regexp="yes">be</token>
+                    <token min="0" max="-1" chunk="I-VP"><exception>suggested</exception></token>
+                    <token>suggested</token>
+                    <token>to</token>
+                    <token postag="VB"/>
+                </antipattern>
+                <pattern>
+                    <token inflected="yes" regexp="yes" postag="VB.*" postag_regexp="yes">a(dmit|ppreciate|void)|delay|practice|risk|deny|discuss|imagine|suggest|dislike|keep|tolerate|enjoy|mi(nd|ss)|re(commend|s(ent|ist))|finish|postpone<exception scope="previous" regexp="yes" inflected="yes">of|be</exception></token>
+                    <token>to</token>
+                    <token postag="VB">
+                        <exception postag="NN:UN?" postag_regexp="yes"/>
+                        <exception>please</exception>
+                        <exception regexp="yes">&uncommon_verbs;</exception>
+                    </token>
+                </pattern>
+                <message>The verb '\1' is used with the gerund form.</message>
+                <suggestion><match no="1"/> <match no="3" postag="VBG"/></suggestion>
+                <short>Grammatical problem: use 'ing'</short>
+                <example correction="enjoy running">I <marker>enjoy to run</marker>.</example>
+                <example correction="recommended gaining">My teachers <marker>recommended to gain</marker> a better understanding of statistics.</example>
+                <example correction="recommend gaining">Would you <marker>recommend to gain</marker> a better understanding of statistics?</example>
+                <example>I <marker>enjoy running</marker>.</example>
+                <example>Before we proceed, I recommend to please take a full backup of your database.</example>
+                <example>A three-man committee has recommended to Commission Chairman Charles O. Emmerich...</example>
+                <example>Although Peter also seems happy on the surface, he admits to <marker>Ken</marker> that he isn't sure they are ready.</example>
+                <example>Which scientific literature would you recommend to gain a better understanding of the subject matter?</example>
+                <example>... where child labor is a common practice to obtain the product.</example><!-- #3236 -->
+                <example>I have a great mind to do that myself.</example><!-- #3236 -->
+                <example>I have a good mind to visit the Silk Road.</example><!-- #3236 -->
+                <example>The most merciful thing in the world, I think, is the inability of the human mind to correlate all its contents.</example><!-- #3236 -->
+                <example>I have a good mind to visit the Silk Road.</example><!-- #3236 -->
+                <example>However, it was still a common practice to have single sponsor shows, such as The United States Steel Hour.</example><!-- #3236 -->
+                <example>... there are employees with feelings and a good mind to think things through and feel you are justified in accepting...</example><!-- #3236 -->
+                <example>... sitting on their hands, using the time delay to protect existing positions, while whipping up State regulators' fears of jurisdictional shift.</example><!-- #3236 -->
+                <example>... and it became a common practice to construct prestige buildings from the new industrial bricks.</example><!-- #3236 -->
+                <example>Rick, I suggested to Bill that he come in early/mid October.</example>
+                <example>It is strongly suggested to revise your code.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token inflected="yes" postag="VB.*" postag_regexp="yes">regret</token>
+                    <token>to</token>
+                    <token postag="VB">
+                        <exception postag="NN:UN?" postag_regexp="yes"/><exception regexp="yes">say|inform|tell|announce|state|learn|report|note|hear|mention|advise</exception>
+                        <exception regexp="yes">&uncommon_verbs;</exception>
+                    </token>
+                </pattern>
+                <message>The verb '\1' is used with the gerund form.</message>
+                <suggestion><match no="1"/> <match no="3" postag="VBG"/></suggestion>
+                <short>Grammatical problem: use 'ing'</short>
+                <example correction="regret reading">I <marker>regret to read</marker> this book.</example>
+                <example>I <marker>regret reading</marker> this book.</example>
+                <example>I regret saying this.</example>
+                <example>Dear Madam, I regret to say that you are dead.</example>
+            </rule>
+            <rule>
+                <antipattern><!-- is usually understood -->
+                    <token inflected="yes">be</token>
+                    <token postag="RB"/>
+                    <token>understood</token>
+                </antipattern>
+                <antipattern><!-- #2060. I want to look up reports to see if -->
+                    <token chunk="E-NP-plural" postag="NNS"/>
+                    <token>to</token>
+                </antipattern>
+                <pattern>
+                    <token inflected="yes" postag="VB.*" regexp="yes" postag_regexp="yes">consider|report|understand<exception scope="previous" regexp="yes" inflected="yes">be|,|war</exception></token>
+                    <token>to</token>
+                    <token postag="VB">
+                        <exception postag="NN:UN?" postag_regexp="yes"/>
+                        <exception regexp="yes">be|have|include|&uncommon_verbs;</exception>
+                    </token>
+                </pattern>
+                <message>The verb '\1' is used with the gerund form.</message>
+                <suggestion><match no="1"/> <match no="3" postag="VBG"/></suggestion>
+                <short>Grammatical problem: use 'ing'</short>
+                <example correction="consider running">I <marker>consider to run</marker> my favourite sport.</example>
+                <example>I <marker>consider running</marker> my favourite sport.</example>
+                <example>They were a vagabond lot and considered to be shady and undesirable characters.</example>
+                <example>The lethal dose for adult zebrafish has been reported to be as high as 40 Gy.</example>
+                <example>"Anthropology" is from the Greek anthrōpos, "man", understood to mean humankind or humanity, and -logia (-λογία).</example>
+                <example>She had to master war reporting to understand the suffering.</example>
+                <example>"Amsterdam" <marker>is usually understood</marker> to refer to the municipality of Amsterdam.</example>
+                <example>I want to look up reports to see if the numbers increased.</example><!--  #2060 -->
+                <example>Check your credit report to identify errors that could hurt your chances.</example><!-- #3236 -->
+                <example>Or double-click on the title of the expense report to preview the details.</example><!-- #3236 -->
+                <example>Michelle, Currently when Tindall &amp; Foster are completing the forms they use our annual report to complete these.</example><!-- #3236 -->
+                <example>Amy knows how to run the macro report to insure all deals have been flipped out.</example><!-- #3236 -->
+                <example>Early predictions are for the AGA report to show a build around 84 billion cubic feet up to 94 Bcf.</example><!-- #3236 -->
+                <example>I'm talking to Dave about Hughes reporting to Sally.</example>
+                <example>Hala will report to Peter Redpath until such time as a head of Supply Side Management is appointed.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token inflected="yes" regexp="yes">be|get</token>
+                    <marker>
+                        <token>accustomed</token>
+                        <token>to</token>
+                        <token postag="VB">
+                            <exception regexp="yes">&uncommon_verbs;</exception>
+                        </token>
+                    </marker>
+                </pattern>
+                <message>The verb '\1' is used with the gerund form.</message>
+                <suggestion><match no="2"/> <match no="3"/> <match no="4" postag="VBG"/></suggestion>
+                <short>Grammatical problem: use 'ing'</short>
+                <example correction="accustomed to running">I am <marker>accustomed to run</marker>.</example>
+                <example>I am <marker>accustomed to running</marker>.</example>
+                <example>I am accustomed to hearing nonsense.</example>
+            </rule>
+            <rule>
+                <antipattern><!-- *Probably* passive voice -->
+                    <token>they</token>
+                    <token regexp="yes">are|were</token>
+                    <token>used</token>
+                    <token>to</token>
+                    <token postag="VB"/>
+                    <token postag_regexp="yes" postag="DT|PRP\$"/>
+                </antipattern>
+                <pattern>
+                    <token regexp="yes">I|you|s?he|we|they</token>
+                    <token inflected="yes" regexp="yes">be|get</token>
+                    <marker>
+                        <token>used</token>
+                        <token>to</token>
+                        <token postag="VB"/>
+                    </marker>
+                </pattern>
+                <message>In the grammatical structure 'pronoun + be/get + used + to + verb', the verb '\3' is used with the gerund.</message>
+                <suggestion><match no="3"/> <match no="4"/> <match no="5" postag="VBG"/></suggestion>
+                <short>Grammatical problem: use 'ing'</short>
+                <example correction="used to running">I am <marker>used to run</marker>. I run every day for 30 minutes.</example>
+                <example correction="used to running">They are <marker>used to run</marker> in the rain; they live in Manchester.</example>
+                <example correction="used to testing">We are <marker>used to test</marker> the rules.</example><!-- Ambiguous. Possible passive voice. (Other people are used by the organization to write the rules.) -->
+                <example>I <marker>used to run</marker> every day, but I hurt my knee. Now, I cannot run.</example>
+                <example>I am <marker>used to running</marker>.</example>
+                <example>I used to enjoy running.</example>
+                <example>When used with the infinitive, however, these verbs can be used to speak about something that hasn't happened yet.</example>
+                <example>... of comic drama known as Old Comedy, and they are used to define the genre.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token regexp="yes">I|you|s?he|we|they</token>
+                    <token regexp="yes">'s|'m|'re</token>
+                    <marker>
+                        <token>used</token>
+                        <token>to</token>
+                        <token postag="VB"/>
+                    </marker>
+                </pattern>
+                <message>In the grammatical structure 'pronoun + be/get + used + to + verb', the verb '\3' is used with the gerund.</message>
+                <suggestion><match no="3"/> <match no="4"/> <match no="5" postag="VBG"/></suggestion>
+                <short>Grammatical problem: use 'ing'</short>
+                <example correction="used to running">I'm <marker>used to run</marker>. I run every day for 30 minutes.</example>
+                <example>I <marker>used to run</marker> every day, b

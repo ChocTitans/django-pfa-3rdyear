@@ -1,0 +1,466 @@
+   // Note: this is _slightly_ less efficient for the initial tree
+    // building than it could be, but in exchange, it's a much simpler
+    // algorithm.
+    // If this node has a bunch of children, and those children satisfy
+    // its various deps, then we're going to _first_ create all the
+    // edges, and _then_ assign the children into place, re-resolving
+    // them all in _reloadNamedEdges.
+    // A more efficient, but more complicated, approach would be to
+    // flag this node as being a part of a tree build, so it could
+    // hold off on resolving its deps until its children are in place.
+
+    // call the parent setter
+    // Must be set prior to calling _loadDeps, because top-ness is relevant
+
+    // will also assign root if present on the parent
+    this[_parent] = null
+    this.parent = parent || null
+
+    this[_fsParent] = null
+    this.fsParent = fsParent || null
+
+    // see parent/root setters below.
+    // root is set to parent's root if we have a parent, otherwise if it's
+    // null, then it's set to the node itself.
+    if (!parent && !fsParent) {
+      this.root = root || null
+    }
+
+    // mostly a convenience for testing, but also a way to create
+    // trees in a more declarative way than setting parent on each
+    if (children) {
+      for (const c of children) {
+        new Node({ ...c, parent: this })
+      }
+    }
+    if (fsChildren) {
+      for (const c of fsChildren) {
+        new Node({ ...c, fsParent: this })
+      }
+    }
+
+    // now load all the dep edges
+    this[_loadDeps]()
+  }
+
+  get meta () {
+    return this[_meta]
+  }
+
+  set meta (meta) {
+    this[_meta] = meta
+    if (meta) {
+      meta.add(this)
+    }
+  }
+
+  get global () {
+    return this.root[_global]
+  }
+
+  // true for packages installed directly in the global node_modules folder
+  get globalTop () {
+    return this.global && this.parent && this.parent.isProjectRoot
+  }
+
+  get workspaces () {
+    return this[_workspaces]
+  }
+
+  set workspaces (workspaces) {
+    // deletes edges if they already exists
+    if (this[_workspaces]) {
+      for (const name of this[_workspaces].keys()) {
+        if (!workspaces.has(name)) {
+          this.edgesOut.get(name).detach()
+        }
+      }
+    }
+
+    this[_workspaces] = workspaces
+    this[_loadWorkspaces]()
+    this[_loadDeps]()
+  }
+
+  get binPaths () {
+    if (!this.parent) {
+      return []
+    }
+
+    return getBinPaths({
+      pkg: this[_package],
+      path: this.path,
+      global: this.global,
+      top: this.globalTop,
+    })
+  }
+
+  get hasInstallScript () {
+    const { hasInstallScript, scripts } = this.package
+    const { install, preinstall, postinstall } = scripts || {}
+    return !!(hasInstallScript || install || preinstall || postinstall)
+  }
+
+  get version () {
+    return this[_package].version || ''
+  }
+
+  get packageName () {
+    return this[_package].name || null
+  }
+
+  get pkgid () {
+    const { name = '', version = '' } = this.package
+    // root package will prefer package name over folder name,
+    // and never be called an alias.
+    const { isProjectRoot } = this
+    const myname = isProjectRoot ? name || this.name
+      : this.name
+    const alias = !isProjectRoot && name && myname !== name ? `npm:${name}@`
+      : ''
+    return `${myname}@${alias}${version}`
+  }
+
+  get overridden () {
+    return !!(this.overrides && this.overrides.value && this.overrides.name === this.name)
+  }
+
+  get package () {
+    return this[_package]
+  }
+
+  set package (pkg) {
+    // just detach them all.  we could make this _slightly_ more efficient
+    // by only detaching the ones that changed, but we'd still have to walk
+    // them all, and the comparison logic gets a bit tricky.  we generally
+    // only do this more than once at the root level, so the resolve() calls
+    // are only one level deep, and there's not much to be saved, anyway.
+    // simpler to just toss them all out.
+    for (const edge of this.edgesOut.values()) {
+      edge.detach()
+    }
+
+    this[_explanation] = null
+    /* istanbul ignore next - should be impossible */
+    if (!pkg || typeof pkg !== 'object') {
+      debug(() => {
+        throw new Error('setting Node.package to non-object')
+      })
+      pkg = {}
+    }
+    this[_package] = pkg
+    this[_loadWorkspaces]()
+    this[_loadDeps]()
+    // do a hard reload, since the dependents may now be valid or invalid
+    // as a result of the package change.
+    this.edgesIn.forEach(edge => edge.reload(true))
+  }
+
+  // node.explain(nodes seen already, edge we're trying to satisfy
+  // if edge is not specified, it lists every edge into the node.
+  explain (edge = null, seen = []) {
+    if (this[_explanation]) {
+      return this[_explanation]
+    }
+
+    return this[_explanation] = this[_explain](edge, seen)
+  }
+
+  [_explain] (edge, seen) {
+    if (this.isProjectRoot && !this.sourceReference) {
+      return {
+        location: this.path,
+      }
+    }
+
+    const why = {
+      name: this.isProjectRoot || this.isTop ? this.packageName : this.name,
+      version: this.package.version,
+    }
+    if (this.errors.length || !this.packageName || !this.package.version) {
+      why.errors = this.errors.length ? this.errors : [
+        new Error('invalid package: lacks name and/or version'),
+      ]
+      why.package = this.package
+    }
+
+    if (this.root.sourceReference) {
+      const { name, version } = this.root.package
+      why.whileInstalling = {
+        name,
+        version,
+        path: this.root.sourceReference.path,
+      }
+    }
+
+    if (this.sourceReference) {
+      return this.sourceReference.explain(edge, seen)
+    }
+
+    if (seen.includes(this)) {
+      return why
+    }
+
+    why.location = this.location
+    why.isWorkspace = this.isWorkspace
+
+    // make a new list each time.  we can revisit, but not loop.
+    seen = seen.concat(this)
+
+    why.dependents = []
+    if (edge) {
+      why.dependents.push(edge.explain(seen))
+    } else {
+      // ignore invalid edges, since those aren't satisfied by this thing,
+      // and are not keeping it held in this spot anyway.
+      const edges = []
+      for (const edge of this.edgesIn) {
+        if (!edge.valid && !edge.from.isProjectRoot) {
+          continue
+        }
+
+        edges.push(edge)
+      }
+      for (const edge of edges) {
+        why.dependents.push(edge.explain(seen))
+      }
+    }
+
+    if (this.linksIn.size) {
+      why.linksIn = [...this.linksIn].map(link => link[_explain](edge, seen))
+    }
+
+    return why
+  }
+
+  isDescendantOf (node) {
+    for (let p = this; p; p = p.resolveParent) {
+      if (p === node) {
+        return true
+      }
+    }
+    return false
+  }
+
+  getBundler (path = []) {
+    // made a cycle, definitely not bundled!
+    if (path.includes(this)) {
+      return null
+    }
+
+    path.push(this)
+
+    const parent = this[_parent]
+    if (!parent) {
+      return null
+    }
+
+    const pBundler = parent.getBundler(path)
+    if (pBundler) {
+      return pBundler
+    }
+
+    const ppkg = parent.package
+    const bd = ppkg && ppkg.bundleDependencies
+    // explicit bundling
+    if (Array.isArray(bd) && bd.includes(this.name)) {
+      return parent
+    }
+
+    // deps that are deduped up to the bundling level are bundled.
+    // however, if they get their dep met further up than that,
+    // then they are not bundled.  Ie, installing a package with
+    // unmet bundled deps will not cause your deps to be bundled.
+    for (const edge of this.edgesIn) {
+      const eBundler = edge.from.getBundler(path)
+      if (!eBundler) {
+        continue
+      }
+
+      if (eBundler === parent) {
+        return eBundler
+      }
+    }
+
+    return null
+  }
+
+  get inBundle () {
+    return !!this.getBundler()
+  }
+
+  // when reifying, if a package is technically in a bundleDependencies list,
+  // but that list is the root project, we still have to install it.  This
+  // getter returns true if it's in a dependency's bundle list, not the root's.
+  get inDepBundle () {
+    const bundler = this.getBundler()
+    return !!bundler && bundler !== this.root
+  }
+
+  get isWorkspace () {
+    if (this.isProjectRoot) {
+      return false
+    }
+    const { root } = this
+    const { type, to } = root.edgesOut.get(this.packageName) || {}
+    return type === 'workspace' && to && (to.target === this || to === this)
+  }
+
+  get isRoot () {
+    return this === this.root
+  }
+
+  get isProjectRoot () {
+    // only treat as project root if it's the actual link that is the root,
+    // or the target of the root link, but NOT if it's another link to the
+    // same root that happens to be somewhere else.
+    return this === this.root || this === this.root.target
+  }
+
+  get isRegistryDependency () {
+    if (this.edgesIn.size === 0) {
+      return false
+    }
+    for (const edge of this.edgesIn) {
+      if (!npa(edge.spec).registry) {
+        return false
+      }
+    }
+    return true
+  }
+
+  * ancestry () {
+    for (let anc = this; anc; anc = anc.resolveParent) {
+      yield anc
+    }
+  }
+
+  set root (root) {
+    // setting to null means this is the new root
+    // should only ever be one step
+    while (root && root.root !== root) {
+      root = root.root
+    }
+
+    root = root || this
+
+    // delete from current root inventory
+    this[_delistFromMeta]()
+
+    // can't set the root (yet) if there's no way to determine location
+    // this allows us to do new Node({...}) and then set the root later.
+    // just make the assignment so we don't lose it, and move on.
+    if (!this.path || !root.realpath || !root.path) {
+      this[_root] = root
+      return
+    }
+
+    // temporarily become a root node
+    this[_root] = this
+
+    // break all linksIn, we're going to re-set them if needed later
+    for (const link of this.linksIn) {
+      link[_target] = null
+      this.linksIn.delete(link)
+    }
+
+    // temporarily break this link as well, we'll re-set if possible later
+    const { target } = this
+    if (this.isLink) {
+      if (target) {
+        target.linksIn.delete(this)
+        if (target.root === this) {
+          target[_delistFromMeta]()
+        }
+      }
+      this[_target] = null
+    }
+
+    // if this is part of a cascading root set, then don't do this bit
+    // but if the parent/fsParent is in a different set, we have to break
+    // that reference before proceeding
+    if (this.parent && this.parent.root !== root) {
+      this.parent.children.delete(this.name)
+      this[_parent] = null
+    }
+    if (this.fsParent && this.fsParent.root !== root) {
+      this.fsParent.fsChildren.delete(this)
+      this[_fsParent] = null
+    }
+
+    if (root === this) {
+      this[_refreshLocation]()
+    } else {
+      // setting to some different node.
+      const loc = relpath(root.realpath, this.path)
+      const current = root.inventory.get(loc)
+
+      // clobber whatever is there now
+      if (current) {
+        current.root = null
+      }
+
+      this[_root] = root
+      // set this.location and add to inventory
+      this[_refreshLocation]()
+
+      // try to find our parent/fsParent in the new root inventory
+      for (const p of walkUp(dirname(this.path))) {
+        if (p === this.path) {
+          continue
+        }
+        const ploc = relpath(root.realpath, p)
+        const parent = root.inventory.get(ploc)
+        if (parent) {
+          /* istanbul ignore next - impossible */
+          if (parent.isLink) {
+            debug(() => {
+              throw Object.assign(new Error('assigning parentage to link'), {
+                path: this.path,
+                parent: parent.path,
+                parentReal: parent.realpath,
+              })
+            })
+            continue
+          }
+          const childLoc = `${ploc}${ploc ? '/' : ''}node_modules/${this.name}`
+          const isParent = this.location === childLoc
+          if (isParent) {
+            const oldChild = parent.children.get(this.name)
+            if (oldChild && oldChild !== this) {
+              oldChild.root = null
+            }
+            if (this.parent) {
+              this.parent.children.delete(this.name)
+              this.parent[_reloadNamedEdges](this.name)
+            }
+            parent.children.set(this.name, this)
+            this[_parent] = parent
+            // don't do it for links, because they don't have a target yet
+            // we'll hit them up a bit later on.
+            if (!this.isLink) {
+              parent[_reloadNamedEdges](this.name)
+            }
+          } else {
+            /* istanbul ignore if - should be impossible, since we break
+             * all fsParent/child relationships when moving? */
+            if (this.fsParent) {
+              this.fsParent.fsChildren.delete(this)
+            }
+            parent.fsChildren.add(this)
+            this[_fsParent] = parent
+          }
+          break
+        }
+      }
+
+      // if it doesn't have a parent, it's a top node
+      if (!this.parent) {
+        root.tops.add(this)
+      } else {
+        root.tops.delete(this)
+      }
+
+      // assign parentage for any nodes that need to have this as a parent
+      // this can happen when we have a node at nm/a/nm/b added *before*
+      // the node at nm/a, which might have the root node as a fsPa

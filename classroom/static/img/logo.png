@@ -1,0 +1,1278 @@
+tag_regexp="yes" postag="NN.*" inflected="yes">firth|frith|holt|weald|wood|woodland</token>
+                <token>,</token>
+                <token>wold</token>
+            </antipattern>
+            <antipattern><!--  wold, weald -->
+                <token>wold</token>
+                <token>,</token>
+                <token regexp="yes" postag_regexp="yes" postag="NN.*" inflected="yes">firth|frith|holt|weald|wood|woodland</token>
+            </antipattern>
+            <antipattern><!-- Wold's thesis -->
+                <token postag="NNP"/>
+                <token>'s</token>
+                <token chunk_re=".-NP-.*"/>
+            </antipattern>
+            <antipattern><!-- Wold argued  -->
+                <token postag="NNP"/>
+                <token min="0" max="4" postag="RB"/>
+                <token chunk_re=".-VP" postag_regexp="yes" postag="VB.*"/><!-- Ignore incorrect inflections: Wold actually argue -->
+            </antipattern>
+            <antipattern><!-- Verb: wold actually be [Found by WOLD_WOULD]-->
+                <token>wold</token>
+                <token min="0" max="4" postag="RB"/>
+                <token>be</token>
+            </antipattern>
+            <antipattern><!-- Verb: wold function /wold have been / wold have locked out [Found by WOLD_WOULD]-->
+                <token>wold</token>
+                <token chunk_re="E-NP-singular|B-VP" postag="VB"/>
+            </antipattern>
+            <pattern>
+                <token chunk_re=".-NP-.*" postag="NN:UN">wold</token>
+            </pattern>
+            <message>Did you mean the noun <suggestion>word</suggestion> or <suggestion>world</suggestion>? A wold is an upland area of open country.</message>
+            <short>Possible typo</short>
+            <example correction="word|world">This is the largest cake in the <marker>wold</marker>.</example><!-- Semantic ambiguity -->
+            <example correction="word|world">Is America the largest country in the <marker>wold</marker>?</example>
+            <example correction="Word|World"><marker>Wold</marker> politics interests me.</example>
+            <example correction="word|world">What are the origins of the <marker>wold</marker> wide web?</example>
+            <example correction="word|world">This unusual <marker>wold</marker> exemplified the problems of disambiguation.</example>
+            <example correction="word|world">This <marker>wold</marker> shows how a single letter can change the meaning entirely.</example>
+            <example correction="word|world">Our troubled <marker>wold</marker> pains me; it could be so much better.</example>
+            <example correction="word|world">Our <marker>wold</marker> has many problems.</example>
+            <example correction="word|world">Many people in the <marker>wold</marker> argued that trade was necessary.</example>
+            <example>This is the largest cake in the <marker>world</marker>.</example>
+            <example>I wold like a cup of tea.</example>
+            <example>400 million wold have been better.</example>
+            <example>The discovery of 5 wold have been hailed as a triumph of intergalactic space exploration.</example>
+            <example>More than three items wold not actually have been a problem.</example>
+            <example>... and specifically wold have locked out competition.</example>
+            <example>My first guess wold be a belt tensioner.</example>
+            <example>My second guess wold actually be that you should start again.</example>
+            <example>I can see how this wold be a powerful option for Insights.</example>
+            <example>Stow on the Wold is beautiful.</example>
+            <example>A wold is an upland area of open country.</example>
+            <example>They went riding out along the ridge of the wold toward Burythorpe.</example>
+            <example>Wold's thesis, A Study in the analysis of stationary time series, was an important contribution.</example>
+            <example>Wold argued that doing a trade over the telephone was still, in most cases, the quickest method.</example>
+            <example>Wold actually argue with me for hours.</example>
+            <example>Other terms used to mean "an area with a high density of trees" are wood, woodland, wold, weald, holt, frith and firth.</example>
+            <example>They had to do a firmware update to my SmartThings hub before the bulbs wold function.</example><!-- function/E-NP-singular -->
+            <example>I could not find any settings that wold override this.</example><!-- override/E-NP-singular -->
+            <example>The cybercourt wold have the same power to subpoena witnesses.</example>
+            <example type="triggers_error">... hillsides, incorporating the term, wold, meaning, woodland.</example>
+        </rule>
+
+    </category>
+
+    <category id="COMPOUNDING" name="Compounding">
+        <rule id="SEEKER_COMPOUNDS" name="home seeker (homeseeker)">
+            <pattern>
+                <token regexp="yes" case_sensitive="yes">[Hh]ome|[Ss]un|[Jj]ob</token>
+                <token case_sensitive="yes" regexp="yes">seekers?</token>
+            </pattern>
+            <message>The noun <suggestion>\1\2</suggestion> is spelled as one word.</message>
+            <example correction="homeseeker">I'm a <marker>home seeker</marker>.</example>
+        </rule>
+        <rule id="RESISTANT_HYPHEN" name="water resistant (water-resistant)">
+            <antipattern>
+                <token postag="W.*|SENT_START|CC|PCT" postag_regexp="yes" />
+                <token inflected="yes">be</token>
+                <token min="0">n't</token>
+                <token postag="DT|PRP\$" postag_regexp="yes" />
+                <token postag="JJ" min="0" />
+                <token regexp="yes">water|rub|fire|acid</token>
+                <token skip="-1">resistant</token>
+                <token>?</token>
+            </antipattern>
+            <pattern>
+                <token regexp="yes">water|rub|fire|acid|heat</token>
+                <token>resistant</token>
+            </pattern>
+            <message>The adjective <suggestion>\1-\2</suggestion> is normally spelled with a hyphen.</message>
+            <example correction="water-resistant">The new iPhones are <marker>water resistant</marker>.</example>
+            <example>Isn't the water resistant against any form of ...?</example>
+        </rule>
+        <rule id="THERETO" name="thereto (there to)">
+            <pattern>
+                <token inflected="yes" regexp="yes">go|be|come</token>
+                <marker>
+                    <token regexp="yes">t?hereto</token>
+                </marker>
+                <token postag="VB" />
+            </pattern>
+            <message>Did you mean <suggestion><match no="2" regexp_match="(?i)(^.*e)(to)" regexp_replace="$1 $2" /></suggestion> instead of the adverb "\2"?</message>
+            <example correction="here to">He is <marker>hereto</marker> help.</example>
+        </rule>
+        <rule id="DECISION_MAKING" name="decision making (decision-making)">
+            <antipattern>
+                <token inflected="yes">be</token>
+                <token min="0">n't</token>
+                <token regexp="yes">the|this|that</token>
+                <token>decision</token>
+                <token>making</token>
+                <token skip="-1">
+                    <exception postag="NN.*" postag_regexp="yes" />
+                </token>
+                <token>?</token>
+            </antipattern>
+            <pattern>
+                <token>decision</token>
+                <token>making</token>
+            </pattern>
+            <message>The noun <suggestion>\1-\2</suggestion> (= the process of deciding something) is spelled with a hyphen.</message>
+            <url>https://www.merriam-webster.com/dictionary/decision-making</url>
+            <example correction="decision-making">The <marker>decision making</marker> took us 3 days.</example>
+            <example>Isn't that decision making it harder for us?</example>
+        </rule>
+        <rule id="CHRISTMAS_TIME" name="Christmas time (Christmastime)">
+            <pattern>
+                <token>Christmas</token>
+                <token>time</token>
+            </pattern>
+            <message>The noun <suggestion>Christmastime</suggestion> (= the Christmas season) is normally spelled as one word.</message>
+            <url>https://www.merriam-webster.com/dictionary/Christmastime</url>
+            <example correction="Christmastime">I will have vacation around <marker>Christmas time</marker>.</example>
+        </rule>
+        <rule id="DO_ABLE" name="Do able (Doable)">
+            <pattern>
+                <token>do</token>
+                <token case_sensitive="yes">able</token>
+            </pattern>
+            <message>Did you mean the adjective <suggestion>doable</suggestion>?</message>
+            <example correction="doable">Do you think that this is <marker>do able</marker>?</example>
+        </rule>
+        <rule id="YARDER_HYPHEN" name="a 42 yarder (42-yarder)">
+            <pattern>
+                <token regexp="yes">an?|the|another</token>
+                <token postag="JJ.*" postag_regexp="yes" min="0" />
+                <marker>
+                    <token regexp="yes">\d+</token>
+                    <token>yarder</token>
+                </marker>
+            </pattern>
+            <message>It appears that a hyphen is missing.</message>
+            <suggestion>\3-\4</suggestion>
+            <example correction="42-yarder">He has thrown a <marker>42 yarder</marker>.</example>
+        </rule>
+        <rule id="PRO_RATA" name="prorata -> pro rata">
+            <pattern>
+                <token regexp="yes">pro-?(rata|bono|forma)</token>
+            </pattern>
+            <message>The Latin adjective/adverb <suggestion>pro <match no="1" regexp_match="(?i)pro-?" regexp_replace="" /></suggestion> is spelled as two words.</message>
+            <url>https://www.merriam-webster.com/dictionary/pro%20forma</url>
+            <example correction="pro rata">The transaction includes a <marker>pro-rata</marker> portion of the non-deductible contributions.</example>
+        </rule>
+        <rule id="DRIVE_THROUGH_HYPHEN" name="missing hyphen in 'drive-through'">
+            <antipattern>
+                <token postag="MD|PRP_S.*" postag_regexp="yes" />
+                <token postag="RB" min="0" />
+                <token>drive</token>
+            </antipattern>
+            <antipattern>
+                <token regexp="yes">please|lets</token>
+                <token postag="RB" min="0" />
+                <token>drive</token>
+            </antipattern>
+            <antipattern>
+                <token>let</token>
+                <token>'s</token>
+                <token postag="RB" min="0" />
+                <token>drive</token>
+            </antipattern>
+            <pattern>
+                <marker>
+                    <token>drive</token>
+                    <token>through</token>
+                </marker>
+                <token min="0" chunk_re="[BI]-NP.*" postag="NN.*|JJ.*" postag_regexp="yes" />
+                <token regexp="yes" chunk_re="E-NP.*">restaurants?|penalt(y|ies)|wash|shops?|facility|starbucks|mcdonalds|zoos?|safaris?|subways?|cinemas?|supermarkets?|sores?|markets?</token>
+            </pattern>
+            <message>The adjective <suggestion>\1-\2</suggestion> is spelled with a hyphen.</message>
+            <example correction="drive-through">We got our food from a <marker>drive through</marker> supermarket.</example>
+            <example>Let's drive through zoos and discover wild animals!</example>
+        </rule>
+        <rulegroup id="ON_OFF_SCREEN_HYPHEN" name="missing hyphen in 'on/off screen'">
+            <antipattern>
+                <token>screen</token>
+                <token regexp="yes">sizes?|resolutions?|readers?|shots?|sharings?|capture|dumps?|memor(y|ies)|savers?|mirror(ing)?|recorders?|recordings?</token>
+            </antipattern>
+            <rule>
+
+                <pattern>
+                    <token>off</token>
+                    <token>screen</token>
+                </pattern>
+                <message>The adjective or adverb <suggestion>\1-\2</suggestion> is spelled with a hyphen.</message>
+                <url>https://www.merriam-webster.com/dictionary/off-screen</url>
+                <example correction="off-screen">She remains a mystery woman <marker>off screen</marker>.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token postag="DT|PRP\$|IN" postag_regexp="yes">
+                        <exception postag="CC" />
+                    </token>
+                    <token postag="JJ.*" postag_regexp="yes" min="0" />
+                    <marker>
+                        <token>on</token>
+                        <token>screen</token>
+                    </marker>
+                    <token postag="NN.*" postag_regexp="yes">
+                        <exception postag="VBN|MD|IN|DT|PRP.*|RB" postag_regexp="yes" />
+                    </token>
+                </pattern>
+                <message>The adjective or adverb <suggestion>\3-\4</suggestion> is spelled with a hyphen.</message>
+                <url>https://www.merriam-webster.com/dictionary/on-screen</url>
+                <example correction="on-screen">I enabled the <marker>on screen</marker> keyboard.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token regexp="yes" inflected="yes">appear|be</token>
+                    <token postag="RB" min="0" />
+                    <marker>
+                        <token>on</token>
+                        <token chunk_re="E-NP.*">screen</token>
+                    </marker>
+                </pattern>
+                <message>The adjective <suggestion>\3-\4</suggestion> is spelled with a hyphen, or did you forget an article?</message>
+                <suggestion>\3 the \4</suggestion>
+                <url>https://www.merriam-webster.com/dictionary/on-screen</url>
+                <example correction="on-screen|on the screen">The notification appeared <marker>on screen</marker>.</example>
+            </rule>
+        </rulegroup>
+        <rule id="ONE_HANDED_HYPHEN" name="one handed (one-handed)">
+            <antipattern>
+                <token>no</token>
+                <token>one</token>
+            </antipattern>
+            <antipattern>
+                <token regexp="yes" skip="3">all|every|any</token>
+                <token>but</token>
+                <token regexp="yes">one|two</token>
+            </antipattern>
+            <antipattern>
+                <token>handed</token>
+                <token postag="DT|PRP\$|PRP_O.*" postag_regexp="yes" />
+            </antipattern>
+            <pattern>
+                <token regexp="yes">one|two</token>
+                <token>handed</token>
+            </pattern>
+            <message>The adjective or adverb <suggestion>\1-\2</suggestion> is spelled with a hyphen.</message>
+            <url>https://www.merriam-webster.com/dictionary/one-handed</url>
+            <example correction="one-handed">She caught the ball <marker>one handed</marker>.</example>
+            <example>No one handed them anything.</example>
+            <example>One handed me a basket and said "My child shop with care.</example>
+            <example>All the employees but one handed in their notices.</example>
+        </rule>
+        <rule id="OFF_HAND_COMPOUND" name="off hand (offhand)">
+            <antipattern>
+                <token>hand</token>
+                <token regexp="yes">in|to</token>
+                <token regexp="yes">hand|glove</token>
+            </antipattern>
+            <antipattern>
+                <token>hand</token>
+                <token regexp="yes">full?|cuff.*|bag.*|craft.*|luggage|brakes?|wash.*|down|jobs?|pick.*|knit.*|writ.*|over|puppets?|signals?|saniti.*</token>
+            </antipattern>
+            <antipattern>
+                <token inflected="yes" regexp="yes" chunk_re=".-VP">jump|pay|drop</token>
+                <token>off</token>
+            </antipattern>
+            <pattern>
+                <token>off</token>
+                <token regexp="yes">hand(ed)?</token>
+            </pattern>
+            <message>The adjective or adverb <suggestion>off<match no="2" case_conversion="alllower" /></suggestion> is spelled as one word.</message>
+            <url>https://www.merriam-webster.com/dictionary/offhand</url>
+            <example correction="offhand">I can't think of a better solution <marker>off hand</marker>.</example>
+        </rule>
+        <rule id="STRAIGHT_UP_HYPHEN" name="straight up (straight-up)">
+            <pattern>
+                <token postag="PRP\$|DT|IN|CD" postag_regexp="yes">
+                    <exception regexp="yes">like|to</exception>
+                </token>
+                <token regexp="yes" min="0">very|really|quite</token>
+                <token postag="JJ" min="0" />
+                <marker>
+                    <token>straight</token>
+                    <token regexp="yes">up|time</token>
+                </marker>
+                <token postag="JJ" min="0" />
+                <token postag="NN.*" postag_regexp="yes">
+                    <exception postag="IN|RB|CC|MD|DT|PRP.*" postag_regexp="yes" />
+                </token>
+            </pattern>
+            <message>The adjective <suggestion>\4-\5</suggestion> is spelled with a hyphen.</message>
+            <url>https://www.merriam-webster.com/dictionary/straight-up</url>
+            <example correction="straight-up">I'm a <marker>straight up</marker> gentleman.</example>
+        </rule>
+        <rule id="NEAR_DEATH_HYPHEN" name="near death (near-death)">
+            <pattern>
+                <marker>
+                    <token>near</token>
+                    <token>death</token>
+                </marker>
+                <token regexp="yes">experiences?</token>
+            </pattern>
+            <message>It appears that a hyphen is missing.</message>
+            <suggestion>\1-\2</suggestion>
+            <url>https://www.merriam-webster.com/dictionary/near-death%20experience</url>
+            <example correction="near-death">He had a <marker>near death</marker> experience.</example>
+        </rule>
+        <rulegroup id="UP_TO_DATE_HYPHEN" name="up to date (up-to-date)">
+            <url>https://www.merriam-webster.com/dictionary/up-to-date</url>
+            <rule>
+                <pattern>
+                    <token inflected="yes" regexp="yes">be|seem|look</token>
+                    <token postag="RB" min="0" />
+                    <marker>
+                        <token>up</token>
+                        <token>to</token>
+                        <token>date</token>
+                    </marker>
+                </pattern>
+                <message>It appears that hyphens are missing in the adjective <suggestion>\3-\4-\5</suggestion>.</message>
+                <example correction="up-to-date">The software is <marker>up to date</marker>.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <marker>
+                        <token>up</token>
+                        <token>to</token>
+                        <token>date</token>
+                    </marker>
+                    <token postag="JJ.*|NN.*" postag_regexp="yes">
+                        <exception postag="IN|MD|DT|PRP.*|RB|CC" postag_regexp="yes" />
+                    </token>
+                </pattern>
+                <message>It appears that hyphens are missing in the adjective <suggestion>\1-\2-\3</suggestion>.</message>
+                <example correction="up-to-date">That is an <marker>up to date</marker> software.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token>up</token>
+                    <token>2</token>
+                    <token>date</token>
+                </pattern>
+                <message>The adjective <suggestion>\1-to-\3</suggestion> is spelled with hyphens.</message>
+                <example correction="up-to-date">The software is <marker>up 2 date</marker>.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token regexp="yes">up-?2-?date</token>
+                </pattern>
+                <message>The adjective <suggestion>up-to-date</suggestion> is spelled with hyphens.</message>
+                <example correction="up-to-date">The software is <marker>up2date</marker>.</example>
+            </rule>
+        </rulegroup>
+        <rule id="THREE_LINE_HYPHEN" name="missing hyphen in 'three line'">
+            <pattern>
+                <marker>
+                    <token>three</token>
+                    <token>line</token>
+                </marker>
+                <token regexp="yes">octaves?|whips?|poems?|stanzas?|verses?|equal</token>
+            </pattern>
+            <message>It appears that a hyphen is missing.</message>
+            <suggestion>\1-\2</suggestion>
+            <example correction="three-line">The teacher explained to us what <marker>three line</marker> octaves are.</example>
+        </rule>
+        <rule id="FOR_PROFIT_HYPHEN" name="missing hyphen in 'for-profit'">
+            <pattern>
+                <token regexp="yes">an?|the|my|y?our|his|of</token>
+                <token postag="JJ.*" postag_regexp="yes" min="0" />
+                <marker>
+                    <token>for</token>
+                    <token>profit</token>
+                </marker>
+                <token postag="NN.*" postag_regexp="yes">
+                    <exception postag="PRP.*|DT|MD|CC|W.*|RB" postag_regexp="yes" />
+                </token>
+            </pattern>
+            <message>The adjective <suggestion>\3-\4</suggestion> is normally spelled with a hyphen.</message>
+            <url>https://www.merriam-webster.com/dictionary/for-profit</url>
+            <example correction="for-profit">Microsoft is a <marker>for profit</marker> business.</example>
+        </rule>
+        <rule id="TRICKLE_DOWN_HYPHEN" name="missing hyphen in 'trickle down'">
+            <pattern>
+                <marker>
+                    <token>trickle</token>
+                    <token>down</token>
+                </marker>
+                <token regexp="yes">econom(y|ies)|effects?|economics|spendings?|benefits?|theor(y|ies)|technolog(y|ies)|methods?</token>
+            </pattern>
+            <message>It appears that a hyphen is missing.</message>
+            <suggestion>\1-\2</suggestion>
+            <url>https://www.merriam-webster.com/dictionary/trickle-down</url>
+            <example correction="Trickle-down"><marker>Trickle down</marker> economics is the economic proposition that taxes on businesses and the wealthy in society should be reduced as a means to stimulate business investment in the short term and benefit society at large in the long term.</example>
+        </rule>
+        <rulegroup id="TAILOR_MADE_HYPHEN" name="missing hyphen in 'tailor-made'">
+            <url>https://www.merriam-webster.com/dictionary/tailor-made</url>
+            <rule>
+                <pattern>
+                    <token inflected="yes" regexp="yes">be|seem</token>
+                    <token postag="RB" min="0">
+                        <exception postag="IN|EX" postag_regexp="yes" />
+                    </token>
+                    <marker>
+                        <token>tailor</token>
+                        <token>made</token>
+                    </marker>
+                </pattern>
+                <message>The adjective <suggestion>\3-\4</suggestion> is spelled with a hyphen.</message>
+                <example correction="tailor-made">This solution was <marker>tailor made</marker> for this scenario.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <marker>
+                        <token>tailor</token>
+                        <token>made</token>
+                    </marker>
+                    <token>for</token>
+                </pattern>
+                <message>The adjective <suggestion>\1-\2</suggestion> is spelled with a hyphen.</message>
+                <example correction="tailor-made">This solution was <marker>tailor made</marker> for this scenario.</example>
+            </rule>
+        </rulegroup>
+        <rulegroup id="X_RATED_HYPHEN" name="X-rated">
+            <rule>
+                <antipattern>
+                    <token>rated</token>
+                    <token regexp="yes">it|them|this|that</token>
+                </antipattern>
+                <antipattern>
+                    <token>rated</token>
+                    <token postag="PRP\$|DT" postag_regexp="yes" />
+                </antipattern>
+                <pattern>
+                    <token>x</token>
+                    <token>rated</token>
+                </pattern>
+                <message>The adjective <suggestion>X-rated</suggestion> is spelled with a hyphen.</message>
+                <example correction="X-rated">This move is <marker>x rated</marker>.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token case_sensitive="yes">x-rated</token>
+                </pattern>
+                <message>The "X" in the adjective <suggestion>X-rated</suggestion> needs to be capitalized.</message>
+                <example correction="X-rated">This move is <marker>x-rated</marker>.</example>
+            </rule>
+        </rulegroup>
+        <rulegroup id="DAYTIME" name="day time (daytime)">
+            <antipattern>
+                <token>time</token>
+                <token regexp="yes">continuums?|frames?|limits?|periods?|windows?</token>
+            </antipattern>
+            <antipattern>
+                <token>time</token>
+                <token chunk_re="B-VP.*" />
+            </antipattern>
+            <rule>
+                <pattern>
+                    <token postag="IN|RP" postag_regexp="yes" />
+                    <token min="0" postag="P?DT" postag_regexp="yes" />
+                    <marker>
+                        <token>day</token>
+                        <token>time</token>
+                    </marker>
+                </pattern>
+                <message>This word is usually spelled as one word.</message>
+                <suggestion>daytime</suggestion>
+                <example correction="daytime">You should go during the <marker>day time</marker>, it's really pretty.</example>
+                <example>The next day time was running out.</example>
+                <example>One day time will no longer be an issue.</example>
+                <example>I tell him every day time and again, but he won't listen.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <marker>
+                        <token>day</token>
+                        <token>time</token>
+                    </marker>
+                    <token chunk_re="[IE]-NP.*" />
+                </pattern>
+                <message>This word is usually spelled as one word.</message>
+                <suggestion>daytime</suggestion>
+                <example correction="daytime">I joined some <marker>day time</marker> tennis leagues at our club.</example>
+                <example>The next day time was running out.</example>
+                <example>One day time will no longer be an issue.</example>
+                <example>I tell him every day time and again, but he won't listen.</example>
+            </rule>
+        </rulegroup>
+        <rulegroup id="ONE_PAGER_HYPHEN" name="one pager (one-pager)">
+            <rule>
+                <pattern>
+                    <token postag="DT|PRP\$" postag_regexp="yes" />
+                    <token postag="JJ.*" postag_regexp="yes" min="0" />
+                    <marker>
+                        <token>one</token>
+                        <token>pager</token>
+                    </marker>
+                </pattern>
+                <message>This noun is normally spelled with a hyphen.</message>
+                <suggestion>\3-\4</suggestion>
+                <example correction="one-pager">I'm have written a <marker>one pager</marker>.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token>one</token>
+                    <token>pagers</token>
+                </pattern>
+                <message>This noun is normally spelled with a hyphen.</message>
+                <suggestion>\1-\2</suggestion>
+                <example correction="one-pagers">I'm have written a couple of <marker>one pagers</marker>.</example>
+            </rule>
+        </rulegroup>
+        <rule id="SECOND_LARGEST_HYPHEN" name="Missing hyphen in 'second largest'">
+            <pattern>
+                <marker>
+                    <token regexp="yes">second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth</token>
+                    <token postag="JJS">
+                        <exception regexp="yes">most|least</exception>
+                    </token>
+                </marker>
+                <token postag="JJ" min="0" />
+                <token postag="NN.*" postag_regexp="yes">
+                    <exception postag="PRP.*|DT|VBN|CC|IN|MD" postag_regexp="yes" />
+                </token>
+            </pattern>
+            <message>It appears that a hyphen is missing.</message>
+            <suggestion>\1-\2</suggestion>
+            <example correction="fourth-largest">Cologne is the <marker>fourth largest</marker> city in Germany.</example>
+            <example>She is the second most recognizable woman.</example>
+        </rule>
+        <rule id="MILLION_DOLLAR_HYPHEN" name="Missing hyphen in 'billion dollar'">
+            <antipattern>
+                <token postag="CD" skip="2" />
+                <token regexp="yes">(multi)?[mb]illion|(multi)?trillion|thousand</token>
+            </antipattern>
+            <antipattern>
+                <token regexp="yes" skip="2">.*[0-9].*</token>
+                <token regexp="yes">(multi)?[mb]illion|(multi)?trillion|thousand</token>
+            </antipattern>
+            <pattern>
+                <marker>
+                    <token regexp="yes">(multi)?[mb]illion|(multi)?trillion|thousand</token>
+                    <token regexp="yes">dollar|euro|pound</token>
+                </marker>
+                <token regexp="yes">houses?|ideas?|apps?|compan(y|ies)|corporates?|start-?ups?|business|corporations?|bills?|cars?|mansions?|enterprises?|questions?|industry|plans?|series|yachts?|ships?|sailboats?|boats?|mistakes?|offer</token>
+            </pattern>
+            <message>It appears that a hyphen is missing.</message>
+            <suggestion>\1-\2</suggestion>
+            <example correction="billion-dollar">That's a <marker>billion dollar</marker> idea!</example>
+        </rule>
+        <rulegroup id="FUND_RAISE_HYPHEN" name="Missing hyphen in 'fund raise'">
+            <rule>
+                <pattern>
+                    <token postag="MD|TO" postag_regexp="yes">
+                        <exception>need</exception>
+                    </token>
+                    <token postag="RB" min="0" />
+                    <marker>
+                        <token>fund</token>
+                        <token>raise</token>
+                    </marker>
+                </pattern>
+                <message>The verb <suggestion>\3-\4</suggestion> is spelled as one word.</message>
+                <example correction="fund-raise">I want to <marker>fund raise</marker> for a good cause.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token inflected="yes" regexp="yes">have|be</token>
+                    <token postag="RB" min="0" />
+                    <marker>
+                        <token>fund</token>
+                        <token>raised</token>
+                    </marker>
+                </pattern>
+                <message>The verb <suggestion>\3-\4</suggestion> is spelled as one word.</message>
+                <example correction="fund-raised">I have <marker>fund raised</marker> for a good cause.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token regexp="yes">s?he|it|you|we|they|I|(some|any|no|every)(body|thing|one)</token>
+                    <token postag="RB" min="0" />
+                    <marker>
+                        <token>fund</token>
+                        <token regexp="yes">raises?</token>
+                    </marker>
+                </pattern>
+                <message>The verb <suggestion>\3-\4</suggestion> is spelled as one word.</message>
+                <example correction="fund-raise">I <marker>fund raise</marker> for a good cause.</example>
+            </rule>
+        </rulegroup>
+        <rulegroup id="HEAD_TO_HEAD_HYPHEN" name="missing hyphens in 'head-to-head'">
+            <url>https://www.merriam-webster.com/dictionary/head-to-head</url>
+            <rule>
+                <pattern>
+                    <token inflected="yes" regexp="yes" chunk_re=".-VP">be|go|race|compete|stand|run|meet|play|perform</token>
+                    <marker>
+                        <token>head</token>
+                        <token>to</token>
+                        <token>head</token>
+                    </marker>
+                </pattern>
+                <message>The adjective or adverb <suggestion>\2-\3-\4</suggestion> is normally spelled with hyphens.</message>
+                <example correction="head-to-head">They are <marker>head to head</marker> in the race.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <marker>
+                        <token>head</token>
+                        <token>to</token>
+                        <token>head</token>
+                    </marker>
+                    <token postag="JJ.*" postag_regexp="yes" min="0" />
+                    <token postag="NN.*" postag_regexp="yes">
+                        <exception postag="IN|DT|PRP.*|RB|CC|MD|VBN" postag_regexp="yes" />
+                    </token> 
+                </pattern>
+                <message>The adjective or adverb <suggestion>\1-\2-\3</suggestion> is normally spelled with hyphens.</message>
+                <example correction="head-to-head">It is a <marker>head to head</marker> battle.</example>
+            </rule>
+        </rulegroup>
+        <rulegroup id="WEEK_OVER_WEEK_HYPHEN" name="missing hyphen in 'year over year'">
+            <rule>
+                <pattern>
+                    <token regexp="yes">an?|the|y?our|my|their|his|her|this|no</token>
+                    <marker>
+                        <token regexp="yes">week|day|year|month</token>
+                        <token>over</token>
+                        <token>
+                            <match no="1" />
+                        </token>
+                    </marker>
+                    <token postag="NN.*" postag_regexp="yes">
+                        <exception postag="IN|RB|VBN|DT|MD|CC|PRP.*" postag_regexp="yes" />
+                    </token>
+                </pattern>
+                <message>This word is normally spelled with hyphens.</message>
+                <suggestion>\2-\3-\4</suggestion>
+                <example correction="week-over-week">This <marker>week over week</marker> increase was caused by our ad campaign.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token regexp="yes">an?|the|y?our|my|their|his|her|this|no</token>
+                    <token postag="CD|JJ.*|UNKNOWN" postag_regexp="yes" />
+                    <marker>
+                        <token regexp="yes">week|day|year|month|quarter</token>
+                        <token>over</token>
+                        <token>
+                            <match no="2" />
+                        </token>
+                    </marker>
+                    <token postag="NN.*" postag_regexp="yes">
+                        <exception postag="IN|RB|VBN|DT|MD|CC|PRP.*" postag_regexp="yes" />
+                    </token>
+                </pattern>
+                <message>This word is normally spelled with hyphens.</message>
+                <suggestion>\3-\4-\5</suggestion>
+                <example correction="week-over-week">This 40% <marker>week over week</marker> increase was caused by our ad campaign.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token regexp="yes">%|percent|\d+%</token>
+                    <marker>
+                        <token regexp="yes">week|day|year|month|quarter</token>
+                        <token>over</token>
+                        <token>
+                            <match no="1" />
+                        </token>
+                    </marker>
+                    <token postag="NN.*" postag_regexp="yes">
+                        <exception postag="IN|RB|VBN|DT|MD|CC|PRP.*" postag_regexp="yes" />
+                    </token>
+                </pattern>
+                <message>This word is normally spelled with hyphens.</message>
+                <suggestion>\2-\3-\4</suggestion>
+                <example correction="week-over-week">This 40% <marker>week over week</marker> increase was caused by our ad campaign.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <marker>
+                        <token regexp="yes">week|day|year|month|quarter</token>
+                        <token>over</token>
+                        <token>
+                            <match no="0" />
+                        </token>
+                    </marker>
+                    <token regexp="yes">increases?|decreases?|growth|comparisons?|changes?|declines?</token>
+                </pattern>
+                <message>This word is normally spelled with hyphens.</message>
+                <suggestion>\1-\2-\3</suggestion>
+                <example correction="week-over-week">This 40% <marker>week over week</marker> increase was caused by our ad campaign.</example>
+            </rule>
+        </rulegroup>
+
+        <rule id="ABOVE_MENTIONED" name="above mentioned">
+            <antipattern>
+                <token postag="CC|SENT_START|PCT" postag_regexp="yes" />
+                <token postag="IN" />
+                <token />
+                <token>mentioned</token>
+                <token postag="PRP.*|DT|EX" postag_regexp="yes" />
+            </antipattern>
+            <antipattern>
+                <token postag="CC|SENT_START|PCT" postag_regexp="yes" />
+                <token postag="IN" />
+                <token />
+                <token>mentioned</token>
+                <token regexp="yes">,|:</token>
+            </antipattern>
+            <pattern>
+                <token regexp="yes">above|below</token>
+                <token>mentioned</token>
+            </pattern>
+            <message>The adjective <suggestion>\1-\2</suggestion> is spelled with a hyphen.</message>
+            <url>https://www.lexico.com/definition/above-mentioned</url>
+            <example correction="above-mentioned">The <marker>above mentioned</marker> changes weren't implemented.</example>
+        </rule>
+        <rule id="EVERY_BODY" name="every body (everybody)">
+            <antipattern case_sensitive="yes">
+                <token>every</token>
+                <token regexp="yes">Body|BODY</token>
+            </antipattern>
+            <antipattern>
+                <token>body</token>
+                <token>of</token>
+                <token>water</token>
+            </antipattern>
+            <antipattern>
+                <token>body</token>
+                <token regexp="yes">tag|element|statement</token>
+            </antipattern>
+            <antipattern>
+                <token>every</token>
+                <token>body</token>
+                <token postag="VBZ" />
+                <token postag="DT|PRP\$" postag_regexp="yes" />
+                <token postag="JJ.*" postag_regexp="yes" />
+                <token>body</token>
+            </antipattern>
+            <antipattern>
+                <token>body</token>
+                <token>is</token>
+                <token regexp="yes">beautiful|wonderful</token>
+            </antipattern>
+            <pattern>
+                <token>every</token>
+                <token chunk_re="E-NP.*">body</token>
+            </pattern>
+            <message>The pronoun <suggestion>every<match no="2" case_conversion="alllower" /></suggestion> is spelled as one word.</message>
+            <url>https://www.merriam-webster.com/dictionary/everybody</url>
+            <example correction="Everybody"><marker>Every body</marker> is happy!</example>
+            <example correction="everybody">Please inform <marker>every body</marker> about this.</example>
+            <example>Every body is a good body.</example>
+        </rule>
+        <rule id="SOME_TIMES" name="some times (sometimes)">
+            <antipattern>
+                <token>times</token>
+                <token>new</token>
+                <token>roman</token>
+            </antipattern>
+            <antipattern>
+                <token>times</token>
+                <token regexp="yes">journalists?|newspapers?</token>
+            </antipattern>
+            <antipattern>
+                <token postag="IN" />
+                <token>some</token>
+            </antipattern>
+            <antipattern>
+                <token skip="1">times</token>
+                <token regexp="yes">this|next|upcoming|last</token>
+                <token regexp="yes">week|month|year|week-?end</token>
+            </antipattern>
+            <antipattern>
+                <token skip="1">times</token>
+                <token regexp="yes">ago|yesterday|today|tonight|tomorrow</token>
+            </antipattern>
+            <antipattern>
+                <token regexp="yes">are|'re|were|be</token>
+                <token>some</token>
+                <token>times</token>
+                <token min="0">back</token>
+                <token regexp="yes">where|when(ever)?|then</token>
+            </antipattern>
+            <antipattern>
+                <token regexp="yes">have|'ve</token>
+                <token postag="RB" min="0" />
+                <token>been</token>
+                <token>some</token>
+                <token>times</token>
+                <token min="0">back</token>
+                <token regexp="yes">where|when(ever)?|then</token>
+            </antipattern>
+            <antipattern>
+                <token>times</token>
+                <token regexp="yes">and|&amp;|or</token>
+                <token>dates</token>
+            </antipattern>
+            <antipattern>
+                <token skip="4">dates</token>
+                <token>times</token>
+            </antipattern>
+            <antipattern>
+                <token inflected="yes">take</token>
+                <token>some</token>
+            </antipattern>
+            <antipattern>
+                <token skip="2">let</token>
+                <token>know</token>
+                <token>some</token>
+                <token>times</token>
+            </antipattern>
+            <antipattern>
+                <token inflected="yes" regexp="yes">block|reserve|mark|confirm|book|schedule</token>
+                <token>some</token>
+                <token>times</token>
+            </antipattern>
+            <antipattern>
+                <token>some</token>
+                <token>times</token>
+                <token inflected="yes" regexp="yes">block|reserve|mark|confirm|book|schedule</token>
+            </antipattern>
+            <antipattern>
+                <token>times</token>
+                <token regexp="yes" skip="3">in|on|at|to</token>
+                <token regexp="yes">timetables?|timelines?|calendars?|schedules?</token>
+            </antipattern>
+            <antipattern>
+                <token regexp="yes" inflected="yes" skip="1">know|remember|send|share</token>
+                <token>some</token>
+                <token>times</token>
+                <token min="0">back</token>
+                <token regexp="yes">where|when(ever)?|then</token>
+            </antipattern>
+            <antipattern><!-- Please send me some times you are available to chat. -->
+                <token>some</token>
+                <token>times</token>
+                <token min="0" regexp="yes">when|where|once|after|before</token>
+                <token postag="PRP|NNP" postag_regexp="yes" />
+                <token postag="MD" min="0" />
+                <token inflected="yes" regexp="yes">be|have</token>
+                <token postag="RB" min="0" />
+                <token regexp="yes">available|free</token>
+            </antipattern>
+            <antipattern>
+                <token regexp="yes">here|below|above</token>
+                <token>are</token>
+                <token>some</token>
+                <token>times</token>
+                <token regexp="yes">that|which</token>
+            </antipattern>
+            <antipattern>
+                <token>what</token>
+                <token regexp="yes">are|were</token>
+                <token>some</token>
+                <token>times</token>
+            </antipattern>
+            <antipattern>
+                <token regexp="yes">are|were|propose[sd]?</token>
+                <token>some</token>
+                <token>times</token>
+                <token>that</token>
+            </antipattern>
+            <antipattern>
+                <token>times</token>
+                <token>in</token>
+                <token regexp="yes">CST|CDT|MST|MDT|PST|PDT|EST|EDT</token>
+            </antipattern>
+            <antipattern>
+                <token>some</token>
+                <token>times</token>
+                <token>that</token>
+                <token>work</token>
+                <token>for</token>
+                <token regexp="yes">you|me|us|them|him|her</token>
+            </antipattern>
+            <pattern>
+                <token>some</token>
+                <token case_sensitive="yes">times</token>
+            </pattern>
+            <message>Did you mean the adverb <suggestion>sometimes</suggestion> (= occasionally)?</message>
+            <url>https://www.merriam-webster.com/dictionary/sometimes</url>
+            <example correction="Sometimes"><marker>Some times</marker> I have to check it twice just to be sure.</example>
+            <example>Still not amazing, but he'll be useful for some players at some times.</example>
+            <example>I feel great with Stronglifts, I will study new programs but it will take some times.</example>
+            <example>It all happened some times ago.</example>
+            <example>Please let me know some times that would be convenient for you.</example>
+            <example>There have been some times where I've thrown even more resources than you at a new Mythic and gotten nothing for my investment.</example>
+            <example>You will notice that I have blocked some times on my calendar to get reviews written and delivered.</example>
+            <example>I selected some times for tomorrow.</example>
+            <example>Please send me some times you are available to chat.</example>
+            <example type="triggers_error">Sami and Layla spoke some times but they never dated.</example>
+        </rule>
+        <rule id="OUT_PERFORM_COMPOUND" name="out + perform">
+            <antipattern>
+                <token postag="VB.*" postag_regexp="yes">
+                    <exception postag="MD" />
+                    <exception inflected="yes" regexp="yes">be|do|have</exception>
+                </token>
+                <token>out</token>
+            </antipattern>
+            <pattern>
+                <token regexp="yes" case_sensitive="yes">[Oo]ut</token>
+                <token inflected="yes">perform</token>
+            </pattern>
+            <message>The verb <suggestion>out<match no="2" case_conversion="alllower" /></suggestion> is spelled as one word.</message>
+            <example correction="outperforming">Tesla is <marker>out performing</marker> other carmakers when it comes to EV.</example>
+        </rule>
+        <rule id="WELL_WISH_HYPHEN" name="missing hyphen in 'well wishes'">
+            <pattern>
+                <token postag="VB.*|DT|PRP\$|IN" postag_regexp="yes" />
+                <token postag="JJ" min="0" />
+                <marker>
+                    <token>well</token>
+                    <token chunk_re="[IE]-NP.*" regexp="yes">wish(es)?</token>
+                </marker>
+            </pattern>
+            <message>The noun <suggestion>\3-\4</suggestion> is spelled with a hyphen.</message>
+            <url>https://www.merriam-webster.com/dictionary/well-wish</url>
+            <example correction="well-wishes">Thanks for the <marker>well wishes</marker>.</example>
+        </rule>
+        <rule id="TRUE_CRIME_HYPHEN" name="missing hyphen in 'true-crime'">
+            <pattern>
+                <marker>
+                    <token>true</token>
+                    <token>crime</token>
+                </marker>
+                <token regexp="yes">tales?|documentar(y|ies)|movies?|series|tv|shows?|stor(y|ies)|podcasts?|books?|films?|museums?|enthusiasts?|fans?|files?|communit(y|ies)|sitcoms?</token>
+            </pattern>
+            <message>Consider adding a hyphen to this noun/adjective.</message>
+            <suggestion>\1-\2</suggestion>
+            <example correction="true-crime">He likes to watch <marker>true crime</marker> documentaries.</example>
+        </rule>
+        <rule id="ON_OFF_HYPHEN" name="on off (on-off)">
+            <pattern>
+                <marker>
+                    <token>on</token>
+                    <token>off</token>
+                </marker>
+                <token regexp="yes">relationships?|switch(es)?|affairs?|patterns?</token>
+            </pattern>
+            <message>The adjective <suggestion>\1-\2</suggestion> is spelled with a hyphen.</message>
+            <url>https://www.merriam-webster.com/dictionary/on-off</url>
+            <example correction="on-off">Tom and Mary are having an <marker>on off</marker> relationship.</example>
+        </rule>
+        <rulegroup id="VERB_NOUN_CONFUSION" name="warm up (warm-up)">
+            <antipattern>
+                <token regexp="yes">&nouns_with_a;</token>
+                <token>a</token>
+            </antipattern>
+            <antipattern>
+                <token postag="V.*" postag_regexp="yes"/>
+                <token>her</token>
+            </antipattern>
+            <rule><!-- up -->
+                <antipattern><!-- The harassed mule got his back up and began kicking up dust. -->
+                    <token inflected="yes" regexp="yes" skip="4">get|lift|put|move|bring</token>
+                    <token>back</token>
+                    <token>up</token>
+                </antipattern>
+                <antipattern>
+                    <token>up</token>
+                    <token>in</token>
+                    <token>the</token>
+                    <token>air</token>
+                </antipattern>
+                <antipattern>
+                    <token>up</token>
+                    <token>in</token>
+                    <token>arms</token>
+                </antipattern>
+                <antipattern>
+                    <token>up</token>
+                    <token>to</token>
+                    <token regexp="yes">date|par|here|mud|one</token>
+                </antipattern>
+                <antipattern>
+                    <token>up</token>
+                    <token>to</token>
+                    <token>at</token>
+                    <token>least</token>
+                </antipattern>
+                <antipattern>
+                    <token>up</token>
+                    <token>to</token>
+                    <token postag="CD" />
+                </antipattern>
+                <antipattern>
+                    <token>up</token>
+                    <token>to</token>
+                    <token>no</token>
+                    <token>good</token>
+                </antipattern>
+                <antipattern>
+                    <token>up</token>
+                    <token>to</token>
+                    <token>a</token>
+                    <token>date</token>
+                </antipattern>
+                <antipattern>
+                    <token>up</token>
+                    <token regexp="yes">above|against|there|untill?</token>
+                </antipattern>
+                <antipattern>
+                    <token>up</token>
+                    <token regexp="yes">and|&amp;|n?or</token>
+                    <token>down</token>
+                </antipattern>
+                <antipattern><!-- Let's take a walk up the mountain -->
+                    <token regexp="yes">walk|run</token>
+                    <token>up</token>
+                    <token postag="DT|PRP\$" postag_regexp="yes" />
+                </antipattern>
+                <antipattern>
+                    <token postag="PRP$" />
+                    <token>chin</token>
+                    <token>up</token>
+                </antipattern>
+                <antipattern>
+                    <token inflected="yes" chunk_re=".-VP">set</token>
+                    <token skip="2" />
+                    <token>up</token>
+                </antipattern>
+                <antipattern>
+                    <token>tie</token>
+                    <token>up</token>
+                    <token>to</token>
+                </antipattern>
+                <antipattern>
+                    <token>look</token>
+                    <token>up</token>
+                    <token>to</token>
+                    <token regexp="yes">see|check|recogni[sz]e</token>
+                </antipattern>
+                <pattern>
+                    <token regexp="yes">an?|the|my|her|his|their|y?our</token>
+                    <marker>
+                        <token regexp="yes">
+                            mash|check|slap|sign|break|mess|mix|pull|push|walk|tie|take|sit|top|warm|run|hang|start|pop|line|catch|stand|mark|set|pick|back|hook|clean|look|make|follow|cover|brush|get|lock|step|speed|mock|link|dial|wash|chin|wake|screw|hurry|call|fuck
+                        </token>
+                        <token regexp="yes">ups?</token>
+                    </marker>
+                </pattern>
+                <message>This noun is spelled as one word.</message>
+                <suggestion suppress_misspelled="yes">\2-\3</suggestion>
+                <!-- <suggestion suppress_misspelled="yes"><match no="2" case_conversion="alllower" /><match no="3" case_conversion="alllower" /></suggestion> -->
+                <example correction="warm-up">A <marker>warm up</marker> is required before every workout session.</example>
+                <example>The harassed mule got his back up and began kicking up dust.</example>
+                <example>The omnibus swap below, plus this Annex A make up the "omnibus" confirm.</example>
+                <example>Let's take a walk up the mountain!</example>
+                <example correction="chin-up">He can't even do a <marker>chin up</marker>.</example>
+                <example>Keep your chin up!</example>
+                <example correction="break-up">After her <marker>break up</marker> with Marc, she stayed single for a year.</example>
+                <example>I will have her break up all relationships.</example>
+                <example>I will make her warm up before the training starts.</example>
+                <example>She can poll everyone for a convenient time slot and set the call up.</example>
+            </rule>
+            <rule><!-- ups -->
+                <pattern>
+                    <token regexp="yes">
+                        mash|check|slap|sign|break|mess|mix|pull|push|walk|tie|take|sit|top|warm|run|hang|start|pop|line|catch|stand|mark|set|pick|back|hook|clean|look|make|follow|cover|brush|get|lock|step|speed|mock|link|dial|wash|chin|wake|screw|call
+                    </token>
+                    <token>ups</token>
+                </pattern>
+                <message>This plural noun is spelled as one word.</message>
+                <suggestion>\1-\2</suggestion>
+                <!-- <suggestion suppress_misspelled="yes"><match no="2" case_conversion="alllower" /><match no="3" case_conversion="alllower" /></suggestion> -->
+                <example correction="warm-ups">We did two <marker>warm ups</marker> before we started the training.</example>
+                <example>The harassed mule got his back up and began kicking up dust.</example>
+                <example>The omnibus swap below, plus this Annex A make up the "omnibus" confirm.</example>
+                <example>Let's take a walk up the mountain!</example>
+            </rule>
+            <rule><!-- out -->
+                <!-- https://internal1.languagetool.org/regression-tests/via-http/2021-01-30/en-US/result_grammar_VERB_NOUN_CONFUSION[2].html -->
+                <antipattern>
+                    <token>out</token>
+                    <token regexp="yes">of|there</token>
+                </antipattern>
+                <antipattern>
+                    <token>out</token>
+                    <token regexp="yes">and|&amp;</token>
+                    <token>about</token>
+                </antipattern>
+                <antipattern>
+                    <token inflected="yes" regexp="yes" skip="4">get|move|put</token>
+                    <token regexp="yes">cash|work|sign</token>
+                    <token>out</token>
+                </antipattern>
+                <antipattern>
+                    <token>out</token>
+                    <token regexp="yes">and|&amp;|n?or</token>
+                    <token>in</token>
+                </antipattern>
+                <antipattern>
+                    <token inflected="yes" skip="2" regexp="yes">take|spread</token>
+                    <token>time</token>
+                    <token>out</token>
+                </antipattern>
+                <antipattern>
+                    <token inflected="yes">read</token>
+                    <token postag="DT|PRP\$" postag_regexp="yes" />
+                    <token />
+                    <token>out</token>
+                    <token>loud</token>
+                </antipattern>
+                <antipattern>
+                    <token inflected="yes">look</token>
+                    <token>out</token>
+                    <token>the</token>
+                </antipattern>
+                <pattern>
+                    <token regexp="yes">an?|the|my|his|her|their|y?our</token>
+                    <marker>
+                        <token regexp="yes">call|miss|fall|cut|black|opt|stand|pull|hide|bail|pay|freak|hang|shout|cash|print|try|burn|sign|log|break|time|look|roll|work|check|lay|take|read|knock|wash|watch|carry|turn</token>
+                        <token regexp="yes">outs?</token>
+                    </marker>
+                </pattern>
+                <message>This noun is spelled as one word.</message>
+                <suggestion suppress_misspelled="yes">\2-\3</suggestion>
+                <!-- <suggestion suppress_misspelled="yes"><match no="2" case_conversion="alllower" /><match no="3" case_conversion="alllower" /></suggestion> -->
+                <example correction="knock-out">A <marker>knock out</marker> put him to the floor.</example>
+                <example>Stop your grumbling and get the work out of the way.</example>
+                <example>Last night, I got a call out of the blue from Tom.</example>
+                <example>At least you got your cash out and booked.</example>
+                <example>Thank you for taking the time out of your busy schedule to provide assistance.</example>
+                <example>Sami never spends his time out there.</example>
+                <example>Please read your work out loud.</example>
+                <example>A look out the front door …</example>
+            </rule>
+            <rule><!-- outs -->
+                <pattern>
+                    <token regexp="yes">call|miss|fall|cut|black|opt|stand|pull|hide|bail|pay|freak|hang|shout|cash|print|try|burn|sign|log|break|time|look|roll|work|check|lay|take|read|knock|wash|watch|carry</token>
+                    <token>outs</token>
+                </pattern>
+                <message>This plural noun is spelled as one word.</message>
+                <suggestion>\1-\2</suggestion>
+                <example correction="knock-outs">These <marker>knock outs</marker> put him to the floor.</example>
+                <example>Stop your grumbling and get the work out of the way.</example>
+            </rule>
+            <rule><!-- off -->
+                <antipattern><!-- Take your hand off my neck. -->
+                    <token>off</token>
+                    <token postag="DT|PRP\$" postag_regexp="yes" />
+                </antipattern>
+                <antipattern>
+                    <token>off</token>
+                    <token>course</token>
+                </antipattern>
+                <antipattern>
+                    <token regexp="yes" inflected="yes">get|take|cut|slice|hit|wipe|snatch|pull</token>
+                    <token skip="5" />
+                    <token>off</token>
+                </antipattern>
+                <antipattern>
+                    <token>off</token>
+                    <token regexp="yes">air|again</token>
+                </antipattern>
+                <antipattern>
+                    <token>hand</token>
+                    <token>off</token>
+                </antipattern>
+                <pattern>
+                    <token regexp="yes">an?|the|my|his|her|their|y?our</token>
+                    <marker>
+                        <token regexp="yes">log|show|spin|take|sign|write|pay|run|hand|drop|kick|lay|shut|cut|rub|stand|trade|send|brush</token>
+                        <token regexp="yes">offs?</token>
+                    </marker>
+                </pattern>
+                <message>This noun is spelled as one word.</message>
+                <suggestion suppress_misspelled="yes">\2-\3</suggestion>
+                <!-- <suggestion suppress_misspelled="yes"><match no="2" case_conversion="alllower" /><match no="3" case_conversion="alllower" /></suggestion> -->
+                <example correction="kick-off">The <marker>kick off</marker> for the project starts at 8am.</example>
+                <example>Take your hand off my neck.</example>
+                <example>You can't take your hand off fast enough!</example>
+                <example>He is cutting his hand off.</example>
+            </rule>
+            <rule><!-- offs -->
+                <pattern>
+                    <token regexp="yes">log|show|spin|take|sign|write|pay|run|hand|drop|kick|lay|shut|cut|rub|stand|trade|send|brush</token>
+                    <token>offs</token>
+                </pattern>
+                <message>This plural noun is spelled as one word.</message>
+                <suggestion>\1-\2</suggestion>
+                <example correction="kick-offs">The <marker>kick offs</marker> for the project start at 8am.</example>
+                <example>Take your hand off my neck.</example>
+                <example>You can't take your hand off fast enough!</example>
+                <example>He is cutting his hand off.</example>
+            </rule>
+            <rule><!-- down -->
+                <antipattern>
+                    <token>down</token>
+                    <token regexp="yes">and|n?or|&amp;</token>
+                    <token regexp="yes">up|out</token>
+                </antipattern>
+                <antipattern>
+                    <token>down</token>
+                    <token>the</token>
+                </antipattern>
+                <antipattern>
+                    <token>down</token>
+                    <token>along</token>
+                </antipattern>
+                <pattern>
+                    <token regexp="yes">an?|the|my|his|her|their|y?our</token>
+                    <marker>
+                        <token regexp="yes">shoot|lock|back|slow|drop|break|shut|count|let|write|take|step|drill</token>
+                        <token regexp="yes">downs?</token>
+                    </marker>
+                </pattern>
+                <message>This noun is spelled as one word.</message>
+                <suggestion suppress_misspelled="yes">\2-\3</suggestion>
+                <!-- <suggestion suppress_misspelled="yes"><match no="2" case_conversion="alllower" /><match no="3" case_conversion="alllower" /></suggestion> -->
+                <example correction="take-down">The <marker>take down</marker> happened immediately.</example>
+            </rule>
+            <rule><!-- downs -->
+                <pattern>
+                    <token regexp="yes">shoot|lock|back|slow|drop|break|shut|count|let|write|take|step|drill</token>
+                    <token>downs</token>
+                </pattern>
+                <message>This plural noun is spelled as one word.</message>
+                <suggestion>\1-\2</suggestion>
+                <example correction="take-downs">The <marker>take downs</marker> happened immediately.</example>
+            </rule>
+            <rule><!-- over -->
+                <antipattern>
+                    <token>over</token>
+                    <token regexp="yes">and|n?or|&amp;</token>
+                    <token regexp="yes">out|over|done|above</token>
+                </antipattern>
+                <antipattern>
+                    <token>over</token>
+                    <token>the</token>
+                    <token regexp="yes">air|fence|hill|long|medium|counter|course|board</token>
+                </antipattern>
+                <antipattern>
+                    <token inflected="yes" regexp="yes" skip="4">wave|put|move|hold|run|place|pass</token>
+                    <token>hand</token>
+                    <token>over</token>
+                </antipattern>
+                <antipattern>
+                    <token>over</token>
+                    <token regexp="yes">t?here</token>
+                </antipattern>
+                <antipattern>
+                    <token>over</token>
+                    <token postag="DT|PRP\$" postag_regexp="yes" />
+                </antipattern>
+                <antipattern>
+                    <token>voice</token>
+                    <token>over</token>
+                    <token regexp="yes">ips?|internet.*</token>
+                </antipattern>
+                <antipattern>
+                    <token>over</token>
+                    <token regexp="yes">\d.*</token>
+                </antipattern>
+                <antipattern>
+                    <token>over</token>
+                    <token postag="CD" />
+                </antipattern>
+                <antipattern>
+                    <token inflected="yes" regexp="yes" skip="3">have|get</token>
+                    <token>hold</token>
+                    <token>over</token>
+                    <token chunk_re

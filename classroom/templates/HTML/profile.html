@@ -1,0 +1,26 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include './header.html' %}
+
+</head>
+<body>
+  <div class="container-scroller">
+      <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+            {% include './left-bar.html' %}
+        </ul>
+      </nav>
+            {% include './dashboard.html' %}
+  </div>
+  </div>
+    {% include './footer.html' %}
+</body>
+
+</html>
+

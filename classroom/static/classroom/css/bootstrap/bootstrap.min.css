@@ -1,0 +1,1971 @@
+e found.</example>
+                <example>...rmation about the volumes published so far can be found on the webpages of the Einstein Papers Project an...</example>
+                <example>...rs and a variety of unique flora and fauna can be found there, including "living fossils" and many endemi...</example>
+                <example>...and diversity of animal life in Azerbaijan can be found in travel notes of Eastern travelers.</example>
+                <example>... the species growing in the whole Caucasus can be found in Azerbaijan.</example>
+                <example>... sections with a link to a "Main article" will be found in the linked article.</example>
+                <example>...campaigns, battles, units, and individuals can be found in those articles.</example>
+                <example>The flowchart of "Elegant" can be found at the top of this article.</example>
+                <example>...o a goal from a vertex in a weighted graph can be found by using the shortest path to the goal from all a...</example>
+                <example>Why did he quit his job?</example>
+                <example>Why did you quit?</example>
+                <example>Up-to-date information on the Asparagales can be found on the Angiosperm Phylogeny Website.</example>
+                <example>The remains of the church of St. Clement can be found today in a building just off Işıklar Caddesi in t...</example>
+                <example>...s, hand-woven carpets and leather products can be found at bargain prices.</example>
+                <example>...any interesting items, not just of copper, can be found here like jewelry, carpets, costumes, antiques an...</example>
+                <example>I simply cannot get rid of this bad cold of mine.</example>
+                <example>How can I quit this job?</example>
+                <example>I cannot dance worth a damn.</example>
+                <example>I give my pledge that I will quit smoking.</example>
+                <example>Jewish schools can be found in the southern suburbs of Amsterdam.</example>
+                <example>A parking garage can be found underneath the square, as well as a supermarket.</example>
+                <example>Such a thing cannot be found everywhere.</example>
+                <example>Many restaurants can be found in Amsterdam as well.</example>
+                <example>...ity, a lot of different ethnic restaurants can be found.</example>
+                <example>Art films can be found at Tuschinski, and the independent The Movies, Ci...</example>
+                <example>The museum can be found in the 19th century building The Iron in the Mota...</example>
+                <example>May 2011 saw record sales for Audi of America with the new Aud...</example>
+                <example>... Geological Survey expects more resources will be found.</example>
+                <example>Likewise, a group of atoms can remain bound to each other by chemical bonds based on the same...</example>
+                <example>...usion principle, in which no two electrons may be found in the same quantum state, bound electrons pair u...</example>
+                <example>Archipelagos may be found isolated in bodies of water or neighboring a larg...</example>
+                <example>...that alternative mathematical systems might exist was very troubling to mathematicians of the 19th cent...</example>
+                <example>Polyacetylenes can be found in Apiaceae vegetables like carrot, celery, fenne...</example>
+                <example>...ring the summer months and where hay barns can be found, and the term "the Alps", referring to the mounta...</example>
+                <example>...e Edelweiss which grows in rocky areas and can be found at altitudes as low as and as high as.</example>
+                <example>...ate in large groups to provide warmth, and can be found in all areas of the Alps, in large colonies they ...</example>
+                <example>...e Alps; they nest high on rocky ledges and can be found at altitudes of.</example>
+                <example>Brown trout can be found in the streams up to the snow line.</example>
+                <example>Scorpions can be found in the Italian Alps.</example>
+                <example>You can get rid of the cold if you take this medicine.</example>
+                <example>It can be found in low densities in star and planetary system for...</example>
+                <example>An account of that night can be found in Kerouac's novel The Dharma Bums, describing ho...</example>
+                <example>You should get rid of these weeds.</example>
+                <example>... and the following elements of a parabasis can be found within them.</example>
+                <example>I would quit before I would do that job in this company.</example>
+                <example>... objective world expecting that humanity would be found to have a special meaning within it.</example>
+                <example>...inally stops - when no further investments can be found which provide adequate returns for speculative bo...</example>
+                <example>...northernmost, though the domesticated form can be found as far north as Iceland.</example>
+                <example>... prejudice against Jews and their religion can be found in the works of many pagan Greek and Roman writer...</example>
+                <example>All he did was playing golf.</example>
+                <example>Those flips you just did were on point.</example><!-- #3090 -->
+                <example type="triggers_error">Those tests that the technician actually did found the problem.</example><!-- #3090 -->
+            </rule>
+        </rulegroup>
+
+        <rule id="MUST_HAVE_TO" name="'must to' instead of 'have to'">
+            <antipattern>
+                <token>a</token>
+                <token>must</token>
+            </antipattern>
+            <pattern>
+                <marker>
+                    <token>must</token>
+                    <token>to</token>
+                </marker>
+                <token postag="VB"/>
+            </pattern>
+            <message>After 'must', the verb is used without 'to'. Probably, you should use <suggestion>must</suggestion> or <suggestion>have to</suggestion> here.</message>
+            <short>Grammatical problem: unnecessary 'to'</short>
+            <example correction="must|have to">I <marker>must to</marker> go shopping.</example>
+            <example>It is a must to be aware of that.</example>
+        </rule>
+        <rule id="AS_ADJ_AS" name="Comparison with 'as'">
+            <pattern>
+                <token>as</token>
+                <token postag="JJ|RB" postag_regexp="yes"><exception>other</exception><exception postag="JJR"/></token>
+                <marker>
+                    <token regexp="yes">like|th[ae]n</token>
+                </marker>
+            </pattern>
+            <message>Comparison is written 'as \2 as'.</message>
+            <suggestion>as</suggestion>
+            <short>Grammatical problem: use 'as'</short>
+            <example correction="as">This house is as big <marker>than</marker> mine.</example>
+            <example correction="as">This box contains as much <marker>like</marker> possible.</example>
+            <example>This house is as big <marker>as</marker> mine.</example>
+            <example>It is inappropriate to cite this document as other than work in progress.</example>
+            <example>This strikes me as less than a satisfactory expression of appreciation.</example>
+        </rule>
+        <rule id="THE_SAME_AS" name="Comparison with 'the same ... as'">
+            <pattern>
+                <token>the</token>
+                <token skip="1">same</token>
+                <marker>
+                    <token regexp="yes">like|than</token>
+                </marker>
+            </pattern>
+            <message>Comparison is written 'the same ... as'.</message>
+            <suggestion>as</suggestion>
+            <url>https://www.merriam-webster.com/dictionary/same</url>
+            <short>Grammatical problem: use 'as'</short>
+            <example correction="as">This is not the same thing <marker>than</marker> his.</example>
+            <example  correction="as">Your idea is the same <marker>like</marker> his.</example>
+        </rule>
+        <rule id="EAGER_TO" name="Non-infinitive verb with 'eager to...'">
+            <pattern>
+                <token>eager</token>
+                <token>to</token>
+                <marker>
+                    <token postag="VB[GZND]" postag_regexp="yes"><exception postag="VB"/></token>
+                </marker>
+            </pattern>
+            <message>With 'eager to', use the base form of the verb.</message>
+            <suggestion><match no="3" postag="VB"/></suggestion>
+            <short>Grammatical problem: use the base form</short>
+            <example>Bangladesh is eager to <marker>buy</marker> cars from Iran.</example>
+            <example correction="buy">Bangladesh is eager to <marker>buying</marker> cars from Iran.</example>
+            <example correction="try">I'd be eager to <marker>trying</marker> out your patch.</example>
+            <example correction="buy">Bangladesh is eager to <marker>bought</marker> cars from Iran.</example>
+            <example>His compatriots were eager to <marker>cast</marker> off Ottoman rule.</example>
+        </rule>
+        <!-- 106(less..)+319(more...) in complete BNC, all(?) because "...as" -->
+        <rulegroup id="COMP_THAN" name="Comparison with 'than', e.g. 'bigger then (than)'">
+            <antipattern>
+                <token>as</token>
+                <token>well</token>
+            </antipattern>
+            <antipattern>
+                <token>as</token>
+                <token regexp="yes">long|good|well|soon|early|best|bad|fast|quick</token>
+                <token>as</token>
+            </antipattern>
+            <rule>
+                <antipattern>
+                    <token>as</token>
+                    <token regexp="yes">they|s?he|it|you|we|I</token>
+                    <token postag="RB" min="0" />
+                    <token postag="VB.*" postag_regexp="yes" />
+                </antipattern>
+                <antipattern>
+                    <token inflected="yes">ask</token>
+                    <token>for</token>
+                    <token>more</token>
+                </antipattern>
+                <pattern>
+                    <token regexp="yes">more|less</token>
+                    <marker>
+                        <token postag='RB'>as</token>
+                    </marker>
+                    <token>
+                        <exception regexp="yes">to|if|follows|early|much|though|well</exception>
+                    </token>
+                </pattern>
+                <message>Comparison requires <suggestion>than</suggestion>, not 'then' nor 'as'.</message>
+                <short>Grammatical problem: use 'than'</short>
+                <example correction="than">The tagger will return more <marker>as</marker> one tag.</example>
+                <example>The tagger will return more <marker>than</marker> one tag.</example>
+                <example>Think of it more <marker>as</marker> activity.</example>
+                <example>It is faster as well.</example>
+                <example>I gasped once more as the sky fell.</example>
+                <example>They earn less as they grow older.</example>
+                <example>I'll be in contact with development and ask for more as needed.</example>
+            </rule>
+            <rule>
+                <antipattern>
+                    <token>then</token>
+                    <token postag="PCT" />
+                </antipattern>
+                <pattern>
+                    <token regexp="yes">more|less</token>
+                    <marker>
+                        <token>then</token>
+                    </marker>
+                </pattern>
+                <message>Comparison requires <suggestion>than</suggestion>, not 'then' nor 'as'.</message>
+                <short>Grammatical problem: use 'than'</short>
+                <example correction="than">The tagger will return more <marker>then</marker> one tag.</example>
+            </rule>
+            <rule>
+                <antipattern>
+                    <token>then</token>
+                    <token postag="PCT" />
+                </antipattern>
+                <antipattern>
+                    <token>more</token>
+                    <token>or</token>
+                    <token>less</token>
+                    <token>as</token>
+                </antipattern>
+                <antipattern>
+                    <token>as</token>
+                    <token regexp="yes">much|many</token>
+                    <token>more</token>
+                    <token>as</token>
+                </antipattern>
+                <pattern>
+                    <token postag="JJR"><exception postag="IN|NN" postag_regexp="yes"/></token>
+                    <marker>
+                        <token regexp="yes">(then|as)</token>
+                    </marker>
+                    <token negate_pos="yes" postag="DT"><exception regexp="yes">follows|if|early|much|though|to</exception></token>
+                    <!-- the below condition fixed a false alarm -
+                         'these cheeses just get firmer as water evaporates' -->
+                    <token><exception postag="VB.*" postag_regexp="yes"/></token>
+                </pattern>
+                <message>Comparison requires <suggestion>than</suggestion>, not 'then' nor 'as'.</message>
+                <short>Grammatical problem: use 'than'</short>
+                <example correction="than">This house is bigger <marker>then</marker> mine.</example>
+                <example>This house is bigger <marker>than</marker> mine.</example>
+                <example>This palace was used later as a prison.</example>
+                <example>The ozone layer then blocks most UVB.</example>
+                <example>It acts more or less as a replacement.</example>
+                <example>...lidays to discuss this a little further as well as a broader alliance between Enro...</example>
+            </rule>
+        </rulegroup>
+
+        <rulegroup id="MISSING_PAST_TENSE" name="Missing past tense with '...last year/month/etc.'">
+            <rule>
+                <antipattern>
+                    <token postag="VB[DN]" postag_regexp="yes" skip="-1"></token>
+                    <token>last</token><!-- #3217 regression: I was a first year student last year. -->
+                    <token regexp="yes">week|month|year</token>
+                </antipattern>
+                <antipattern>
+                    <token inflected="yes" regexp="yes" skip="-1">forget|remember</token>
+                    <token>last</token>
+                    <token regexp="yes">week|month|year</token>
+                </antipattern>
+                <antipattern>
+                    <token>same</token>
+                    <token>as</token>
+                    <token>last</token>
+                    <token regexp="yes">week|month|year</token>
+                </antipattern>
+                <antipattern>
+                    <token skip="2" regexp="yes">thanks?|sorry|apologi[sz]e</token>
+                    <token skip="6">for</token>
+                    <token>last</token>
+                    <token regexp="yes">week|month|year</token>
+                </antipattern>
+                <antipattern><!-- #3217 couldn't go -->
+                    <token regexp="yes">could|did|had|might|should|used|would</token>
+                    <token skip="-1">n't</token>
+                    <token>last</token>
+                    <token regexp="yes">week|month|year</token>
+                </antipattern>
+                <antipattern><!-- #3217 could not go -->
+                    <token regexp="yes">could|did|had|might|should|used|would</token>
+                    <token skip="-1">not</token>
+                    <token>last</token>
+                    <token regexp="yes">week|month|year</token>
+                </antipattern>
+                <antipattern><!-- #3217 the meeting last week -->
+                    <token chunk="B-NP-singular" postag_regexp="yes" postag="PRP\$|DT"/>
+                    <token min="0" chunk="I-NP-singular"/>
+                    <token chunk="E-NP-singular"/>
+                    <token>last</token>
+                    <token regexp="yes">week|month|year</token>
+                </antipattern>
+                <antipattern><!-- #3217 those three meetings last week -->
+                    <token chunk="B-NP-plural" postag_regexp="yes" postag="PRP\$|DT"/>
+                    <token min="0" chunk="I-NP-plural"/>
+                    <token chunk="E-NP-plural"/>
+                    <token>last</token>
+                    <token regexp="yes">week|month|year</token>
+                </antipattern>
+                <antipattern><!-- #3217 8.54% last week -->
+                    <token regexp="yes">[0-9]+%</token>
+                    <token>last</token>
+                </antipattern>
+                <pattern>
+                    <marker>
+                        <token>last
+                          <exception postag_regexp="yes" scope="previous" postag="IN|PRP\$|DT"/>
+                          </token>
+                        <token regexp="yes">month|week|year</token>
+                    </marker>
+                    <token postag="SENT_END" regexp="yes">\p{P}</token>
+                </pattern>
+                <message>‘last \2’ indicates a finished event of the past. Please check the predicate's tense.</message>
+                <example correction="">I choose to go to Italy <marker>last year</marker>.</example>
+                <example correction="">She leaves school <marker>last year</marker>.</example>
+                <example correction="">I will not go <marker>last month</marker>.</example><!-- #3217 -->
+                <example correction="">I might go to India <marker>last year</marker>.</example><!-- #3217 -->
+                <example>I'll never forget shaking the President's hand last year.</example>
+                <example>I couldn't go to Australia <marker>last year</marker>.</example><!-- #3217 -->
+                <example>I could not go to Paris <marker>last year</marker>.</example><!-- #3217 -->
+                <example>I’m quitting Starbucks and this is my <marker>last week</marker>.</example><!-- #3217 -->
+                <example>Dave, I am sending you my accomplishments for the <marker>last year</marker>.</example><!-- #3217 -->
+                <example>Kevin, I want to apologize for not attending the meeting <marker>last week</marker>.</example><!-- #3217 -->
+                <example>What a great performance by the rookie WR <marker>last week</marker>.</example><!-- #3217 -->
+                <example>Here are my notes from our meeting <marker>last week</marker>.</example><!-- #3217 -->
+                <example>I apologize for not attending those three meetings <marker>last week</marker>.</example><!-- #3217 -->
+                <example>That is down from 8.54% <marker>last week</marker>.</example><!-- #3217 -->
+                <example>Tom was my last roommate last year.</example>
+                <example>Thanks for your support last week.</example>
+                <example>I apologize for not getting back with you all last week.</example>
+                <example>The Last Month Report</example>
+                <example>I was a first year student last year.</example><!-- #3217 regression -->
+            </rule>
+        </rulegroup>
+
+        <rule id="USE_TO_VERB" name="Missing past tense for 'used to...'">
+            <antipattern>
+                <token>n't</token>
+                <token postag="RB" min="0" />
+                <token>use</token>
+                <token>to</token>
+            </antipattern>
+            <antipattern><!-- Didn't you use to be a teacher? -->
+                <token>n't</token>
+                <token postag="PRP|NNP|UNKNOWN" postag_regexp="yes" />
+                <token postag="RB" min="0" />
+                <token>use</token>
+                <token>to</token>
+            </antipattern>
+            <antipattern>
+                <token regexp="yes">did|does</token>
+                <token postag="RB" min="0" />
+                <token>use</token>
+                <token>to</token>
+            </antipattern>
+            <antipattern>
+                <token postag="MD"/>
+                <token postag="RB"/>
+                <token>use</token>
+                <token>to</token>
+            </antipattern>
+            <antipattern><!-- no matter which channel you use to ... -->
+                <token regexp="yes" skip="2">which|[wt]hat</token>
+                <token postag="NN.*" postag_regexp="yes" />
+                <token regexp="yes" min="0">they|we|you|I</token>
+                <token>use</token>
+                <token>to</token>
+            </antipattern>
+            <antipattern>
+                <token regexp="yes">do|did|does</token>
+                <token regexp="yes">I|you|we|they|he|she|it</token>
+                <token>use</token>
+                <token>to</token>
+            </antipattern>
+            <antipattern>
+                <token regexp="yes">do|did|does</token>
+                <token regexp="yes">you|we</token>
+                <token postag="CD"/>
+                <token>use</token>
+                <token>to</token>
+            </antipattern>
+            <antipattern>
+                <token postag="NN.*" postag_regexp="yes" />
+                <token postag="NN.*" postag_regexp="yes" />
+                <token>use</token>
+                <token>to</token>
+            </antipattern>
+            <antipattern>
+                <token>terms</token>
+                <token>of</token>
+                <token>use</token>
+               <token>to</token>
+            </antipattern>
+            <antipattern>
+                <token postag="MD" />
+                <token postag="PRP|NNP|UNKNOWN" postag_regexp="yes" />
+                <token postag="RB" min="0" max="2" />
+                <token>use</token>
+                <token>to</token>
+            </antipattern>
+            <antipattern>
+                <token postag="MD" />
+                <token chunk_re="B-NP.*" min="0" />
+                <token chunk_re="E-NP.*" />
+                <token postag="RB" min="0" max="2" />
+                <token>use</token>
+                <token>to</token>
+            </antipattern>
+            <antipattern>
+                <token postag="MD" />
+                <token chunk_re="B-NP.*" />
+                <token chunk_re="I-NP.*" min="0" max="3" />
+                <token chunk_re="E-NP.*" />
+                <token postag="RB" min="0" max="2" />
+                <token>use</token>
+                <token>to</token>
+            </antipattern>
+            <antipattern>
+                <token postag="MD" />
+                <token postag="RB" min="0" />
+                <token>use</token>
+                <token>to</token>
+            </antipattern>
+            <antipattern>
+                <token>to</token>
+                <token postag="RB" min="0" />
+                <token>use</token>
+                <token>to</token>
+            </antipattern>
+            <antipattern>
+                <token regexp="yes">an?</token>
+                <token postag="JJ.*" postag_regexp="yes" />
+                <token>use</token>
+            </antipattern>
+            <antipattern><!-- Premium #1795 https://grammar.collinsdictionary.com/easy-learning/used-to -->
+                <token skip="-1">did</token>
+                <token>use</token>
+                <token>to</token>
+                <token skip="-1" postag="VB"/>
+                <token>?</token>
+            </antipattern>
+            <antipattern>
+                <token />
+                <token />
+                <token regexp="yes">that|(which|what|who)(ever)?</token>
+                <token chunk_re="B-NP-.*" />
+                <token chunk_re="I-NP-.*" min="0" max="3" />
+                <token chunk_re="E-NP-.*" postag="NN.*|UNKNOWN" postag_regexp="yes" />
+                <token postag="RB" min="0" />
+                <token>use</token>
+                <token>to</token>
+            </antipattern>
+            <antipattern>
+                <token regexp="yes">that|(which|what|who)(ever)?</token>
+                <token postag="PRP_S.*" postag_regexp="yes" />
+                <token postag="RB" min="0" />
+                <token>use</token>
+                <token>to</token>
+            </antipattern>
+            <antipattern><!-- lowercase "i" (different error) -->
+                <token regexp="yes">that|(which|what|who)(ever)?</token>
+                <token>i</token>
+                <token postag="RB" min="0" />
+                <token>use</token>
+                <token>to</token>
+            </antipattern>
+            <antipattern>
+                <token>d</token>
+                <token postag="RB" min="0" />
+                <token>use</token>
+                <token>to</token>
+            </antipattern>
+            <antipattern><!-- 6 processes we use to ... -->
+                <token chunk_re="E-NP.*" postag="NN.*" postag_regexp="yes" />
+                <token regexp="yes">we|they|I|you</token>
+                <token postag="RB" min="0" />
+                <token>use</token>
+            </antipattern>
+            <antipattern><!-- for everyday use -->
+                <token postag="IN" />
+                <token postag="JJ.*" postag_regexp="yes" min="0" />
+                <token>everyday</token>
+                <token>use</token>
+            </antipattern>
+            <pattern>
+                <token><exception postag="MD"/></token>
+                <marker>
+                    <token chunk_re=".-VP">use</token>
+                    <token>to</token>
+                </marker>
+                <token postag="VB"/>
+            </pattern>
+            <message>Make sure that '\2 \3' is correct. For habitual actions in the past or to mean 'accustomed to', use <suggestion>used to</suggestion>.</message>
+            <url>https://www.collinsdictionary.com/dictionary/english/used-to</url>
+            <short>Possible grammar error</short>
+            <example>It can be used to save lives</example>
+            <example>Tom didn't use to drink so much.</example>
+            <example>That is the term that futurists use to describe a potentially cataclysmic point.</example>
+            <example correction="used to">He <marker>use to</marker> believe this.</example>
+            <example correction="used to">I <marker>use to</marker> own a 2011 Sienna.</example>
+            <example correction="used to">Where can I find all those other apps that <marker>use to</marker> be available?</example>
+            <!-- TODO: -->
+            <!-- <example correction="used to">Aethera <marker>use to</marker> use this.</example> -->
+            <!-- <example correction="used to">This is the laptop that I <marker>use to</marker> use. (It's slow, so I don't use it now.)</example> #1700 -->
+            <example>This could set a dangerous precedent that they would surely use to target other journalists.</example>
+            <example>What language did you use to communicate?</example>
+            <example>Did you use to drink a lot?</example>
+            <example>Please read the terms of use to understand our legal requirements.</example>
+            <example>What language do you two use to communicate?</example>
+            <example>Set the languages you usually use to write texts.</example>
+            <example>A good use to make use of the extra veggies you have is to make a frittata.</example>
+            <example>This is a process doctors use to educate their patients.</example>
+            <example>What would you use to explore this sort of thing?</example>
+            <example>A massive rocket that the space agency wants to use to return humans to the moon.</example>
+            <example>Which things would you use to describe this chemical formula?</example>
+            <example>Did Tom use to play hooky?</example><!-- Premium #1795 -->
+            <example>How often did the neighbour's unruly children use to skip school?</example><!-- Premium #1795 -->
+            <example>This is the laptop that I <marker>use to</marker> code on.</example><!-- #1700 -->
+            <example>...by some methanogenic archaea in enzymes that they use to produce methane.</example>
+            <example>The modern presidential campaign begins before the primary elections, which the two major political parties use to clear the field of candidates before their national nominating conventions.</example>
+            <example>Didn't you use to be a teacher?</example>
+            <example>Which would you ever use to become better?</example>
+            <example>Which I'd really use to become better.</example>
+            <example>6 processes weak use to increase PF</example>
+            <example>But no matter which channel you use to polish your texts, LanguageTool always guarantees you a high-quality spelling and grammar check.</example>
+            <example>It's no use to complain</example>
+            <example>... and its use to keep us safe</example>
+            <example>This works with everything you use to control your lights, Dimmers, Alexa, etc.</example>
+            <example>Pressed an axle - no idea the length or diameter or whatever you use to measure it, or the weight, but it was a lot of fun.</example>
+            <example>Which options can I use to pay?</example>
+            <example>Which options can our customers use to pay?</example>
+            <example>What rental options can our new customers use to drive a car?</example>
+        </rule>
+        <rule id="MORE_A_JJ" name="Word order: 'more a ...' instead of 'a more ...'">
+            <pattern>
+                <token>more<exception regexp="yes" scope="previous">no|much</exception></token>
+                <token regexp="yes">an?</token>
+                <token postag="JJ|VBN" postag_regexp="yes"/>
+            </pattern>
+            <message>Did you mean <suggestion>a more \3</suggestion>?</message>
+            <short>Grammatical problem: word order</short>
+            <example correction="a more detailed">I can give you <marker>more a detailed</marker> description of what's necessary.</example>
+            <example correction="a more analyzed">I wish it was <marker>more an analyzed</marker> case</example>
+            <example>I can give you <marker>a more detailed</marker> description of what's necessary.</example>
+            <example>It is no more a component.</example>
+        </rule>
+        <rule id="ORDER_OF_WORDS_WITH_NOT" name="wrong order of words">
+            <antipattern>
+                <token skip="-1">why</token>
+                <token regexp="yes" case_sensitive="yes">can|ca|have|should|could|will|wo|may|might</token>
+                <token regexp="yes">not|n't</token>
+            </antipattern>
+            <antipattern>
+                <token>not</token>
+                <token>only</token>
+                <token regexp="yes" case_sensitive="yes">can|ca|have|should|could|will|wo|may|might</token>
+                <token regexp="yes">not|n't</token>
+            </antipattern>
+            <antipattern>
+                <token regexp="yes" case_sensitive="yes">can|ca|have|should|could|will|wo|may|might</token>
+                <token regexp="yes">not|n't</token>
+                <token postag="PRP" skip="-1"></token>
+                <token>?</token>
+            </antipattern>
+            <pattern>
+                <token><exception postag="SENT_START"/></token>
+                <marker>
+                    <token regexp="yes" case_sensitive="yes">can|ca|have|should|could|will|wo|won|may|might</token>
+                    <token regexp="yes">not|n't</token>
+                    <token postag="PRP">
+                        <exception regexp="yes">one|(it|him|her|my|your|them)self|(our|your|them)selves</exception>
+                    </token>
+                </marker>
+            </pattern>
+            <message>Please check the order of words and the punctuation of this sentence.</message>
+            <example correction="">She knows that <marker>can not you</marker> do it.</example>
+            <example correction="">She knows that <marker>can't you</marker> do it.</example>
+            <example>"If you're tired, why don't you go to sleep?"</example>
+            <example>Why can't you just call them?</example>
+            <example>So we have not one but two community FAQs about it.</example>
+            <example>The Fund will not itself be a charity.</example>
+            <example>I couldn't myself join the union.</example>
+        </rule>
+        <!-- this works now, and accounts for subjunctive
+             i.e., she recommended that he use his money... -->
+        <rulegroup id="NON3PRS_VERB" name="Agreement error: Third-person verb with a non-third-person pronoun">
+            <short>Grammatical problem: agreement error</short>
+            <antipattern>
+                <token>often</token>
+                <token>times</token>
+            </antipattern>
+            <rule>
+                <antipattern><!-- speller offers better suggestion 'just', not 'jut' -->
+                    <token>I</token>
+                    <token>juts</token>
+                </antipattern>
+                <antipattern>
+                    <token postag="VBZ"/>
+                    <token regexp="yes">n't|not</token>
+                </antipattern>
+                <antipattern><!-- am I ...? -->
+                    <token>am</token>
+                    <token skip="-1">I</token>
+                    <token>?</token>
+                </antipattern>
+                <antipattern><!-- phase I -->
+                    <token regexp="yes">&nouns_with_i;</token>
+                    <token>I</token>
+                </antipattern>
+                <antipattern>
+                    <token>I</token>
+                    <token>stands</token>
+                    <token>for</token>
+                    <token regexp="yes">i.*</token>
+                </antipattern>
+                <antipattern>
+                    <token inflected="yes">dot</token>
+                    <token>the</token>
+                    <token>i</token>
+                    <token>'s</token>
+                </antipattern>
+                <antipattern>
+                    <token>i</token>
+                    <token skip="2">'s</token>
+                    <token inflected="yes">dot</token>
+                </antipattern>
+                <pattern>
+                    <token case_sensitive="yes" skip="1">I</token>
+                    <marker>
+                        <token postag="VBZ"><exception scope="previous" negate_pos="yes" postag_regexp="yes" regexp="yes" postag="RB|PRP(_.*)?|MD"/><exception regexp="yes">is|'s</exception><exception scope="previous">need</exception></token>
+                    </marker>
+                </pattern>
+                <message>The pronoun '<match no="1"/>' must be used with a non-third-person form of a verb.</message>
+                <suggestion><match no="2" postag="VBP"/></suggestion>
+                <example correction="work">I <marker>works</marker> here.</example>
+                <example correction="work">I cannot <marker>works</marker> here.</example>
+                <example>I <marker>work</marker> here.</example>
+                <example>We <marker>make</marker> a lot of mistakes.</example>
+                <example>Phase I corresponds to the small-deformation regime.</example>
+                <example>Am I nuts?</example>
+                <example>... or am I nuts?</example>
+                <example correction="have">I rarely <marker>has</marker> a bad day.</example>
+                <example>Step i corresponds to the ...</example>
+                <example>... and if phase I corresponds to the ...</example>
+                <example>I <marker>doesn't</marker> sure about this.</example><!-- Not correct English, but correct as a test of this rule. -->
+                <example>...this variance estimate correctly, but Algorithm I returns 29.333333333333332 instead of 30.</example>
+                <example>Article I states that Trump had conditioned two official acts on the public announcements that he had requested.</example>
+                <example>dotting the I's and crossing the T's</example>
+                <example>the lawyers kept arguing over which I's should be dotted</example>
+            </rule>
+            <rule>
+                <antipattern>
+                    <token>need</token>
+                    <token>is</token>
+                </antipattern>
+                <antipattern><!-- #2419 we frogs have / we parents-->
+                    <token regexp="yes" postag="PRP">we|they</token>
+                    <token chunk="E-NP-plural" postag="NNS"/>
+                    <token postag_regexp="yes" postag="VB(P|D)?|RB"/>
+                </antipattern>
+                <pattern>
+                    <token skip="1" regexp="yes" postag="PRP">we|they<exception scope="previous">Are</exception></token>
+                    <marker>
+                        <token postag="VBZ">
+                            <exception scope="previous" negate_pos="yes" postag_regexp="yes" regexp="yes" postag="RB|PRP(_.*)?|DT|MD"/>
+                            <exception regexp="yes">is|'s</exception>
+                        </token>
+                    </marker>
+                    <token><exception regexp="yes">&apostrophe;.*</exception></token>
+                </pattern>
+                <message>The pronoun '<match no="1"/>' must be used with a non-third-person form of a verb.</message>
+                <suggestion><match no="2" postag="VBP"/></suggestion>
+                <example correction="work">They <marker>works</marker> here.</example>
+                <example correction="work">They cannot <marker>works</marker> here.</example>
+                <example correction="work">They always <marker>works</marker> here.</example>
+                <example correction="mean">They all <marker>means</marker> the same.</example>
+                <example>We <marker>make</marker> a lot of mistakes.</example>
+                <example>Are they <marker>friends</marker>?</example>
+                <example>All we need is love.</example>
+                <example>Phase I corresponds to the small-deformation regime.</example>
+                <example>They <marker>is</marker> happy. [Found by PERS_PRONOUN_AGREEMENT_SENT_START]</example>
+                <example>We <marker>parents</marker> sometimes become blind in loving our children too...</example>
+                <example>Yes, sometimes we frogs have sticky feet.</example><!-- #2419 -->
+            </rule>
+            <rule>
+                <antipattern><!-- phase I -->
+                    <token regexp="yes">&nouns_with_i;</token>
+                    <token>I</token>
+                </antipattern>
+                <pattern>
+                    <token skip="1" regexp="yes" postag="PRP">I|we|they</token>
+                    <marker>
+                        <token postag="VBZ">
+                            <exception scope="previous" negate_pos="yes" postag_regexp="yes" regexp="yes" postag="RB|PRP(_.*)?|DT"/>
+                        </token>
+                        <token>n't</token>
+                    </marker>
+                </pattern>
+                <message>The pronoun '<match no="1"/>' must be used with a non-third-person form of a verb.</message>
+                <suggestion><match no="2" postag="VBP"/><match no="3"/></suggestion>
+                <example correction="don't">We <marker>doesn't</marker> believe so.</example>
+                <example correction="aren't">We <marker>isn't</marker> believe so.</example>
+                <example correction="don't">What will I <marker>doesn't</marker> now?</example><!-- Refer to https://forum.languagetool.org/t/replacing-contractions-bug/2234/1 -->
+            </rule>
+            <rule>
+                <antipattern>
+                    <token postag="SENT_START"/>
+                    <token skip="-1">What</token>
+                    <token>you</token>
+                    <token postag="VBZ"/>
+                </antipattern>
+                <antipattern>
+                    <token skip="3">what</token>
+                    <token postag="VBD"/>
+                    <token>you</token>
+                    <token postag="VBZ"/>
+                </antipattern>
+                <antipattern>
+                    <token>,</token>
+                    <token>you</token>
+                    <token/>
+                    <token postag="SENT_END"/>
+                </antipattern>
+                <antipattern><!-- to see you -->
+                    <token>to</token>
+                    <token postag="VBG?" postag_regexp="yes" />
+                    <token>you</token>
+                </antipattern>
+                <antipattern><!-- the thing I provided you -->
+                    <token postag="NN.*|UNKNOWN" postag_regexp="yes" />
+                    <token regexp="yes">I|s?he|we|it|they</token>
+                    <token postag="MD|VB" postag_regexp="yes" min="0" />
+                    <token postag="VB.*" postag_regexp="yes" />
+                    <token>you</token>
+                </antipattern>
+                <antipattern><!-- how much we pay you -->
+                    <token>how</token>
+                    <token regexp="yes">much|many</token>
+                    <token regexp="yes">I|you|we|they</token>
+                    <token postag_regexp="yes" postag="VBD?"/>
+                    <token>you</token>
+                </antipattern>
+                <antipattern><!-- how many she gave you -->
+                    <token>how</token>
+                    <token regexp="yes">much|many</token>
+                    <token regexp="yes">he|she|it</token>
+                    <token postag_regexp="yes" postag="VB(Z|D)?"/>
+                    <token>you</token>
+                </antipattern>
+                <antipattern><!-- about whom I told you -->
+                    <token>about</token>
+                    <token regexp="yes">whom|which</token>
+                    <token regexp="yes">I|you|we|they</token>
+                    <token postag_regexp="yes" postag="VBD?"/>
+                    <token>you</token>
+                </antipattern>
+                <antipattern><!-- about which she tells you -->
+                    <token>about</token>
+                    <token regexp="yes">whom|which</token>
+                    <token regexp="yes">he|she|it</token>
+                    <token postag_regexp="yes" postag="VB(Z|D)?"/>
+                    <token>you</token>
+                </antipattern>
+                <antipattern><!-- #2148 He sent you messages -->
+                    <token postag_regexp="yes" postag="VB.*"/>
+                    <token>you</token>
+                    <token chunk="E-NP-plural" postag="NNS"/>
+                </antipattern>
+                <antipattern><!-- #2148 giving you a heads up -->
+                    <token postag_regexp="yes" postag="VB.*"/>
+                    <token>you</token>
+                    <token postag="DT"/>
+                </antipattern>
+                <antipattern><!-- #2148 Missing you is -->
+                    <token postag="VBG"/>
+                    <token>you</token>
+                    <token postag="VBZ"/>
+                </antipattern>
+                <antipattern><!-- All of you ...-->
+                    <token regexp="yes">all|everyone</token>
+                    <token min="0">of</token>
+                    <token>you</token>
+                </antipattern>
+                <antipattern><!-- Every one of you ...-->
+                    <token>every</token>
+                    <token>one</token>
+                    <token>of</token>
+                    <token>you</token>
+                </antipattern>
+                <antipattern><!-- he as well as you is ...-->
+                    <token postag="PRP|NNP" postag_regexp="yes" />
+                    <token>as</token>
+                    <token>well</token>
+                    <token>as</token>
+                    <token>you</token>
+                    <token postag="RB" min="0" />
+                    <token postag="VBZ" />
+                </antipattern>
+                <antipattern><!-- thank you goes out to -->
+                    <token>thank</token>
+                    <token>you</token>
+                    <token chunk="B-VP" postag="VBZ"/>
+                    <token postag_regexp="yes" postag="R[BP]"/>
+                    <token>to</token>
+                </antipattern>
+                <antipattern>
+                    <token postag="VBZ"/>
+                    <token>you</token>
+                </antipattern>
+                <antipattern><!-- Just because Tom provoked you doesn't give you a right to attack him. -->
+                    <token postag="IN|VB.*" postag_regexp="yes" />
+                    <token>you</token>
+                    <token>does</token>
+                    <token postag="RB" min="0" />
+                    <token postag="VB" />
+                    <token>you</token>
+                </antipattern>
+                <antipattern>
+                    <token>you</token>
+                    <token regexp="yes">&nouns_with_you;</token>
+                    <token postag="VB.*|MD" postag_regexp="yes" />
+                </antipattern>
+                <antipattern><!-- You comments are welcome -->
+                    <token postag="CC|PCT|SENT_START|DT" postag_regexp="yes" />
+                    <token>you</token>
+                    <token postag="NNP?S" postag_regexp="yes" />
+                    <token regexp="yes" inflected="yes" postag="VB[PD]|MD" postag_regexp="yes">be|have|do|will|want|need|can|should|must|might</token>
+                </antipattern>
+                <antipattern>
+                    <token>thank</token>
+                    <token>you</token>
+                    <token>is</token>
+                </antipattern>
+                <antipattern><!-- All I can tell you that will help you is that it's a subfolder of the path I gave you. -->
+                    <token>that</token>
+                    <token postag="MD" />
+                    <token postag="VB" />
+                    <token>you</token>
+                    <token>is</token>
+                    <token postag="PRP\$|DT" postag_regexp="yes" />
+                </antipattern>
+                <antipattern><!-- All I can tell you is that you sound patriotic -->
+                    <token regexp="yes">all|(every|some|no|any)(thing|one|body)</token>
+                    <token chunk_re="E-NP.*" />
+                    <token regexp="yes" inflected="yes">will|have|do|can|should|be|must|might</token>
+                    <token postag="RB" min="0" />
+                    <token postag="VB.*" postag_regexp="yes" />
+                    <token>you</token>
+                    <token>is</token>
+                </antipattern>
+                <antipattern><!-- The one thing he will not grant you is permission to leave the palace. -->
+                    <token>the</token>
+                    <token postag="JJ.*|CD" postag_regexp="yes" min="0" />
+                    <token postag="NN.*" postag_regexp="yes" chunk_re="E-NP.*" />
+                    <token chunk_re="E-NP.*" />
+                    <token postag="MD" />
+                    <token postag="RB" min="0" />
+                    <token postag="VB" />
+                    <token>you</token>
+                    <token>is</token>
+                </antipattern>
+                <antipattern><!-- The only reason anyone would ever hate you is because they want to be just like you. -->
+                    <token>the</token>
+                    <token postag="JJ.*|CD" postag_regexp="yes" min="0" />
+                    <token postag="NN.*" postag_regexp="yes" />
+                    <token postag="PRP" />
+                    <token postag="MD" />
+                    <token postag="RB" min="0" />
+                    <token postag="VB" />
+                    <token>you</token>
+                    <token>is</token>
+                </antipattern>
+                <antipattern><!-- How people treat you is their karma; how you react is yours. -->
+                    <token regexp="yes">how|what</token>
+                    <token chunk_re="B-NP.*" min="0" />
+                    <token chunk_re="E-NP.*" />
+                    <token chunk_re=".-VP" />
+                    <token>you</token>
+                    <token postag="RB" min="0" />
+                    <token postag="VBZ" />
+                </antipattern>
+                <antipattern><!-- Everyone here but you has done that. -->
+                    <token postag="CC|PCT|SENT_START|DT" postag_regexp="yes" />
+                    <token regexp="yes">(every|any)(body|one)</token>
+                    <token postag="RB" min="0" />
+                    <token>but</token>
+                    <token>you</token>
+                </antipattern>
+                <antipattern><!-- Aren't you friends with Tom? -->
+                    <token regexp="yes">were|are</token>
+                    <token min="0">n't</token>
+                    <token>you</token>
+                    <token postag="RB" min="0" />
+                    <token postag="NNS" />
+                </antipattern>
+                <antipattern><!-- I sent you messages from both the boys -->
+                    <token chunk_re=".-VP">
+                        <exception inflected="yes" regexp="yes">think|hope</exception>
+                    </token>
+                    <token>you</token>
+                    <token postag="NNS" />
+                    <token postag="IN" />
+                </antipattern>
+                <antipattern><!-- Seeing you always makes me think about my father. -->
+                    <token postag="VBG" />
+                    <token>you</token>
+                    <token postag="RB" min="0" />
+                    <token regexp="yes">gives|makes</token>
+                    <token regexp="yes">us|me|them|him|her|it</token>
+                </antipattern>
+                <antipattern><!-- I ask you is the Taliban more responsible than we think. -->
+                    <token regexp="yes">we|I|they</token>
+                    <token postag="RB" min="0" />
+                    <token>ask</token>
+                    <token>you</token>
+                    <token postag="RB" chunk_re=".-ADVP" min="0" />
+                    <token>is</token>
+                    <token chunk_re=".-NP.*" />
+                </antipattern>
+                <antipattern><!-- Every word which I tell you is the naked truth -->
+                    <token chunk_re="E-NP.*" skip="5" />
+                    <token chunk_re=".-VP" postag="VB.*|UNKNOWN" postag_regexp="yes">
+                        <exception inflected="yes" regexp="yes">do|have|think|hope|believe|doubt|assume|know</exception>
+                    </token>
+                    <token>you</token>
+                    <token postag="RB" chunk_re=".-ADVP" min="0" />
+                    <token regexp="yes">is|gets|has|does|needs</token>
+                </antipattern>
+                <antipattern><!-- The umbrella that I lent you belongs to Tom.  -->
+                    <token chunk_re=".-VP" postag="VB.*|UNKNOWN" postag_regexp="yes">
+                        <exception inflected="yes" regexp="yes">think|hope|believe|doubt|assume</exception>
+                    </token>
+                    <token>you</token>
+                    <token postag="RB" chunk_re=".-ADVP" min="0" />
+                    <token>belongs</token>
+                    <token>to</token>
+                </antipattern>
+                <pattern>
+                    <token postag="PRP">
+                        you
+                        <exception scope="previous" postag="IN"/>
+                        <exception scope="next" postag="PRP"/>
+                    </token>
+                    <token postag="RB" min="0">
+                        <exception postag="IN" />
+                        <exception regexp="yes">now|nothing</exception>
+                    </token>
+                    <marker>
+                        <token postag="VBZ">
+                            <exception scope="previous" negate_pos="yes" postag_regexp="yes" regexp="yes" postag="RB|PRP(_.*)?|DT"/>
+                            <exception regexp="yes">guys|dudes|kids|cats</exception>
+                            <exception inflected="yes" regexp="yes">&uncommon_verbs;</exception>
+                        </token>
+                    </marker>
+                    <token><exception regexp="yes">&apostrophe;|n't</exception></token>
+                </pattern>
+                <message>The pronoun '<match no="1"/>' must be used with a non-third-person form of a verb.</message>
+                <suggestion><match no="3" postag="VBP"/></suggestion>
+                <example correction="work">You <marker>works</marker> here.</example>
+                <example correction="are">You <marker>is</marker> a good engineer.</example><!-- You=E-NP-singular, thus cannot use chunks in the antipatterns -->
+                <example correction="are">Either Mary or you <marker>is</marker> to go.</example><!-- https://theeditorsblog.net/2015/09/12/either-neither-and-subject-verb-agreement/, Condition Two -->
+                <example correction="hear">As soon as you <marker>hears</marker> the grinding you should have notified the mechanic.</example>
+                <example correction="know">If you or someone you <marker>knows</marker> has experience helping to run an office in a fast paced environment and has an interest in the financial world …</example>
+                <example>You <marker>make</marker> a lot of mistakes.</example>
+                <example>One of you thinks that this is possible.</example>
+                <example>Be sure the man nearest you is awake.</example>
+                <example>You guys remember that.</example>
+                <example>How many times do I have to tell you he isn't here?</example>
+                <example>What I have told you is true.</example>
+                <example>Scatter, you chickens!</example>
+                <example><marker>To see you</marker> is always a great pleasure.</example>
+                <example><marker>What he told you</marker> wasn't true.</example>
+                <example>... and <marker>how much we pay you</marker> depends on your skill.</example>
+                <example>"<marker>How many she gave you</marker> interests us very much," said the policeman.</example>
+                <example>The girl <marker>about whom I told you</marker> lives here.</example>
+                <example>The projects <marker>about which she tells you</marker> are confidential.</example>
+                <example>Next to seeing you is the pleasure of seeing your handwriting.</example>
+                <example>The API I provided you is only useful for capturing.</example>
+                <example>The API I will provide you is great.</example>
+                <example>He sent you messages asking for help.</example><!-- #2148 -->
+                <example>I'm giving you a heads up.</example><!-- #2148. The noun 'heads up' is hyphenated [www.lexico.com/en/definition/heads-up], but that is a different problem. -->
+                <example>I'm asking you questions.</example><!-- #2148 -->
+                <example>Missing you is something I hate.</example><!-- #2148 -->
+                <example>The manager sent you messages asking for help.</example><!-- #2148 -->
+                <example>Loving you makes me happy.</example><!-- #2148 -->
+                <example>He as well as you is in the wrong.</example>
+                <example>He as well as you likes baseball.</example>
+                <example>A special thank you goes out to Dan Flynn for the invitation.</example>
+                <example>What Tom told you isn't true.</example>
+                <example>There's a good chance what Tom told you isn't true.</example>
+                <example>The fact that no one understands you doesn't mean you're an antist.</example>
+                <example>Just because Tom provoked you doesn't give you a right to attack him.</example>
+                <example>You kids must be hungry.</example>
+                <example>Different error: You comments are welcome.</example>
+                <example>What you smell now is the scent of nightmares.</example>
+                <example>You aren't kids anymore.</example>
+                <example>Please call if you have further questions.</example>
+                <example>All I can tell you that will help you is that it's a subfolder of the path I gave you.</example>
+                <example>All I can tell you is that you sound patriotic.</example>
+                <example>The one thing he will not grant you is permission to leave the palace.</example>
+                <example>I made you guys something.</example>
+                <example>How people treat you is their karma; how you react is yours.</example>
+                <example>You peeps spend real money on this?</example>
+                <example>Everyone here but you has done that.</example>
+                <example>Aren't you friends with Tom?</example>
+                <example>Everything I've told you is true.</example>
+                <example>Are you still friends with them?</example>
+                <example>So what I told you still stands.</example>
+                <example>I sent you messages from both the boys.</example>
+                <example>Every word which I tell you is the naked truth.</example>
+                <example>I ask you is the Taliban more responsible than we think.</example>
+                <example>Seeing you always makes me think about my father.</example>
+                <example>You cats live it up for me.</example>
+                <example>Everything I just told you is true.</example>
+                <example>Where a driver will take you is probably his choice</example>
+                <example>The guy who hit you is at the front door.</example>
+                <example>The umbrella that I lent you belongs to Tom.</example>
+                <example>A women who doesn't criticize you anymore is a women who doesn't love you anymore.</example>
+                <example>The greatest gift that someone can give you is their love and their time.</example>
+                <example>However, I think what may help you is a generic form that we use in Iowa.</example>
+                <example>If they tell you nothing is wrong, at least you have a record of contacting them.</example>
+                <example>Something that might help you is just accepting the symptoms you have and working on them individually.</example>
+                <example>The only reason anyone would ever hate you is because they want to be just like you.</example>
+            </rule>
+            <rule>
+                <antipattern>
+                    <token chunk="B-VP" />
+                    <token postag="IN" min="0" />
+                    <token>you</token>
+                </antipattern>
+                <pattern>
+                    <token skip="1" postag="PRP">you<exception scope="previous" postag="IN"/><exception scope="next" postag="PRP"/></token>
+                    <marker>
+                        <token postag="VBZ"><exception scope="previous" negate_pos="yes" postag_regexp="yes" regexp="yes" postag="RB|PRP(_.*)?|DT"/></token>
+                        <token>n't</token>
+                    </marker>
+                </pattern>
+                <message>The pronoun '<match no="1"/>' must be used with a non-third-person form of a verb.</message>
+                <suggestion><match no="2" postag="VB"/><match no="3"/></suggestion>
+                <example correction="don't">You <marker>doesn't</marker> work hard enough.</example>
+                <example>You can't do that because you ain't me.</example>
+                <example>I just noticed that the version I sent to you doesn't contain the replace.txt yet for English.</example>
+            </rule>
+            <rule>
+                <pattern case_sensitive="yes">
+                    <token postag="SENT_START"/>
+                    <marker>
+                        <token>Has</token>
+                    </marker>
+                    <token regexp="yes">I|we|you|they</token>
+                </pattern>
+                <message>The pronoun '\3' must be used with <suggestion>Have</suggestion>.</message>
+                <example correction="Have"><marker>Has</marker> you bought a ticket?</example>
+                <example>Have you done this?</example>
+            </rule>
+            <rule>
+                <pattern case_sensitive="no">
+                    <token postag="SENT_START"/>
+                    <token postag="W(RB|P)" postag_regexp="yes"/>
+                    <marker>
+                        <token>has</token>
+                    </marker>
+                    <token regexp="yes">I|we|you|they</token>
+                </pattern>
+                <message>The pronoun '\3' must be used with <suggestion>have</suggestion>.</message>
+                <example correction="have">What <marker>has</marker> you done?</example>
+                <example>Why have you done this?</example>
+            </rule>
+            <rule>
+                <pattern case_sensitive="yes">
+                    <token postag="SENT_START"/>
+                    <marker>
+                        <token>Is</token>
+                    </marker>
+                    <token regexp="yes">we|you|they</token>
+                </pattern>
+                <message>The pronoun '\3' must be used with <suggestion>Are</suggestion>.</message>
+                <example correction="Are"><marker>Is</marker> you crazy?</example>
+                <example>Is this true?</example>
+            </rule>
+            <rule>
+                <pattern case_sensitive="yes">
+                    <token postag="SENT_START"/>
+                    <marker>
+                        <token>Is</token>
+                    </marker>
+                    <token>I</token>
+                </pattern>
+                <message>The pronoun '\3' must be used with <suggestion>Am</suggestion>.</message>
+                <example correction="Am"><marker>Is</marker> I crazy?</example>
+                <example>Is this true?</example>
+            </rule>
+            <rule>
+                <pattern case_sensitive="no">
+                    <token postag="SENT_START|PCT|CC" postag_regexp="yes" />
+                    <token postag="W(RB|P)" postag_regexp="yes">
+                        <exception>that</exception>
+                    </token>
+                    <marker>
+                        <token>is</token>
+                    </marker>
+                    <token regexp="yes">we|you|they</token>
+                </pattern>
+                <message>The pronoun '\3' must be used with <suggestion>are</suggestion>.</message>
+                <example correction="are">What <marker>is</marker> you doing?</example>
+                <example correction="are">Tom, which <marker>is</marker> you preferring?</example>
+                <example>Why are you doing this?</example>
+                <example>That is you!</example>
+            </rule>
+            <rule>
+                <pattern case_sensitive="no">
+                    <token postag="SENT_START"/>
+                    <token postag="W(RB|P)" postag_regexp="yes" />
+                    <marker>
+                        <token>is</token>
+                    </marker>
+                    <token>I</token>
+                </pattern>
+                <message>The pronoun '\3' must be used with <suggestion>am</suggestion>.</message>
+                <example correction="am">Why <marker>is</marker> I in love?</example>
+                <example>Why am I doing this?</example>
+            </rule>
+            <rule><!-- #2025 -->
+                <antipattern>
+                    <token>as</token>
+                    <token>i</token>
+                    <marker>
+                        <token postag="VBZ"><exception postag="VBZ" negate_pos="yes"></exception></token>
+                    </marker>
+                </antipattern>
+                <antipattern>
+                    <token>my</token>
+                    <token skip="-1" regexp="yes" case_sensitive="yes">[A-Z][A-z]+</token>
+                    <token postag="PRP">i</token>
+                    <marker>
+                        <token postag="VBZ" chunk="B-VP"></token>
+                    </marker>
+                </antipattern>
+                <pattern>
+                    <token skip="-1">my</token>
+                    <token postag="PRP" case_sensitive="yes">I</token>
+                    <marker>
+                        <token postag="VBZ" chunk="B-VP"><exception inflected="yes">be</exception></token>
+                    </marker>
+                </pattern>
+                <message>The pronoun "<match no="2"/>" must be used with a non-third-person form of a verb.</message>
+                <suggestion><match no="3" postag="VBP"/></suggestion>
+                <!--<example correction="am|are|aren">In my dreams where I <marker>is</marker> the ruler of the universe.</example>-->
+                <example correction="mark">My laptop is where I <marker>marks</marker> the grades.</example>
+                <example>In my dreams where I am the ruler of the universe</example>
+                <example>My Enemies &amp; I is an American rock band formed in Richmond, Virginia in 2010.</example>
+                <example>A single episode of My Husband and I has been released by Network DVD on a DVD called "Classic ITV Christmas Comedy".</example>
+                <example>My Conscience and I is the debut album by Remi Nicole, released in the UK on December 3, 2007 on the Universal label.</example>
+                <example>Heaven is my father and earth is my mother, and even such a small creature as I finds an intimate place in their midst.</example>
+            </rule>
+            <rule><!-- #2025 -->
+                <antipattern>
+                    <token>as</token>
+                    <token>i</token>
+                    <marker>
+                        <token postag="VBZ"><exception postag="VBZ" negate_pos="yes"></exception></token>
+                    </marker>
+                </antipattern>
+                <antipattern>
+                    <token>my</token>
+                    <token skip="-1" regexp="yes" case_sensitive="yes">[A-Z][A-z]+</token>
+                    <token postag="PRP">i</token>
+                    <marker>
+                        <token postag="VBZ" chunk="B-VP"></token>
+                    </marker>
+                </antipattern>
+                <pattern>
+                    <token skip="-1">my</token>
+                    <token postag="PRP" case_sensitive="yes">I</token>
+                    <marker>
+                        <token postag="VBZ" chunk="B-VP" inflected="yes">be</token>
+                    </marker>
+                </pattern>
+                <message>The pronoun "<match no="2"/>" must be used with a non-third-person form of a verb.</message>
+                <suggestion>am</suggestion>
+                <example correction="am">In my dreams where I <marker>is</marker> the ruler of the universe.</example>
+                <!--<example correction="mark">My laptop is where I <marker>marks</marker> the grades.</example>-->
+                <example>In my dreams where I am the ruler of the universe</example>
+                <example>My Enemies &amp; I is an American rock band formed in Richmond, Virginia in 2010.</example>
+                <example>A single episode of My Husband and I has been released by Network DVD on a DVD called "Classic ITV Christmas Comedy".</example>
+                <example>My Conscience and I is the debut album by Remi Nicole, released in the UK on December 3, 2007 on the Universal label.</example>
+                <example>Heaven is my father and earth is my mother, and even such a small creature as I finds an intimate place in their midst.</example>
+            </rule>
+        </rulegroup>
+        <rule id="OUGHT_SAY" name="ought + infinitive (ought to + infinitive)">
+            <pattern>
+                <token>ought</token>
+                <token postag="VB"/>
+            </pattern>
+            <message>Did you mean <suggestion>\1 to \2</suggestion>?</message>
+            <example correction="ought to say">We <marker>ought say</marker> the truth.</example>
+        </rule>
+        <rule id="NOTHING_SUCH_AS" name="to be nothing such as (to be no such thing as)">
+            <pattern>
+                <token inflected="yes">be</token>
+                <token>nothing</token>
+                <token>such</token>
+                <token>as</token>
+            </pattern>
+            <message>Did you mean <suggestion>\1 no such thing as</suggestion>?</message>
+            <example correction="is no such thing as">There <marker>is nothing such as</marker> as a free lunch.</example>
+        </rule>
+        <rule id="DO_ANYONE" name="Do (Does) anyone">
+            <pattern>
+                <token postag="SENT_START" />
+                <token postag="CC" min="0" />
+                <marker>
+                    <token>do</token>
+                    <token regexp="yes">(some|any)(one|body)</token>
+                </marker>
+            </pattern>
+            <message>Did you mean <suggestion>does \4</suggestion>?</message>
+            <example correction="does anybody">But <marker>do anybody</marker> use a Mac?</example>
+            <example correction="Does anyone"><marker>Do anyone</marker>?</example>
+            <example>Do something that relaxes you.</example>
+        </rule>
+        <rulegroup id="DO_HE_VERB" name="do (does) he have">
+            <rule>
+                <!-- more specific than HE_VERB_AGR, helps to avoid loops with that -->
+                <antipattern><!-- #2125 Do it after school. -->
+                    <token>do</token>
+                    <token skip="-1">it
+                        <exception scope="next">?</exception>
+                        </token>
+                    <token postag="SENT_END"/>
+                </antipattern>
+                <antipattern><!-- Premium #1795 1.) & 2.) -->
+                    <token skip="-1" regexp="yes">don?|didn?|doesn?</token>
+                    <token>do</token>
+                    <token skip="-1">it</token>
+                    <token>?</token>
+                </antipattern>
+                <pattern>
+                    <marker>
+                        <token>do</token>
+                    </marker>
+                    <token regexp="yes">he|she|it</token>
+                    <token postag="RB" min='0' max='3'><exception postag="VBD"/></token>
+                    <token postag="VB"><exception regexp="yes">well|even|better</exception></token>
+                </pattern>
+                <message>Did you mean <suggestion>does</suggestion>?</message>
+                <example correction="Does"><marker>Do</marker> she have dinner alone?</example>
+                <example correction="Does"><marker>Do</marker> it look broken to you?</example>
+                <example correction="does">... but <marker>do</marker> it usually look good or bad?</example>
+                <example>If you do it at all, try to do it well.</example>
+                <example>Then please do it after school.</example><!-- #2125 -->
+                <example>Then do it after school.</example>
+                <example>Do it after school.</example>
+                <example>You should do it before school.</example>
+                <example>Does Tom do it right?</example><!-- Premium #1795 1.) -->
+                <example>Why don't you does it like I showed you?</example><!-- Premium #1795 2.) -->
+                <example>Did the lazy politicians who were arguing about process do it right?</example>
+                <example>Why didn't you do it like I showed you?</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <marker>
+                        <token>do</token>
+                        <token>n't</token>
+                    </marker>
+                    <token regexp="yes">he|she|it</token>
+                    <token postag="RB" min='0' max='3'><exception postag="VBD"/></token>
+                    <token postag="VB"><exception regexp="yes">well|even|better</exception></token>
+                </pattern>
+                <message>Did you mean <suggestion>doesn't</suggestion>?</message>
+                <example correction="Doesn't"><marker>Don't</marker> she have dinner alone?</example>
+                <example correction="Doesn't"><marker>Don’t</marker> it help you somehow?</example>
+            </rule>
+        </rulegroup>
+        <rule id="WHEN_IS_NNP_AND_NNP" name="Incorrect use of 'is' vs. 'are'">
+            <pattern>
+                <token postag="SENT_START|CC" postag_regexp="yes" />
+                <token postag="WRB|WP" postag_regexp="yes" />
+                <marker>
+                    <token>is</token>
+                </marker>
+                <token postag="NNP" />
+                <token postag="NNP|UNKNOWN" postag_regexp="yes" min="0" />
+                <token regexp="yes">and|&amp;|,</token>
+                <token postag="NNP" />
+            </pattern>
+            <message>Did you mean <suggestion>are</suggestion>?</message>
+            <example correction="are">When <marker>is</marker> Sylvester Stallone and Arnold Schwarzenegger back in cinema?</example>
+            <example correction="are">It's exciting but when <marker>is</marker> Christmas and New Years finally over?</example>
+            <example>What is Carl's and Peter's favorite meal?</example>
+        </rule>
+        <rule id="WAS_IS" name="was is">
+            <antipattern>
+                <token postag="W.+" postag_regexp="yes" skip="-1" />
+                <token>was</token>
+            </antipattern>
+            <pattern case_sensitive="yes">
+                <marker>
+                    <token regexp="yes">[Ww]as</token>
+                    <token regexp="yes">[Ii]s</token>
+                </marker>
+            </pattern>
+            <message>Did you mean <suggestion>\1</suggestion>, <suggestion>\2</suggestion>, or <suggestion>\1 it</suggestion>?</message>
+            <example correction="was|is|was it">He <marker>was is</marker> a good boy.</example>
+            <example correction="was|is|was it">Tom <marker>was is</marker> in the passenger seat.</example>
+            <example>Whatever it was is not relevant anymore.</example>
+            <example>Was IS defeated by Obama or Trump?</example>
+        </rule>
+        <rule id="IS_WAS" name="is was">
+            <antipattern>
+                <token postag="W.+" postag_regexp="yes" skip="-1" />
+                <token>is</token>
+            </antipattern>
+            <pattern case_sensitive="yes">
+                <marker>
+                    <token regexp="yes">[Ii]s</token>
+                    <token regexp="yes">[Ww]as</token>
+                </marker>
+            </pattern>
+            <message>Did you mean <suggestion>\1</suggestion>, <suggestion>\2</suggestion>, or <suggestion>it \2</suggestion>?</message>
+            <example correction="is|was|it was">He <marker>is was</marker> a good boy.</example>
+            <example correction="Is|Was|It was"><marker>Is was</marker> a very simple install except.</example>
+            <example>Whatever it is was not relevant anymore.</example>
+            <example>IS was defeated by Obama or Trump.</example>
+        </rule>
+        <rule id="IS_OWN" name="is own">
+            <pattern>
+                <token>is</token>
+                <token>own</token>
+            </pattern>
+            <message>Did you mean <suggestion>its \2</suggestion>?</message>
+            <example correction="its own">Currently SAMI has <marker>is own</marker> API</example>
+        </rule>
+        <rule id="DIDINT" name="he didin't (didn't)">
+            <pattern>
+                <token regexp="yes">didin|diden|din|did</token>
+                <token regexp="yes">&apostrophe;</token>
+                <token>t</token>
+            </pattern>
+            <message>Did you mean <suggestion>didn\2t</suggestion>?</message>
+            <example correction="didn't">He <marker>didin't</marker> know about it.</example>
+        </rule>
+        <rule id="DIDENT" name="he dident (didn't)">
+            <pattern>
+                <token>dident</token>
+            </pattern>
+            <message>Did you mean <suggestion>didn't</suggestion>?</message>
+            <example correction="didn't">He <marker>dident</marker> know about it.</example>
+        </rule>
+        <rule id="PRP_DINT" name="he dint (didn't)">
+            <pattern>
+                <token regexp="yes">I|you|s?he|we|they|it</token>
+                <marker>
+                    <token>dint</token>
+                </marker>
+            </pattern>
+            <message>Did you mean <suggestion>didn't</suggestion>?</message>
+            <example correction="didn't">He <marker>dint</marker> know about it.</example>
+        </rule>
+        <rule id="I_EM" name="I em (am)">
+            <pattern>
+                <marker>
+                    <token>I</token>
+                    <token>em</token>
+                </marker>
+            </pattern>
+            <message>Did you mean <suggestion>I am</suggestion>?</message>
+            <example correction="I am"><marker>I em</marker> very happy.</example>
+        </rule>
+        <rule id="ANI_T" name="he ani't (ani't)">
+            <pattern>
+                <token>ani</token>
+                <token regexp="yes">&apostrophe;</token>
+                <token>t</token>
+            </pattern>
+            <message>Did you mean <suggestion>ain\2t</suggestion>?</message>
+            <example correction="ain't">I <marker>ani't</marker> happy about it.</example>
+        </rule>
+        <rule id="PRP_ANIT" name="he ani't (ani't)">
+            <pattern>
+                <token postag="PRP" />
+                <token postag="RB" min="0" />
+                <marker>
+                    <token case_sensitive="yes">anit</token>
+                </marker>
+            </pattern>
+            <message>Did you mean <suggestion>ain't</suggestion>?</message>
+            <example correction="ain't">I <marker>anit</marker> happy about it.</example>
+        </rule>
+        <rulegroup id="PRP_HAVES" name="he haves (has)">
+            <rule>
+                <pattern>
+                    <token regexp="yes">s?he|it|I|you|we|they</token>
+                    <token postag="RB" min="0" />
+                    <marker>
+                        <token>haves</token>
+                    </marker>
+                </pattern>
+                <message>The word "haves" is a plural noun, not a verb. Did you mean <suggestion>has</suggestion> or <suggestion>have</suggestion>?</message>
+                <example correction="has|have">He <marker>haves</marker> no idea.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token postag="CC|PCT|SENT_START" postag_regexp="yes" />
+                    <marker>
+                        <token>haves</token>
+                    </marker>
+                    <token regexp="yes">s?he|it|I|you|we|they</token>
+                </pattern>
+                <message>The word "haves" is a plural noun, not a verb. Did you mean <suggestion>has</suggestion> or <suggestion>have</suggestion>?</message>
+                <example correction="has|have">But <marker>haves</marker> he got time?</example>
+            </rule>
+        </rulegroup>
+        <rulegroup id="PRP_FOND" name="we fond (found)">
+            <rule>
+                <antipattern>
+                    <token inflected="yes">be</token>
+                    <token regexp="yes">n't|not</token>
+                    <token postag="PRP" />
+                    <token>fond</token>
+                </antipattern>
+                <antipattern>
+                    <token inflected="yes">be</token>
+                    <token postag="PRP" />
+                    <token>fond</token>
+                </antipattern>
+                <antipattern>
+                    <token postag="VB.*|IN" postag_regexp="yes" />
+                    <token regexp="yes">you|it</token>
+                    <token>fond</token>
+                </antipattern>
+                <pattern>
+                    <token regexp="yes">they|I|you|we|s?he|it</token>
+                    <token postag="RB" min="0" />
+                    <marker>
+                        <token>fond</token>
+                    </marker>
+                    <token postag="PRP\$?|DT|TO|IN|NNP" postag_regexp="yes" />
+                </pattern>
+                <message>Did you mean the verb <suggestion>found</suggestion>?</message>
+                <example correction="found">We <marker>fond</marker> out that you lied to us.</example>
+                <example>Are you fond of swimming?</example>
+                <example>Isn't she fond of swimming?</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token postag="MD" />
+                    <token regexp="yes" min="0">&apostrophe;</token>
+                    <token postag="RB" min="0" />
+                    <marker>
+                        <token>fond</token>
+                    </marker>
+                </pattern>
+                <message>Did you mean the verb <suggestion>found</suggestion>?</message>
+                <example correction="found">We will eventually <marker>fond</marker> out that you lied to us.</example>
+            </rule>
+        </rulegroup>
+        <rulegroup id="PRP_WONT" name="he wonts (wants)">
+            <rule>
+                <pattern>
+                    <token regexp="yes">s?he|it</token>
+                    <token postag="RB" min="0" />
+                    <marker>
+                        <token regexp="yes">wonts?</token>
+                    </marker>
+                </pattern>
+                <message>Did you mean <suggestion>wants</suggestion>?</message>
+                <example correction="wants">He <marker>wonts</marker> to go there.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token regexp="yes">they|I|you|we</token>
+                    <token postag="RB" min="0" />
+                    <marker>
+                        <token>wont</token>
+                    </marker>
+                    <token postag="PRP\$?|DT|TO|NNP" postag_regexp="yes" />
+                </pattern>
+                <message>Did you mean <suggestion>want</suggestion>?</message>
+                <example correction="want">They <marker>wont</marker> to go there.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token regexp="yes">they|I|you|we|s?he|it</token>
+                    <token postag="RB" min="0" />
+                    <marker>
+                        <token>wonted</token>
+                    </marker>
+                    <token postag="PRP\$?|DT|TO|NNP" postag_regexp="yes" />
+                </pattern>
+                <message>Did you mean <suggestion>wanted</suggestion>?</message>
+                <example correction="wanted">They <marker>wonted</marker> to go there.</example>
+            </rule>
+        </rulegroup>
+        <rule id="PRP_SUITES" name="he suites (suits)">
+            <pattern>
+                <token regexp="yes">s?he|it</token>
+                <token postag="RB" min="0" />
+                <marker>
+                    <token regexp="yes">suites?</token>
+                </marker>
+            </pattern>
+            <message>Did you mean <suggestion>suits</suggestion> (= verb)?</message>
+            <url>https://www.merriam-webster.com/dictionary/suit</url>
+            <example correction="suits">He <marker>suites</marker> in the car.</example>
+        </rule>
+        <rule id="PRP_MUS" name="he mus (must)">
+            <pattern>
+                <token regexp="yes">I|you|s?he|we|they|it</token>
+                <marker>
+                    <token>mus</token>
+                </marker>
+            </pattern>
+            <message>Did you mean <suggestion>must</suggestion>?</message>
+            <url>https://www.merriam-webster.com/dictionary/must</url>
+            <example correction="must">I <marker>mus</marker> admit that you are right.</example>
+        </rule>
+        <rule id="PRP_NEDS" name="he neds (needs)">
+            <pattern>
+                <token regexp="yes">I|you|s?he|we|they|it</token>
+                <token postag="RB" min="0" />
+                <marker>
+                    <token regexp="yes">neds?</token>
+                </marker>
+            </pattern>
+            <message>Did you mean <suggestion><match no="3" regexp_match="(?i)ed" regexp_replace="eed" /></suggestion> (= verb)?</message>
+            <url>https://www.merriam-webster.com/dictionary/need</url>
+            <example correction="needs">He <marker>neds</marker> to know about it.</example>
+        </rule>
+        <rule id="PRP_DELT" name="he delt (dealt)">
+            <pattern>
+                <token regexp="yes">I|you|s?he|we|they|it</token>
+                <token postag="RB" min="0" />
+                <marker>
+                    <token>delt</token>
+                </marker>
+            </pattern>
+            <message>Did you mean <suggestion>dealt</suggestion> (past tense of 'to deal')?</message>
+            <url>https://www.merriam-webster.com/dictionary/dealt</url>
+            <example correction="dealt">He <marker>delt</marker> with it.</example>
+        </rule>
+        <rule id="PRP_GOS" name="he gos (goes)">
+            <pattern>
+                <token regexp="yes">s?he|it</token>
+                <token postag="RB" min="0" />
+                <marker>
+                    <token>gos</token>
+                </marker>
+            </pattern>
+            <message>Did you mean <suggestion>goes</suggestion> (= verb)?</message>
+            <url>https://www.merriam-webster.com/dictionary/go</url>
+            <example correction="goes">He <marker>gos</marker> home.</example>
+        </rule>
+        <rule id="PRP_HAFT" name="They haft (have) to">
+            <pattern>
+                <token postag="PRP|MD" postag_regexp="yes" />
+                <marker>
+                    <token>haft</token>
+                </marker>
+                <token postag="DT|TO" postag_regexp="yes" />
+            </pattern>
+            <message>Did you mean <suggestion>have</suggestion>?</message>
+            <example correction="have">They will <marker>haft</marker> to go on.</example>
+        </rule>
+        <rule id="PRP_DOS" name="he dos (does)">
+            <pattern>
+                <token regexp="yes">s?he|it</token>
+                <token postag="RB" min="0" />
+                <marker>
+                    <token>dos</token>
+                </marker>
+            </pattern>
+            <message>Did you mean <suggestion>does</suggestion> (= verb)?</message>
+            <url>https://www.merriam-webster.com/dictionary/do</url>
+            <example correction="does">He <marker>dos</marker> not want to go home.</example>
+        </rule>
+        <rule id="PRP_DRYS" name="it drys (dries)">
+            <pattern>
+                <token regexp="yes">it|s?he|this|that</token>
+                <token postag="RB" min="0" />
+                <marker>
+                    <token>drys</token>
+                </marker>
+            </pattern>
+            <message>The word "\3" is a plural noun. Did you mean the singular simple present verb <suggestion>dries</suggestion>?</message>
+            <example correction="dries">We need to do it before it <marker>drys</marker> out.</example>
+        </rule>
+        <rulegroup id="YOUR_RE" name="Your're (you're)">
+            <rule>
+                <pattern>
+                    <token>your</token>
+                    <token spacebefore="no">'re</token>
+                </pattern>
+                <message>Did you mean <suggestion>you're</suggestion> or <suggestion>your</suggestion>?</message>
+                <example correction="You're|Your"><marker>Your're</marker> right!</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token>your</token>
+                    <token case_sensitive="yes" regexp="yes">[Aa]re</token>
+                </pattern>
+                <message>Did you mean <suggestion>you are</suggestion>, <suggestion>yours are</suggestion> or <suggestion>your</suggestion>?</message>
+                <example correction="You are|Yours are|Your"><marker>Your are</marker> right!</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token>its</token>
+                    <token spacebefore="no">'s</token>
+                </pattern>
+                <message>Did you mean <suggestion>it's</suggestion> or <suggestion>its</suggestion>?</message>
+                <example correction="It's|Its"><marker>Its's</marker> very cool!</example>
+            </rule>
+        </rulegroup>
+        <rulegroup id="A_MD_VB" name="A would not do it">
+            <antipattern><!-- adjective without hyphen "This book is a must-read" -->
+                <token>must</token>
+                <token regexp="yes">have|read|go|see|visit|be|do|offer|take</token>
+            </antipattern>
+            <antipattern>
+                <token skip="-1" regexp="yes">[CBDENXY]|γ|α|functions?|variables?|abbrev(iation)?s?</token>
+                <token>A</token>
+            </antipattern>
+            <antipattern>
+                <token skip="-1">A</token>
+                <token regexp="yes">[CBDENXY]|γ|α|functions?|variables?|abbrev(iation)?s?</token>
+            </antipattern>
+            <antipattern>
+                <token regexp="yes">[A-Z]</token>
+                <token regexp="yes">&amp;|and|n?or|\.</token>
+                <token>A</token>
+            </antipattern>
+            <antipattern>
+                <token regexp="yes">[A-Z]</token>
+                <token regexp="yes">&amp;|and|n?or|\.|\-|–|\:|\*|\+|\/</token>
+                <token>A</token>
+            </antipattern>
+            <antipattern>
+                <token>for</token><!-- CC -->
+                <token>A</token>
+            </antipattern>
+            <rule><!-- "A would do it" -->
+                <pattern>
+                    <token postag="CC|PCT|SENT_START" postag_regexp="yes" />
+                    <marker>
+                        <token>a</token>
+                    </marker>
+                    <token postag="MD" />
+                    <token postag="RB" min="0" />
+                    <token postag="VB.*" postag_regexp="yes" />
+                </pattern>
+                <message>Did you mean <suggestion>I</suggestion>?</message>
+                <example correction="I"><marker>A</marker> would not do it like that.</example>
+                <example>A can be regarded as a function of a real variable.</example>
+                <example>If N is 7, A would be 4 and B would be 3.</example>
+                <example>A must read for fans.</example>
+                <example>A will buy tables from C.</example>
+                <example>This Q &amp; A won’t replace our Tuesday stream.</example>
+                <example>The U.S.A would go to war for this.</example>
+            </rule>
+            <rule><!-- "A didn't do it" -->
+                <antipattern><!-- don't pass/come bet www.casinonewsdaily.com/craps-guide/ -->
+                    <token>do</token>
+                    <token>n't</token>
+                    <token skip="-1" regexp="yes">pass|come</token>
+                    <token regexp="yes">bets?</token>
+                </antipattern>
+                <pattern>
+                    <token postag="CC|PCT|SENT_START" postag_regexp="yes" />
+                    <marker>
+                        <token>a</token>
+                    </marker>
+                    <token inflected="yes">do</token>
+                    <token postag="RB" min="0" />
+                    <token postag="VB.*" postag_regexp="yes" />
+                </pattern>
+                <message>Did you mean <suggestion>I</suggestion>?</message>
+                <example correction="I"><marker>A</marker> didn't do it.</example>
+                <example>A can be regarded as a function of a real variable.</example>
+                <example>If N is 7, A would be 4 and B would be 3.</example>
+                <example>A must read for fans.</example>
+                <example>A will buy tables from C.</example>
+                <example>This Q &amp; A won’t replace our Tuesday stream.</example>
+                <example>The U.S.A would go to war for this.</example>
+                <example>A don't come bet is played in two rounds.</example>
+            </rule>
+        </rulegroup>
+        <rule id="PRP_NOWS" name="he nows (knows)">
+            <pattern>
+                <token regexp="yes">s?he|it</token>
+                <token postag="RB" min="0" />
+                <marker>
+                    <token>nows</token>
+                </marker>
+            </pattern>
+            <message>Did you mean <suggestion>knows</suggestion> (= verb)?</message>
+            <url>https://www.merriam-webster.com/dictionary/know</url>
+            <example correction="knows">He <marker>nows</marker> nothing.</example>
+        </rule>
+        <rule id="WENT" name="wen't (went)">
+            <pattern>
+                <token>wen</token>
+                <token regexp="yes">&apostrophe;</token>
+                <token>t</token>
+            </pattern>
+            <message>Did you mean <suggestion>went</suggestion>, <suggestion>won\2t</suggestion>?</message>
+            <example correction="went|won't">I <marker>wen't</marker> to bed.</example>
+        </rule>
+        <rule id="PRP_PORTRAIT" name="he portraits (portrays)">
+            <antipattern>
+                <token postag="VB.*|UNKNOWN|IN" postag_regexp="yes" />
+                <token regexp="yes">it|you</token>
+            </antipattern>
+            <pattern>
+                <token regexp="yes">s?he|it|they|you|I</token>
+                <token postag="RB" min="0" />
+                <marker>
+                    <token regexp="yes">portraits?</token>
+                </marker>
+            </pattern>
+            <message>Did you mean <suggestion><match regexp_match="portrait" regexp_replace="portray" no="3" /></suggestion> (= verb)?</message>
+            <url>https://www.merriam-webster.com/dictionary/portray</url>
+            <example correction="portrays">They <marker>portraits</marker> him as a self-serving careerist.</example>
+        </rule>
+        <rule id="PRP_WUS" name="he wos (was)">
+            <pattern>
+                <token regexp="yes">s?he|it</token>
+                <token postag="RB" min="0" />
+                <marker>
+                    <token regexp="yes">w[ou]s</token>
+                </marker>
+            </pattern>
+            <message>Did you mean <suggestion>was</suggestion>?</message>
+            <url>https://www.merriam-webster.com/dictionary/was</url>
+            <example correction="was">He <marker>wos</marker> home.</example>
+        </rule>
+        <rule id="PRP_BOUGH" name="he bough (bought)">
+            <pattern>
+                <token regexp="yes">s?he|it|they|I|we|you</token>
+                <token postag="RB" min="0" />
+                <marker>
+                    <token>bough</token>
+                </marker>
+            </pattern>
+            <message>Did you mean the verb <suggestion>bought</suggestion> (= past tense of "to buy")?</message>
+            <url>https://www.merriam-webster.com/dictionary/buy</url>
+            <example correction="bought">He <marker>bough</marker> a new car.</example>
+        </rule>
+        <rulegroup id="HE_HIS" name="he his (is)">
+            <antipattern>
+                <token postag="VB.*|IN|UNKNOWN" postag_regexp="yes" />
+                <token>it</token>
+            </antipattern>
+            <rule>
+                <pattern>
+                    <token regexp="yes">s?he|it</token>
+                    <marker>
+                        <token>his</token>
+                    </marker>
+                    <token postag="RB" min="0" />
+                    <token postag="JJ.*|VBG|NN.*" postag_regexp="yes">
+                        <exception regexp="yes">colleagues?|co\-?workers?|co\-?founders?|(boy|girl)?friends?|wife|husband|m[ou]ms?|dads?|m[ou]mmy|daddy|fathers?|mothers?|sisters?|pals?|budd(y|ies)|brothers?|grand(pa|ma|son|daughter|ad|dad|mum|mother)s?|sons?|daughters?|granny|childs?|childrens?|kids?|aunts?|uncles?|auntie</exception>
+                    </token>
+                </pattern>
+                <message>Did you mean <suggestion>is</suggestion>?</message>
+                <example correction="is">He <marker>his</marker> great!</example>
+                <example>Please make it his favorite song.</example>
+                <example>He his dad and I were going to the barbecue.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token regexp="yes">s?he|it</token>
+                    <marker>
+                        <token>his</token>
+                    </marker>
+                    <token postag="DT" />
+                    <token />
+                </pattern>
+                <message>Did you mean <suggestion>is</suggestion>?</message>
+                <example correction="is">He <marker>his</marker> the best!</example>
+            </rule>
+        </rulegroup>
+        <rule id="PRP_SOOTHS" name="it sooths (soothes)">
+            <pattern>
+                <token regexp="yes">s?he|it|we|they|I</token>
+                <token postag="RB" min="0" />
+                <marker>
+                    <token regexp="yes">sooths?</token>
+                </marker>
+            </pattern>
+            <message>Did you mean <suggestion><match no="3" regexp_match="(?i)th" regexp_replace="the" /></suggestion> (= verb)?</message>
+            <url>https://www.merriam-webster.com/dictionary/soothe</url>
+            <example correction="soothes">It <marker>sooths</marker> my skin.</example>
+        </rule>
+        <rulegroup id="PRP_SAIS" name="it sais (says)">
+            <url>https://www.merriam-webster.com/dictionary/say</url>
+            <rule>
+                <pattern>
+                    <token regexp="yes">s?he|it</token>
+                    <token postag="RB" min="0" />
+                    <marker>
+                        <token>sais</token>
+                    </marker>
+                </pattern>
+                <message>Did you mean the verb <suggestion>says</suggestion>?</message>
+                <example correction="says">He <marker>sais</marker> something.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token regexp="yes">we|they|I|you</token>
+                    <token postag="RB" min="0" />
+                    <marker>
+                        <token>sai</token>
+                    </marker>
+                </pattern>
+                <message>Did you mean the verb <suggestion>say</suggestion>?</message>
+                <example correction="say">They <marker>sai</marker> something.</example>
+            </rule>
+        </rulegroup>
+        <rule id="PRP_KNOWNS" name="he knowns (knows)">
+            <pattern>
+                <token regexp="yes">s?he|it</token>
+                <token postag="RB" min="0" />
+                <marker>
+                    <token>knowns</token>
+                </marker>
+            </pattern>
+            <message>Did you mean <suggestion>knows</suggestion> (= 'to know')?</message>
+            <url>https://www.merriam-webster.com/dictionary/know</url>
+            <example correction="knows">He <marker>knowns</marker> someone.</example>
+        </rule>
+        <rule id="CANN_T" name="cann't → can't">
+            <pattern>
+                <marker>
+                    <token>cann</token>
+                    <token regexp="yes">&apostrophe;</token>
+                    <token>t</token>
+                </marker>
+            </pattern>
+            <message>Typo detected. Did you mean <suggestion>can\2\3</suggestion> or <suggestion>cannot</suggestion>?</message>
+            <example correction="can't|cannot">They <marker>cann't</marker> come.</example>
+        </rule>
+        <rule id="DONN_T" name="donn't → don't">
+            <pattern>
+                <marker>
+                    <token>donn</token>
+                    <token regexp="yes">&apostrophe;</token>
+                    <token>t</token>
+                </marker>
+            </pattern>
+            <message>Typo detected. Did you mean <suggestion>don\2\3</suggestion>?</message>
+            <example correction="don't">They <marker>donn't</marker> come.</example>
+        </rule>
+        <rule id="MUSN_T" name="musn't → mustn't">
+            <pattern>
+                <marker>
+                    <token>musn</token>
+                    <token regexp="yes">&apostrophe;</token>
+                    <token>t</token>
+                </marker>
+            </pattern>
+            <message>Typo detected. Did you mean <suggestion>mustn\2\3</suggestion>?</message>
+            <example correction="mustn't">They <marker>musn't</marker> come.</example>
+        </rule>
+        <rule id="COUD_T" name="oud't, oudn't, ould't → ouldn't">
+            <pattern>
+                <marker>
+                    <token regexp="yes">(c|sh|w)ou[ldn]+
+                        <exception regexp="yes">(c|sh|w)ouldn</exception>
+                    </token>
+                    <token regexp="yes">&apostrophe;</token>
+                    <token>t</token>
+                </marker>
+            </pattern>
+            <message>Typo detected. Did you mean <suggestion><match no="1" regexp_match="(?&lt;=ou)[ldn]+$" regexp_replace="ldn" />\2\3</suggestion>?</message>
+            <example correction="couldn't">They <marker>coud't</marker> come.</example>
+            <example correction="couldn't">They <marker>coudn't</marker> come.</example>
+            <example correction="couldn't">They <marker>could't</marker> come.</example>
+            <example correction="couldn't">They <marker>couln't</marker> come.</example>
+            <example correction="couldn't">They <marker>coudln't</marker> come.</example>
+            <example correction="couldn't">They <marker>coundn't</marker> come.</example>
+            <example correction="wouldn't">They <marker>woudn't</marker> come.</example>
+            <example correction="shouldn't">They <marker>shoudn't</marker> come.</example>
+            <example correction="couldn't">They <marker>couldln't</marker> come.</example>
+        </rule>
+        <rule id="COUN_T" name="coun't → couldn't, count">
+            <pattern>
+                <marker>
+                    <token>coun</token>
+                    <token regexp="yes">&apostrophe;</token>
+                    <token>t</token>
+                </marker>
+            </pattern>
+            <message>Typo detected. Did you mean <suggestion>couldn\2\3</suggestion> or <suggestion>count</suggestion>?</message>
+            <example correction="couldn't|count">They <marker>coun't</marker> come.</example>
+        </rule>
+        <rule id="WOUN_T" name="woun't → wouldn't, won't">
+            <pattern>
+                <marker>
+                    <token>woun</token>
+                    <token regexp="yes">&apostrophe;</token>
+                    <token>t</token>
+                </marker>
+            </pattern>
+            <message>Typo detected. Did you mean <suggestion>wouldn\2\3</suggestion> or <suggestion>won\2\3</suggestion>?</message>
+            <example correction="wouldn't|won't">They <marker>woun't</marker> come.</example>
+        </rule>
+        <rule id="ISEN_T" name="isen't → isn't">
+            <!-- See also MISSING_APOSTROPHE_T, APOS_RE, INCORRECT_CONTRACTIONS, EN_CONTRACTION_SPELLING, DONT_T, WASENT, DOSENT, DOESENT, DIDINT, etc. -->
+            <pattern>
+                <marker>
+                    <token regexp="yes">(is|has|does)[ieun]n</token>
+                    <token regexp="yes">&apostrophe;</token>
+                    <token>t</token>
+                </marker>
+            </pattern>
+            <message>Typo detected. Did you mean <suggestion><match no="1" regexp_match="[ieun](?=n$)" regexp_replace="" />\2\3</suggestion>?</message>
+            <example correction="isn't">It <marker>isen't</marker> coming.</example>
+            <example correction="isn’t">It <marker>isen’t</marker> coming.</example>
+            <example correction="isn't">It <marker>isin't</marker> coming.</example>
+            <example correction="isn't">It <marker>isun't</marker> coming.</example>
+            <example correction="isn't">It <marker>isnn't</marker> coming.</example>
+            <example correction="hasn't">It <marker>hasen't</marker> come.</example>
+            <example correction="hasn’t">It <marker>hasen’t</marker> come.</example>
+            <example correction="doesn't">It <marker>doesen't</marker> come.</example>
+            <example correction="doesn’t">It <marker>doesen’t</marker> come.</example>
+        </rule>
+        <rule id="ARN_T" name="arn't → aren't">
+            <pattern>
+                <marker>
+                    <token regexp="yes">(ar|wer)n</token>
+                    <token regexp="yes">&apostrophe;</token>
+                    <token>t</token>
+                </marker>
+            </pattern>
+            <message>Typo detected. Did you mean <suggestion><match no="1" regexp_match="n$" regexp_replace="en" />\2\3</suggestion>?</message>
+            <example correction="aren't">They <marker>arn't</marker> coming.</example>
+            <example correction="aren’t">They <marker>arn’t</marker> coming.</example>
+            <example correction="weren't">They <marker>wern't</marker> coming.</example>
+            <example correction="weren’t">They <marker>wern’t</marker> coming.</example>
+        </rule>
+        <rule id="WASEN_T" name="he wasen't (wasn't)">
+            <pattern>
+                <token regexp="yes">wasen|was|wasnt</token>
+                <token regexp="yes">&apostrophe;</token>
+                <token>t</token>
+            </pattern>
+            <message>Typo detected. Did you mean <suggestion>wasn\2t</suggestion>?</message>
+            <example correction="wasn't">He <marker>wasen't</marker> sure.</example>
+        </rule>
+        <rule id="WASENT" name="he wasent (wasn't)">
+            <pattern>
+                <token regexp="yes">was[ie]nt</token>
+            </pattern>
+            <message>Typo detected. Did you mean <suggestion>wasn't</suggestion>?</message>
+            <example correction="wasn't">He <marker>wasent</marker> sure.</example>
+        </rule>
+        <rule id="DOESENT" name="dosent (doesn't)">
+            <pattern>
+                <marker>
+                    <token regexp="yes">doe?sent|doesint</token>
+                </marker>
+            </pattern>
+            <message>Typo detected. Did you mean <suggestion>doesn't</suggestion> (= verb)?</message>
+            <url>https://www.merriam-webster.com/dictionary/do</url>
+            <example correction="doesn't">He <marker>doesent</marker> want to go home.</example>
+        </rule>
+        <rule id="DONS_T" name="dons't (don't)">
+            <pattern>
+                <marker>
+                    <token>dons</token>
+                    <token regexp="yes">&apostrophe;</token>
+                    <token>t</token>
+                </marker>
+            </pattern>
+            <message>Typo detected. Did you mean <suggestion>don't</suggestion> (= verb)?</message>
+            <url>https://www.merriam-webster.com/dictionary/do</url>
+            <example correction="don't">I <marker>dons't</marker> need your help.</example>
+        </rule>
+        <rulegroup id="PRP_DON" name="they don (don't)">
+            <rule>
+                <pattern>
+                    <token regexp="yes">don|doesn|ha[ds]n|haven|[cw]ouldn|shouldn|wasn|weren|mustn|aren|isn</token>
+                    <token regexp="yes">not?</token>
+                </pattern>
+                <message>Did you mean <suggestion><match no="1" regexp_match="n$" regexp_replace="" /> \2</suggestion>?</message>
+                <example correction="do not">I <marker>don not</marker> know.</example>
+            </rule>
+            <rule>
+                <antipattern><!-- "don" is also a rarely used verb -->
+                    <token regexp="yes">s?he|it</token>
+                    <token postag="RB" min="0" />
+                    <token>dons</token>
+                    <token regexp="yes">an?|that|this|my|y?our|his|her|their</token>
+                </antipattern>
+                <pattern>
+                    <token regexp="yes">I|we|they|s?he|you</token>
+                    <token postag="RB" min="0" />
+                    <marker>
+                        <token>dons</token>
+                    </marker>
+                    <token postag="RB" min="0" />
+                    <token postag="VB.*" postag_regexp="yes" />
+                </pattern>
+                <message>Did you mea
